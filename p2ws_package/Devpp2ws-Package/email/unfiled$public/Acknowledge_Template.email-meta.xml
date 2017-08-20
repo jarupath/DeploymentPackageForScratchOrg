@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>Acknowledge Template</name>
+    <style>freeForm</style>
+    <subject>Acknowledgement</subject>
+    <textOnly>{!User.Station__c}{!User.Department}/{!Case.CaseNumber}
+
+
+
+เรียน ท่านผู้โดยสาร
+
+
+บริษัท การบินไทย จำกัด (มหาชน) ขอขอบพระคุณที่กรุณาสละเวลาแจ้งข้อคิดเห็นมาให้ทราบดังหมายเลขอ้างอิงข้างต้น
+
+
+
+กองบริการลูกค้าสัมพันธ์
+
+บริษัท การบินไทย จำกัด (มหาชน)
+
+
+
+
+Dear Passenger,
+
+Thank you for contacting Thai Airways International.
+
+This is an acknowledgement of receipt your feedback and you will be advised of further process in due time.
+
+Meanwhile, we send you our warm regards.
+
+
+Customer Relations Service Department
+Thai Airways International (PCL)</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

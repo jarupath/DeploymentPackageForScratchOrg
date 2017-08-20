@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AO_Baggage_Claim__c</fullName>
+        <externalId>false</externalId>
+        <label>AO Baggage Claim</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Active_Case_Team_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Active Case Team ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Accepted_Class_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Accepted Class id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Accepted_Seat_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Accepted Seat id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Case_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Case Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Case_Number_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Case Number id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Detail_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Detail id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Flight_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Flight Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Flight_Name_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Flight Name id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Nationality_Full_Name_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Nationality Full Name id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Object_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Object id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Sector_id__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Sector id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CTI_Station_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>CTI Station ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Closed_Record_Type_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Closed Record Type ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Flight_Id_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Flight Id SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Flight_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Flight Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Group_Member_Record_Type_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Group Member Record Type ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Group_Member_Record_Type_ID_for_MA__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Group Member Record Type ID for MA</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Passenger_Id_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Passenger Id SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Passenger_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Passenger Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Record_Type_ID_Ground_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Record Type ID - Ground Service</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Record_Type_ID_Maintenance__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Record Type ID - Maintenance</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Feedback_Create__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Feedback Create</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Feedback_View_RecordType_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Feedback View RecordType ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Services_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Services Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Passenger_ID_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Passenger ID SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Passenger_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Passenger Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inactive_Case_Team_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Inactive Case Team ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Internal_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Email</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_Aircraft_ID_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case Aircraft ID SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_Aircraft_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case Aircraft Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_DEP_STN_Field__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case DEP STN Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_Flight_ID_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case Flight ID SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_Flight_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case Flight Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Case_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Case Record Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Name_SFDC_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger Name SFDC ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Object_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger Object ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Record_Type_New_Passenger__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger Record Type ID - New Passenger</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_Date_Field__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight Date Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reminder_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Reminder Time</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S3_Chief_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S3 Chief Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S3_Tier_1_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S3 Tier 1 Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_First_Platinum_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 First &amp; Platinum Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_Level_8_Ground_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 Level 8 Ground Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_Level_8_In_Flight_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 Level 8 In-Flight Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_Level_8_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 Level 8 Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_Tier_1_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 Tier 1 Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S4_Tier_2_Queue_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>S4 Tier 2 Queue ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TGWebMaster_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>TGWebMaster Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <label>System Configuration</label>
+    <visibility>Public</visibility>
+</CustomObject>

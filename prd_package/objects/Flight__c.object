@@ -1,0 +1,2230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ARR_FLT_FROM_del__c</fullName>
+        <description>Displays the flight arriving with respect to the current user&apos;s station</description>
+        <externalId>false</externalId>
+        <label>ARR FLT FROM</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATA_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ATA_LT__c )</formula>
+        <label>ATA LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ATA_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>ATA LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATA_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ATA_UTC__c )</formula>
+        <label>ATA UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ATA_UTC_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ATA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ATA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ATA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ATA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ATA (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATA_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>ATA UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATA__c</fullName>
+        <description>Use this Field ATA display on page layout</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ATA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ATA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ATA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ATA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>ATA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATD_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ATD_LT__c )</formula>
+        <label>ATD LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ATD_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>ATD LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATD_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ATD_UTC__c )</formula>
+        <label>ATD UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ATD_UTC_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ATD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ATD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ATD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ATD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ATD (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATD_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>ATD UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATD__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ATD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ATD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ATD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ATD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>ATD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>A_C_Reg__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Reg</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accepted_Passengers__c</fullName>
+        <externalId>false</externalId>
+        <label>Accepted Passengers</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AircraftId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Aircraft Registration</label>
+        <referenceTo>Aircraft__c</referenceTo>
+        <relationshipLabel>Flights</relationshipLabel>
+        <relationshipName>Flights</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration_Business_Class__c</fullName>
+        <description>Displays the maximum number of business class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Aircraft Configuration Business Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration_Economy_Class__c</fullName>
+        <description>Displays the maximum number of economy class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Aircraft Configuration Economy Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration_First_Class__c</fullName>
+        <description>Displays the maximum number of first class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Aircraft Configuration First Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration_Premium_Economy__c</fullName>
+        <description>Displays the maximum number of premium economy class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Aircraft Configuration Premium Economy</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <label>Aircraft Configuration</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>AircraftId__r.Aircraft_Description__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>A/C Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Aircraft Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(Name, 2)==&apos;TG&apos;, &apos;TG&apos;, &apos;&apos;)</formula>
+        <label>Airline Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_Delay_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( Arrival_Delay__c )</formula>
+        <label>Arrival Delay DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Arrival_Delay__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival Delay</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_STN_ICAO__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival STN ICAO</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_STN_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival STN Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_STN__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival STN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_Terminal__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival Terminal</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_Time_UTC__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISNULL(ATA_UTC_DateTime__c)), ATA_UTC_DateTime__c, IF( NOT(ISNULL(ETA_UTC_DateTime__c)), ETA_UTC_DateTime__c, STA_UTC_DateTime__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Arrival Time UTC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Available_Seat__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS(Aircraft_Configuration__c, &apos;F&apos;), &apos;F&apos; &amp;
+ IF((Aircraft_Configuration_First_Class__c - Booking_Passenger_First_Class__c) &lt; 0, (&apos;-&apos; &amp;
+     LPAD(
+     TEXT((Aircraft_Configuration_First_Class__c - Booking_Passenger_First_Class__c) * (-1)),
+ 2, &apos;0&apos;)),
+     LPAD(
+     TEXT(Aircraft_Configuration_First_Class__c - Booking_Passenger_First_Class__c),
+ 2, &apos;0&apos;)
+    )
+ , &apos;&apos;) &amp;
+IF(CONTAINS(Aircraft_Configuration__c, &apos;C&apos;), &apos; C&apos; &amp;
+ IF((Aircraft_Configuration_Business_Class__c - Booking_Passenger_Business_Class__c) &lt; 0, (&apos;-&apos; &amp;
+     LPAD(
+     TEXT((Aircraft_Configuration_Business_Class__c - Booking_Passenger_Business_Class__c) * (-1)),
+ 2, &apos;0&apos;)),
+     LPAD(
+     TEXT(Aircraft_Configuration_Business_Class__c - Booking_Passenger_Business_Class__c),
+ 2, &apos;0&apos;)
+    )
+ , &apos;&apos;) &amp;
+IF(CONTAINS(Aircraft_Configuration__c, &apos;U&apos;), &apos; U&apos; &amp;
+ IF((Aircraft_Configuration_Premium_Economy__c - Booking_Passenger_Premium_Economy_Class__c) &lt; 0, (&apos;-&apos; &amp;
+     LPAD(
+     TEXT((Aircraft_Configuration_Premium_Economy__c - Booking_Passenger_Premium_Economy_Class__c) * (-1)),
+ 2, &apos;0&apos;)),
+     LPAD(
+     TEXT(Aircraft_Configuration_Premium_Economy__c - Booking_Passenger_Premium_Economy_Class__c),
+ 2, &apos;0&apos;)
+    )
+ , &apos;&apos;) &amp;
+IF(CONTAINS(Aircraft_Configuration__c, &apos;Y&apos;), &apos; Y&apos; &amp;
+ IF((Aircraft_Configuration_Economy_Class__c - Booking_Passenger_Economy_Class__c) &lt; 0, (&apos;-&apos; &amp;
+     LPAD(
+     TEXT((Aircraft_Configuration_Economy_Class__c - Booking_Passenger_Economy_Class__c) * (-1)),
+ 3, &apos;0&apos;)),
+     LPAD(
+     TEXT(Aircraft_Configuration_Economy_Class__c - Booking_Passenger_Economy_Class__c),
+ 3, &apos;0&apos;)
+    )
+ , &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Available Seat</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BAY_ARR_DEP__c</fullName>
+        <externalId>false</externalId>
+        <label>BAY ARR/DEP</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BAY__c</fullName>
+        <externalId>false</externalId>
+        <formula>BAY_ARR_DEP__c</formula>
+        <label>BAY</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Belt__c</fullName>
+        <externalId>false</externalId>
+        <label>Belt</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Block_Time_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( Block_Time__c )</formula>
+        <label>Block Time DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Block_Time__c</fullName>
+        <description>Displays actual flying time in units of minutes</description>
+        <externalId>false</externalId>
+        <label>Block Time</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Passenger_Business_Class__c</fullName>
+        <description>Displays the number of business class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Booking Passenger Business Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Passenger_Economy_Class__c</fullName>
+        <description>Displays the number of economy class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Booking Passenger Economy Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Passenger_First_Class__c</fullName>
+        <description>Displays the number of first class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Booking Passenger First Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Passenger_Premium_Economy_Class__c</fullName>
+        <description>Displays the number of premium economy class available seats in the aircraft</description>
+        <externalId>false</externalId>
+        <label>Booking Passenger Premium Economy Class</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Passengers__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Booking Passengers</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Version__c</fullName>
+        <externalId>false</externalId>
+        <formula>AircraftId__r.Cabin_Ver__c</formula>
+        <label>Cabin Version</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Amount (Clarify)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Flight_Date_LT__c</fullName>
+        <description>Displays the changed flight date in local time</description>
+        <externalId>false</externalId>
+        <label>Change Flight Date LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Flight_Date_UTC__c</fullName>
+        <description>Displays the changed flight date in UTC time</description>
+        <externalId>false</externalId>
+        <label>Change Flight Date UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Flight_Number__c</fullName>
+        <description>Displays the changed flight number</description>
+        <externalId>false</externalId>
+        <label>Change Flight Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Codeshare__c</fullName>
+        <externalId>false</externalId>
+        <label>Codeshare</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DEP_FLT_TO_del__c</fullName>
+        <externalId>false</externalId>
+        <label>DEP FLT TO</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delay_Mins__c</fullName>
+        <externalId>false</externalId>
+        <label>Delay Mins</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departed__c</fullName>
+        <description>STD_UTC_DateTime__c &lt; NOW()</description>
+        <externalId>false</externalId>
+        <formula>Departure_Time_UTC__c  &lt; NOW()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Departed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Departure_Delay_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( Departure_Delay__c )</formula>
+        <label>Departure Delay DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Departure_Delay__c</fullName>
+        <externalId>false</externalId>
+        <label>Departure Delay</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departure_STN_ICAO__c</fullName>
+        <externalId>false</externalId>
+        <label>Departure STN ICAO</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departure_STN_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Departure STN Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departure_STN__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Departure STN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departure_Terminal__c</fullName>
+        <externalId>false</externalId>
+        <label>Departure Terminal</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Departure_Time_UTC__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISNULL(ATD_UTC_DateTime__c)), ATD_UTC_DateTime__c, IF(NOT(ISNULL(ETD_UTC_DateTime__c)), ETD_UTC_DateTime__c, STD_UTC_DateTime__c) )</formula>
+        <label>Departure Time UTC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Destination__c</fullName>
+        <description>Displays the flight departing with respect to the current user&apos;s station</description>
+        <externalId>false</externalId>
+        <label>Destination</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETA_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ETA_LT__c )</formula>
+        <label>ETA LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ETA_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>ETA LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETA_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ETA_UTC__c )</formula>
+        <label>ETA UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ETA_UTC_Display__c</fullName>
+        <description>Estimated Time of Arrival (UTC)</description>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ETA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ETA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ETA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ETA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ETA (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETA_UTC__c</fullName>
+        <description>Estimated Time of Arrival</description>
+        <externalId>false</externalId>
+        <label>ETA UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETA__c</fullName>
+        <description>Estimated Time of Arrival</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ETA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ETA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ETA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ETA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>ETA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETD_ETA__c</fullName>
+        <externalId>false</externalId>
+        <formula>ETD__c &amp; &quot; / &quot; &amp; ETA__c</formula>
+        <label>ETD / ETA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETD_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ETD_LT__c )</formula>
+        <label>ETD LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ETD_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>ETD LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETD_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( ETD_UTC__c )</formula>
+        <label>ETD UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ETD_UTC_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ETD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ETD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ETD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ETD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ETD (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETD_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>ETD UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ETD__c</fullName>
+        <description>Estimated Time of Departure</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( ETD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( ETD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( ETD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( ETD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>ETD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Leg__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>First Leg</label>
+        <referenceTo>Flight__c</referenceTo>
+        <relationshipLabel>Flights</relationshipLabel>
+        <relationshipName>Flights</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Area__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Area</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Cancel_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Displays whether flight is cancelled</description>
+        <externalId>false</externalId>
+        <label>Flight Cancel Flag</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Change_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Displays whether flight is changed</description>
+        <externalId>false</externalId>
+        <label>Flight Change Flag</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Flight_Date_LT__c = &quot;&quot;, &quot;&quot;, 
+RIGHT( Flight_Date_LT__c , 2) + &quot;/&quot; + MID( Flight_Date_LT__c , 6, 2) + &quot;/&quot; + LEFT( Flight_Date_LT__c , 4) 
+)</formula>
+        <label>Flight Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_LT_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE( Flight_Date_LT__c )</formula>
+        <label>Flight Date LT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_LT__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Flight Date</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_UTC_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE( Flight_Date_UTC__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Date UTC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_UTC__c</fullName>
+        <description>Should save the data like :16OCT16 instead of 2016-10-16, Trigger do convert 10OCT16 to 2016-10-16 automatically.</description>
+        <externalId>false</externalId>
+        <label>Flight Date UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Date__c</fullName>
+        <description>Used for input when creating new Flights</description>
+        <externalId>false</externalId>
+        <label>Flight Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Flight External ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Master__c</fullName>
+        <description>Flight Master used for group LEG by the same flight date and flight number, Example data = TG676_16OCT16</description>
+        <externalId>true</externalId>
+        <label>Flight Master</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Number__c</fullName>
+        <description>Data format :TG999</description>
+        <externalId>false</externalId>
+        <label>Flight Numbers</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Region__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Region</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Remark__c</fullName>
+        <description>Displays the extra information on the flight</description>
+        <externalId>false</externalId>
+        <label>Flight Remark</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flying_Elapsed_Time_HH_MM__c</fullName>
+        <description>Displays the flying time in a HH:MM format</description>
+        <externalId>false</externalId>
+        <formula>LEFT( Flying_Time_Elapsed_Time__c , 2)  &amp; &quot;:&quot; &amp; RIGHT ( Flying_Time_Elapsed_Time__c , 2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flying Elapsed Time (HH:MM)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flying_Time_Elapsed_Time__c</fullName>
+        <description>Displays the flying time in an hour format</description>
+        <externalId>false</externalId>
+        <inlineHelpText>HH:MM</inlineHelpText>
+        <label>Flying Time (Elapsed Time)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gate__c</fullName>
+        <externalId>false</externalId>
+        <label>Gate</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IS_CFMS__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Displays whether the flight is a flight created by CFMS</description>
+        <externalId>false</externalId>
+        <label>IS CFMS</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Integration_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration Source</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Irregularity_Handling__c</fullName>
+        <externalId>false</externalId>
+        <label>Irregularity Handling</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Matching_User_Preference__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+(CONTAINS($User.Station__c, Departure_STN__c) || CONTAINS($User.Station__c, Arrival_STN__c)) &amp;&amp;
+(CONTAINS($User.A_C_REG__c, AircraftId__r.Name)) ||
+(CONTAINS($User.A_C_Type__c, AircraftId__r.Aircraft_Type__c)
+ ) , 
+TRUE, 
+FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Matching User Preference</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Port_Equals_to_Bay__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Departure_STN__c = $User.Port__c || Arrival_STN__c = $User.Port__c , TRUE, FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Port Equals to Bay</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Landed__c</fullName>
+        <externalId>false</externalId>
+        <formula>Arrival_Time_UTC__c &lt; NOW()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Landed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_Job_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync Job Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Leg_Number__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Leg Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maintenace_Case_Report__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(
+Report__c ,
+&apos;View&apos;,
+&quot;_parent&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Maintenace Case Report</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manual_Run__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Manual Run</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>My_Station_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Departure_STN__c =  $User.Station__c , TRUE, FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>My Station</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Next_Flight_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Flight Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Next_Flight_STD_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( Next_Flight_STD_LT__c )</formula>
+        <label>Next Flight STD LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Next_Flight_STD_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Flight STD LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Next_Flight_STD_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( Next_Flight_STD_UTC__c )</formula>
+        <label>Next Flight STD UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Next_Flight_STD_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Flight STD UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Cabin_Crew__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Cabin Crew</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Cockpit_Crew__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Cockpit Crew</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Extra_Crew__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Extra Crew</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_GE__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of GE</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Passive_Crew__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Passive Crew</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Origin__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Origin</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Over_Booked_Amount_txt__c</fullName>
+        <externalId>false</externalId>
+        <label>Over Booked Amount</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_Date_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight Date LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_Date_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight Date UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_External_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight Master</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Flight_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Flight Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RPT_Next2Day__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+OR(
+(Flight_Date_LT_F__c - 1 = TODAY()) &amp;&amp; (STD_LT_DateTime__c &gt;= DATETIMEVALUE(LEFT(STD_LT__c , 10) &amp; &apos; 05:00:00&apos;)),
+(Flight_Date_LT_F__c - 2 = TODAY()) &amp;&amp; (STD_LT_DateTime__c &lt;= DATETIMEVALUE(LEFT(STD_LT__c , 10) &amp; &apos; 05:00:00&apos;))
+)
+,true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RPT Next2Day</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Report__c</fullName>
+        <description>Unused
+
+&quot;00ON0000000LsvD?pv0=Text(Maintenance,New+Maintenance)&amp;pv1=&apos; + AircraftId__r.Name</description>
+        <externalId>false</externalId>
+        <formula>&quot;/00ON0000000LsvD?pv0=&quot; &amp; &quot;012N000000053Q2, 012N000000055m5&amp;pv1=&quot; +    AircraftId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Maintenace Report</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Routing__c</fullName>
+        <description>Used for display</description>
+        <externalId>true</externalId>
+        <label>Routing</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SSR_Report_Date_Arrival__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+   ((STA_LT_DateTime__c - 3) &lt;= NOW()) &amp;&amp; 
+   ((STA_LT_DateTime__c - 2) &gt;= NOW())
+, TRUE, FALSE)</formula>
+        <label>SSR Report Date Arrival</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SSR_Report_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+   ((STD_LT_DateTime__c - 3) &lt;= NOW()) &amp;&amp; 
+   ((STD_LT_DateTime__c - 2) &gt;= NOW())
+, TRUE, FALSE)</formula>
+        <label>SSR Report Date</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>STA_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( STA_LT__c )</formula>
+        <label>STA LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>STA_LT_Datetime_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>MID(STA_LT__c , 9, 2) + &apos;/&apos; + 
+MID(STA_LT__c, 6, 2) + &apos;/&apos; + 
+MID(STA_LT__c, 1, 4) + &apos; &apos; + 
+MID(STA_LT__c, 12, 5)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>STA LT (Datetime)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STA_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>STA LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STA_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( STA_UTC__c )</formula>
+        <label>STA UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>STA_UTC_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( STA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( STA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( STA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( STA_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>STA (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STA_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>STA UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STA__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( STA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( STA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( STA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( STA_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>STA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_LT_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( STD_LT__c )</formula>
+        <label>STD LT DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>STD_LT_Datetime_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>MID(STD_LT__c , 9, 2) + &apos;/&apos; + 
+MID(STD_LT__c , 6, 2) + &apos;/&apos; + 
+MID(STD_LT__c , 1, 4) + &apos; &apos; + 
+MID(STD_LT__c , 12, 5)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>STD LT (Datetime)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_LT__c</fullName>
+        <externalId>false</externalId>
+        <label>STD LT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_STA__c</fullName>
+        <externalId>false</externalId>
+        <formula>STD__c &amp; &quot; / &quot; &amp; STA__c</formula>
+        <label>STD / STA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_UTC_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE( STD_UTC__c )</formula>
+        <label>STD UTC DateTime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>STD_UTC_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>LPAD(
+IF(LEFT(SUBSTITUTE(LEFT(RIGHT( STD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( STD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( STD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( STD_UTC__c , 8), 5), &quot;:&quot;, &quot;:&quot;))
+
+, 5 , &quot;0&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>STD (UTC)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_UTC_TEST_del__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(DATEVALUE(STD_UTC__c))) + &quot;/&quot; + TEXT(MONTH(DATEVALUE( STD_UTC__c ))) + &quot;/&quot; + TEXT(YEAR(DATEVALUE( STD_UTC__c ))) + &quot; &quot; + LEFT(RIGHT(STD_UTC__c,Find(&quot; &quot;, STD_UTC__c)-2), 6)</formula>
+        <label>STD_UTC_TEST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD_UTC__c</fullName>
+        <externalId>false</externalId>
+        <label>STD UTC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STD__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <formula>IF(LEFT(SUBSTITUTE(LEFT(RIGHT( STD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;),1) = &quot;0&quot;, MID
+(
+SUBSTITUTE(LEFT(RIGHT( STD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;), 2, 
+LEN(SUBSTITUTE(LEFT(RIGHT( STD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;)
+)
+), SUBSTITUTE(LEFT(RIGHT( STD_LT__c , 8), 5), &quot;:&quot;, &quot;.&quot;))</formula>
+        <label>STD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheduling_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(MID(Flight_Number__c, 3, 1),
+&quot;8&quot;, &quot;Non-Schedule&quot;,
+&quot;Schedule&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Scheduling Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <formula>Departure_STN__c + &quot;-&quot; +  Arrival_STN__c</formula>
+        <label>Sector</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status_txt__c</fullName>
+        <description>For M2
+
+Maintenance Case Color Code</description>
+        <externalId>false</externalId>
+        <formula>IMAGE(&quot;https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000W2ds&amp;oid=00DN0000000AfvZ&amp;lastMod=1475563007000&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Elapsed_Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Leg_Number__c &gt; 1, 
+LPAD(
+LEFT( 
+TEXT(
+(STA_UTC_DateTime__c -  First_Leg__r.STD_UTC_DateTime__c) * 24
+)
+,1)
+,2 ,&quot;0&quot;)
+&amp;
+TEXT(
+FLOOR( 
+VALUE(
+MID(TEXT(
+    (STA_UTC_DateTime__c -  First_Leg__r.STD_UTC_DateTime__c) * 24
+    ), 
+ FIND(&apos;.&apos;, 
+     TEXT(
+    (STA_UTC_DateTime__c -  First_Leg__r.STD_UTC_DateTime__c) * 24
+    ) )+ 1
+   , 2)
+)
+ * 0.6)
+)
+, Flying_Time_Elapsed_Time__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Elapsed Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Flight</label>
+    <listViews>
+        <fullName>AOJ</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Departure_STN__c</field>
+            <operation>equals</operation>
+            <value>AOJ</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>AOJ</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>STD__c</columns>
+        <columns>ETD__c</columns>
+        <columns>STA__c</columns>
+        <columns>ETA__c</columns>
+        <columns>Flying_Time_Elapsed_Time__c</columns>
+        <columns>Total_Elapsed_Time__c</columns>
+        <columns>Departure_STN_Name__c</columns>
+        <columns>Arrival_STN_Name__c</columns>
+        <columns>Leg_Number__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_Flight_Schedule</fullName>
+        <columns>NAME</columns>
+        <columns>AircraftId__c</columns>
+        <columns>Departure_STN__c</columns>
+        <columns>Arrival_STN__c</columns>
+        <columns>Aircraft_Type__c</columns>
+        <columns>BAY_ARR_DEP__c</columns>
+        <columns>STA_UTC_Display__c</columns>
+        <columns>ETA_UTC_Display__c</columns>
+        <columns>STD_UTC_Display__c</columns>
+        <columns>ETD_UTC_Display__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Flight Schedule</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Aircraft_Maintenance_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BKK</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Departure_STN__c</field>
+            <operation>equals</operation>
+            <value>BKK</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>BKK</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CTS</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Departure_STN__c</field>
+            <operation>equals</operation>
+            <value>CTS</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>CTS</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FUK</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Departure_STN__c</field>
+            <operation>equals</operation>
+            <value>FUK</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>FUK</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Flight_Schedule</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>AircraftId__c</columns>
+        <columns>Departure_STN__c</columns>
+        <columns>Arrival_STN__c</columns>
+        <columns>Aircraft_Type__c</columns>
+        <columns>BAY_ARR_DEP__c</columns>
+        <columns>STA_UTC_Display__c</columns>
+        <columns>ETA_UTC_Display__c</columns>
+        <columns>STD_UTC_Display__c</columns>
+        <columns>ETD_UTC_Display__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>STA_UTC_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>STD_UTC_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Flight Schedule</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Aircraft_Maintenance_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>HND</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Departure_STN__c</field>
+            <operation>equals</operation>
+            <value>HND</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>HND</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Station</fullName>
+        <columns>NAME</columns>
+        <columns>Routing__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Flight_Date_UTC__c</columns>
+        <columns>Flight_Date_F__c</columns>
+        <columns>STA__c</columns>
+        <columns>STD__c</columns>
+        <columns>Leg_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>My_Station_F__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>STA_LT_DateTime__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>My Station</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Flight Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Flights</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Flight</fullName>
+        <active>true</active>
+        <label>Flight</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>New_Flight</fullName>
+        <active>true</active>
+        <label>New Flight</label>
+    </recordTypes>
+    <searchLayouts>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Sector__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Routing__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Leg_Number__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Aircraft_Configuration__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>AircraftId__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Routing__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>STD__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>STA__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Flying_Time_Elapsed_Time__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Elapsed_Time__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Departure_STN_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Arrival_STN_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Leg_Number__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Maintenace_Case_Report</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Maintenace Case Report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00ON0000000LsvD?pv0=Maintenance,New Maintenance&amp;pv1=HS-TUA</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,248 @@
+<apex:page standardController="Case" extensions="MergeCaseListController" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false">
+
+    <apex:includeScript value="{!$Resource.jquery}" />
+    <apex:includeScript value="/soap/ajax/37.0/connection.js"/>
+    <apex:includeScript value="/support/console/37.0/integration.js" />
+    <!-- <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js" /> -->
+    <apex:includeScript value="{!URLFOR($Resource.sfdc_bs3, 'dist/js/bootstrap.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.sfdc_bs3, 'dist/css/bootstrap-bs3.css')}" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.materializecss, '')}" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.materializejs, '')}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    
+    <style>
+      .alert {
+          color: #D8000C;
+          background-color: #FFBABA;
+      }
+
+      .alertMessage {
+        font-size: 15px;
+      }
+
+      .panel-body {
+        font-family: "ProximaNovaSoft-Regular", Calibri, 
+            "Gill Sans", "Gill Sans MT", Candara, Segoe, 
+            "Segoe UI", Arial, sans-serif; 
+        background-color: #D9E5F0;
+      }
+
+      .panel-headingCustom {
+          
+          background-image:
+		    linear-gradient(
+		      to top right, 
+		      #3D1A6F, #c6168D
+		    );
+      }
+
+      .btn-transparentCustom {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+    }
+
+      .textbox{ 
+           -webkit-border-radius: 5px; 
+           -moz-border-radius: 5px; 
+           border-radius: 3px; 
+           border: 1px solid #848484;  
+           outline:0; 
+           height:20px; 
+           width: 120px; 
+       } 
+       .btn.btn-primary:hover {
+          background: #E0E5EE;
+          color: #0074D9;
+          border: 1px solid #E0E5EE;
+          box-shadow: none;
+          font-size: 12px;
+          transition: none;
+          font-family: 'SalesforceSans-Regular',Helvetica,Arial,sans-serif;
+          text-transform: none;
+          position: relative;
+          margin-bottom: 15px;
+       }
+
+       .btn.btn-primary {
+          background: #F4F5F7;
+          color: #0074D9;
+          border: 1px solid #E0E5EE;
+          box-shadow: none;
+          font-size: 12px;
+          transition: none;
+          font-family: 'SalesforceSans-Regular',Helvetica,Arial,sans-serif;
+          text-transform: none;
+          position: relative;
+          margin-bottom: 15px;
+       }
+
+       .center {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+       }
+       
+       tr, td, a, div { 
+          font-family: "ProximaNovaSoft-Regular", Calibri, 
+              "Gill Sans", "Gill Sans MT", Candara, Segoe, 
+              "Segoe UI", Arial, sans-serif; 
+          font-size: 100%; 
+      }
+      input { font-size: 95%; }
+    </style>
+    
+    <script>
+       var refreshPrimaryTab = function showTabId(result) {
+       		var tabId = result.id;
+        	sforce.console.refreshPrimaryTabById(tabId, true);
+       	};
+
+		function doPrimaryTabRefresh() {
+      if(!document.querySelector('[id$="msg"]').textContent) {
+        sforce.console.getEnclosingPrimaryTabId(refreshPrimaryTab);            
+      }
+    }
+
+    function openCaseDetailAsPrimary(id) {
+      var result = sforce.console.openPrimaryTab(null, '/' + id, true);
+      console.log(result);
+    }
+    </script>
+
+    <!-- <body ng-app="CaseMergeListHighlightPage" ng-controller="Controller"> -->
+    <body>
+    <apex:pageMessages id="pageMessage"></apex:pageMessages>
+    <div class="alert" style="text-align: center;">
+      <apex:outputText styleclass="alertMessage" rendered="true" value="{!msg}" id="msg"/>
+    </div>
+    <!-- {!testId} -->
+
+    <div class="bs3">
+        <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="CaseMergeList">
+            <br/>
+            
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <apex:outputPanel rendered="{!thisCase.ParentId != null}">
+                <div class="center">
+                  <apex:form >
+                    <apex:commandButton value="Demerge" action="{!demerge}"  styleClass="btn btn-primary" oncomplete="doPrimaryTabRefresh();"/>
+                  </apex:form>
+                </div>
+                </apex:outputPanel>
+
+                <div class="panel panel-default">
+                <span>Parent Case</span>
+                  <apex:outputPanel rendered="{!parentCase != null}">
+                    <div class="panel-headingCustom" role="tab">
+                      <table style="width: 100%; table-layout: fixed;">
+                        <tr style="height: 36px;">
+                          <td style="padding-left: 20px; width:50%;">
+                            <h4 class="panel-title">
+                              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{!parentCase.Id}" aria-expanded="true" aria-controls="{!parentCase.Id}">
+                                <font size="2" color="#FFCB05">{!parentCase.CreatedBy.Station__c & parentCase.CreatedBy.Department & parentCase.CaseNumber}</font>
+                              </a>
+                            </h4>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="{!parentCase.Id}" class="panel-collapse collapse" role="tabpanel">
+                      <div class="panel-body">
+                          <h5>
+                          <font size="2">
+                          <b>Flight:</b> {!parentCase.Flightid__r.Name}<br/>
+                          <b>Description:</b> {!parentCase.Description}<br/>
+                          <b>Status:</b> {!parentCase.Status}<br/>
+                          <a role="button" onclick="openCaseDetailAsPrimary('{!parentCase.Id}');" href="#{!parentCase.Id}">View Detail >> </a>
+                          </font>
+                          </h5>
+                      </div>
+                    </div>
+                  </apex:outputPanel>
+                </div>
+
+
+                <div class="panel panel-default">
+                <span>Related Cases</span>
+                  <apex:repeat value="{!relatedCases}" var="eachCase">
+                      <div class="panel-headingCustom" role="tab">
+                        <table style="width: 100%; table-layout: fixed;">
+                          <tr style="height: 36px;">
+                            <td style="padding-left: 20px; width:50%;">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{!eachCase.Id}" aria-expanded="true" aria-controls="{!eachCase.Id}">
+                                  <font size="2" color="#FFCB05">{!eachCase.CreatedBy.Station__c & eachCase.CreatedBy.Department & eachCase.CaseNumber}</font>
+                                </a>
+                              </h4>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div id="{!eachCase.Id}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <h5>
+                            <font size="2">
+                            <b>Flight:</b> {!eachCase.Flightid__r.Name}<br/>
+                            <b>Description:</b> {!eachCase.Description}<br/>
+                            <b>Status:</b> {!eachCase.Status}<br/>
+                            <a role="button" onclick="openCaseDetailAsPrimary('{!eachCase.Id}');" href="#{!eachCase.Id}">View Detail >> </a>
+                            </font>
+                            </h5>
+                        </div>
+                      </div>
+                    </apex:repeat>
+                </div>
+
+
+                <div class="panel panel-default">
+                <span>Possibly merge case</span>
+                  <apex:repeat value="{!possiblyMergeCases}" var="eachCase"  id="theRepeat">
+                      <div class="panel-headingCustom" role="tab">
+                        <table style="width: 100%; table-layout: fixed;">
+                            <tr style="height: 36px;"><td style="padding-left: 20px; width:50%;">
+                                <h4 class="panel-title">
+                                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{!eachCase.Id}" aria-expanded="true" aria-controls="{!eachCase.Id}">
+                                    <font size="2" color="#FFCB05">{!eachCase.CreatedBy.Station__c & eachCase.CreatedBy.Department & eachCase.CaseNumber}</font>
+                                  </a>
+                                </h4>
+                            </td>
+                            <td style="width:17%;">
+                                <apex:image value="{!URLFOR($Resource.Asterisk, '')}" rendered="{!IF((eachCase.Flightid__c == thisCase.Flightid__c && eachCase.Case_Type__c == thisCase.Case_Type__c),true,false)}" style="width: 14px; height: 14px;"/>
+                            </td><td style="text-align: right">
+                                <apex:form >
+                                   <apex:commandButton value="" action="{!assignParentCase}" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;box-shadow: 0 0 0 0;" oncomplete="doPrimaryTabRefresh();" image="{!URLFOR($Resource.Merge, '')}">
+                                      <apex:param name="parentId" value="{!eachCase.Id}" assignTo="{!parentId}"/>
+                                   </apex:commandButton>
+                                </apex:form>
+                            </td></tr>
+                        </table>
+                      </div>
+                      <div id="{!eachCase.Id}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <h5>
+                            <font size="2">
+                            <b>Flight:</b> {!eachCase.Flightid__r.Name}<br/>
+                            <b>Description:</b> {!eachCase.Description}<br/>
+                            <b>Status:</b> {!eachCase.Status}<br/>
+                            <a role="button" onclick="openCaseDetailAsPrimary('{!eachCase.Id}');" href="#{!eachCase.Id}">View Detail >> </a>
+                            </font>
+                            </h5>
+                        </div>
+                      </div>
+                  </apex:repeat>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div> 
+    </body>
+
+</apex:page>

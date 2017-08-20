@@ -1,0 +1,212 @@
+<apex:page showHeader="false" sidebar="false" controller="VoidCaseController" standardStylesheets="false" applyBodyTag="false" showQuickActionVfHeader="false">
+    <apex:includeScript value="/xdomain/xdomain.js" />
+    <apex:includeScript value="/soap/ajax/26.0/connection.js" />
+    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="{!$Resource.serviceConsoleUtils}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'css/bootstrap.min.css')}" />
+    <apex:includeScript value="{!$Resource.jquery}" />
+    <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'js/bootstrap.min.js')}" />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#seqno').text('{!seqNo}');
+            getForm();
+        });
+
+        function closepopup() {
+            if (sforce && sforce.one) {
+                // window.top.location.href = '/one/one.app#/sObject/' + '{!voidCase.Id}' + '/view';
+                sforce.one.navigateToURL('/one/one.app#/sObject/' + '{!caseId}' + '/view');
+            } else if ('{!topurl}'.indexOf('console') != -1 || '{!topurl}'.indexOf('servicedesk') != -1 || '{!topurl}' == '') {
+                window.top.location.href = '/console';
+            } else {
+                window.top.location.href = '{!returl}';
+            }
+        }
+
+        function savecase() {
+            console.log('into saveCase');
+            var fieldSets = JSON.parse('{!fieldSetString}');
+            var inputCase = {
+                Id: '{!caseId}'
+            };
+            var voidCase = '{!JSENCODE(voidCase.Description)}';
+            var isCompleted = true;
+
+            fieldSets.forEach(function(field) {
+                var isContainEmpty = $('#' + idFormatGenrtator(field.label)).hasClass('empty');
+                if(isContainEmpty){
+                    $('#' + idFormatGenrtator(field.label)).removeClass('empty');
+                }
+                var isContainError = $('#' + idFormatGenrtator(field.label) + 'error').hasClass('errorText');
+                if(isContainError){
+                    $('#' + idFormatGenrtator(field.label) + 'error').removeClass('errorText');
+                    $('#' + idFormatGenrtator(field.label) + 'error').addClass('hide');
+                }
+                var fvalue = $('#' + idFormatGenrtator(field.label)).val();
+                if (field.required && (fvalue == null || fvalue == '')) {
+                    $('#' + idFormatGenrtator(field.label)).addClass('empty');
+                    $('#' + idFormatGenrtator(field.label) + 'error').addClass('errorText');
+                    $('#' + idFormatGenrtator(field.label) + 'error').removeClass('hide');
+                    $('#' + idFormatGenrtator(field.label) + 'error').text(field.label + ' is required');
+
+                    isCompleted = false;
+                }
+                else{
+                    inputCase[field.fieldPath] = $('#' + idFormatGenrtator(field.label)).val();
+                }
+            });
+            if (isCompleted) {
+                VoidCaseController.saveCase(inputCase, voidCase, function(result, event) {
+                    if (event.status) {
+                        closepopup();
+                    } else {
+                        console.log(event);
+                    }
+                });
+            }
+        }
+
+        function idFormatGenrtator(label) {
+            label = label.replace(/\W/g, '');
+            label = label.toLowerCase();
+            return label;
+        }
+
+        function addRow(labelName, type, requiredflag) {
+            var form = '<div class="input-group">';
+            form += '<span class="input-group-addon" id="label">' + labelName + '</span>';
+            if (requiredflag) {
+                form += '<span class="input-group-addon" id="requiredlabel"></span>';
+            } else {
+                form += '<span class="input-group-addon" id="nonrequiredlabel"></span>';
+            }
+            if (type == 'string') {
+                form += '<input id="' + idFormatGenrtator(labelName) + '" type="text" name="blockname" class="form-control"/>';
+            } else if (type == 'textarea') {
+                form += '<textarea id="' + idFormatGenrtator(labelName) + '" name="Text1" cols="40" rows="5" class="form-control"></textarea>';
+            }
+            form += '</div>';
+            form += '<p class="hide" id="' + idFormatGenrtator(labelName) + 'error"></p>';
+            return form;
+        }
+
+        function addBtn() {
+            var btn = '<div>';
+            btn += '<button name="voidbtn" class="btn btn-default" onclick="savecase()">Void</button>';
+            btn += '<button type="button" name="cancelbtn" class="btn btn-default" onclick="closepopup()">Cancel</button>';
+            btn += '</div>';
+            return btn;
+        }
+
+        function getForm() {
+            // var fSet = [<apex:repeat var="f" value="{!$ObjectType.Case.FieldSets.Void_Case}">'{!f}',</apex:repeat>];
+            var fSet = JSON.parse('{!fieldSetString}');
+            console.log(fSet);
+            console.log(fSet.length);
+            for (var i = 0; i < fSet.length; i++) {
+                var field = addRow(fSet[i].label, fSet[i].type, fSet[i].required);
+                console.log(field);
+                $('#form').append(field);
+            }
+            $('#form').append(addBtn());
+        }
+    </script>
+    <style>
+    .hide{
+        width: 0;
+        height: 0;
+    }
+    .btn.btn-default {
+        margin: 10px 5px;
+        background-color: #F4F5F7;
+        position: relative;
+        left: 110px;
+        width: 75px;
+        height: 30px;
+        text-align: center;
+        font-weight: bold;
+        color: #0089D9;
+        /*position: fixed;
+            left: 50em;*/
+    }
+    
+    #showDetail {
+        font-weight: bold;
+        font-size: 12px;
+        margin-top: 20px;
+        margin-left: 75px;
+    }
+    
+    #seqno {
+        margin-left: 10px;
+    }
+    
+    div.input-group span.input-group-addon {
+        background: white;
+        border: 0px solid white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    #requiredlabel {
+        background: red;
+        width: 5px;
+        padding: 0;
+        border-top: 10px solid white;
+        border-bottom: 10px solid white;
+        margin: 0;
+    }
+    
+    #nonrequiredlabel {
+        background: white;
+        width: 5px;
+        padding: 0;
+        border-top: 10px solid white;
+        border-bottom: 10px solid white;
+        margin: 0;
+    }
+    
+    div.input-group input.form-control {
+        margin: 10px;
+        width: 200px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 0;
+    }
+    
+    div.input-group textarea.form-control {
+        margin: 10px;
+        width: 200px;
+        font-size: 12px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 0;
+    }
+    
+    #label {
+        width: 130px;
+        text-align: right;
+    }
+    
+    .empty {
+        border-color: red;
+        border: 2px solid red;
+    }
+
+    .errorText{
+        color: red;
+        height: 20px;
+        width: 450px;
+        font-size: 10px;
+        padding-left: 150px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    </style>
+    <div class="container-fluid" id="form">
+        <div id="showDetail">
+            <p>Seq No: <span id="seqno"></span></p>
+        </div>
+    </div>
+</apex:page>

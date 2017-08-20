@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Ground Customer Service</name>
+    <publicFolderAccess>ReadOnly</publicFolderAccess>
+    <sharedTo>
+        <group>Ground_Service_Team</group>
+        <role>Ground_Customer_Service_Abroad_Station</role>
+    </sharedTo>
+</EmailFolder>

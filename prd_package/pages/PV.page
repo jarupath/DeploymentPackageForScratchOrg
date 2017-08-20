@@ -1,0 +1,282 @@
+<apex:page applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf" standardController="Case" extensions="PVController" contentType="application/pdf#{!pdfName}">
+    <head>
+        <style type="text/css">
+        @page {
+            size: A4;
+            /* A4 width and height */
+            margin: 10px 10px;
+        }
+        
+        body {
+            font-family: Arial Unicode MS;
+            color: rgb(180, 6, 170);
+            font-size: 10px;
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+
+        table.withoutBorder, table.withoutBorder td, table.withoutBorder th {
+            border: none;
+        }
+        
+        td,
+        th {
+            border: 1px solid rgb(180, 6, 170);
+            text-align: left;
+        }
+        
+        .text-above {
+            margin-top: 0px;
+        }
+        
+        .text-below {
+            margin-bottom: 0px;
+            color: black;
+        }
+        
+        .col {
+            float: left;
+        }
+        
+        .clear {
+            display: table;
+            clear: both;
+        }
+        
+        .gray-box {
+            background-color: rgb(185, 185, 185);
+            color: black;
+            font-weight: bold;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 5px 10px 5px 10px;
+        }
+        
+        .padded {
+            padding: 10px 10px 10px 10px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
+        
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            border: 1px solid rgb(180, 6, 170);
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .with-checkbox {
+            width: 9%;
+            margin-left: 28px;
+            margin-top: 7px;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="clear" />
+        <div class="row">
+            <table style="width:100%;table-layout: inherit;">
+                <tr>
+                    <td colspan="3" style="width:30%;margin-top:10px;border:none;">
+                        <img src="{!URLFOR($Resource.THAI_LOGO_EN, '')}" style="width:100px;" />
+                    </td>
+                    <td colspan="3" style="width:30%;margin-top:10px;border:none;padding-left: 50px;">
+                        <h1 align="center"><b>Payment Voucher</b></h1>
+                    </td>
+                    <td colspan="2" rowspan="2" style="width:20%;border:none;">
+                        <div>
+                            <table class="withoutBorder" width="100%">
+                            <tr>
+                                <td width="20%"><apex:image url="{!URLFOR($Resource.checkbox, 'checkbox/check.jpg')}" rendered="{!view.isCheque}" width="12" height="15" style="vertical-align: middle;" />
+                                <apex:image url="{!URLFOR($Resource.checkbox, 'checkbox/uncheck.jpg')}" rendered="{!NOT(view.isCheque)}" width="12" height="15" style="vertical-align: bottom;" />
+                                </td>
+                                <td><h3>CHEQUE</h3></td>
+                            </tr>
+                            <tr>
+                                <td><apex:image url="{!URLFOR($Resource.checkbox, 'checkbox/check.jpg')}" rendered="{!view.isCash}" width="12" height="12"/>
+                                <apex:image url="{!URLFOR($Resource.checkbox, 'checkbox/uncheck.jpg')}" rendered="{!NOT(view.isCash)}" width="12" height="12"/>
+                                </td>
+                                <td><h3>CASH</h3></td>
+                            </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td colspan="2" rowspan="2" style="width:20%;padding-left: 10px;">
+                        <div class="rol">
+                            <div>
+                                <p><h4><!-- {!view.caseNumberSTD} --></h4></p>
+                                <p><h4>No. {!case.CreatedBy.Station__c & case.CreatedBy.Department & '/' & case.CaseNumber & '-' & case.Owner.Alias}</h4></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="border:none;">
+                        THAI Airways International Public Co., Ltd.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="8" style="width:80%;padding-left: 10px;border-bottom: 0;">
+                        <p class="text-above"><h3>Received <b>from THAI AIRWAYS INTERNATIONAL PUBLIC CO., LTD.</b></h3></p>
+                    </td>
+                    <td colspan="2" style="width:20%;">
+                        <p class="text-above" align="center">Amount</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="border-bottom: 0">
+                    </td>
+                    <td colspan="2" style="width:20%;">
+                        <p class="text-above" align="center">Curreny Code ( {!targetCurrency} )</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="border-top: 0">
+                        <p class="text-above" align="left" style="min-height: 100px; padding-top: 10px; padding-left: 10px;">
+                            <apex:outputText value="{!view.freeTextComment}" escape="false"/>
+                        </p>
+                    </td>
+                    <td colspan="1" style="width:15%;border-bottom: 0; border-top:0; vertical-align: top; padding-top: 10px;">
+                        <p class="text-above" align="right">
+                            <apex:outputText value="{0, number, ###,##0}">
+                                <apex:param value="{!view.amountInFigures}"/>
+                            </apex:outputText>
+                        </p>
+                    </td>
+                    <td colspan="1" style="border-bottom: 0; border-top: 0; vertical-align: top; padding-top: 10px;">
+                        <p class="text-above" align="right">
+                            {!view.amountInFiguresDec}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="width:80%;padding-left: 10px;">
+                        {!view.amountInWords}
+                    </td>
+                    <td colspan="1" style="width:15%;border-bottom: 0;">
+                        <p align="right">
+                            <apex:outputText value="{0, number, ###,##0}">
+                                <apex:param value="{!view.amountInFigures}"/>
+                            </apex:outputText></p>
+                    </td>
+                    <td colspan="1" style="border-bottom: 0;">
+                        <p align="right">
+                            {!view.amountInFiguresDec}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="width:100%;height:20px;" />
+                </tr>
+                <tr>
+                    <td style="width:10%;text-align:center;">
+                        Acct.
+                    </td>
+                    <td style="width:10%;text-align:center;">
+                        Center
+                    </td>
+                    <td style="width:10%;text-align:center;">
+                        Aircraft Type
+                    </td>
+                    <td style="width:10%;text-align:center;">
+                        Flight No.
+                    </td>
+                    <td style="width:15%;text-align:center;">
+                        User Analysis
+                    </td>
+                    <td style="width:15%;text-align:center;">
+                        Reconciliation Code
+                    </td>
+                    <td colspan="2" style="width:15%;text-align:center;">
+                        Dr
+                    </td>
+                    <td colspan="2" style="width:15%;text-align:center;">
+                        Cr
+                    </td>
+                </tr>
+                <!-- compesation list -->
+                <!-- <apex:repeat value="{!view.compensations}" var="compensation" id="theRepeat"> -->
+                <tr>
+                    <td style="width:10%; text-align: center;">
+                        {!selectedAccountNumberPartial}
+                    </td>
+                    <td style="width:10%; text-align: center;">
+                        {!selectedAccountCenterPartial}
+                    </td>
+                    <td style="width:10%; text-align: center;">
+                        {!view.caseObj.A_C_Type__c}                        
+                    </td>
+                    <td style="width:10%; text-align: center;">
+                        {!view.caseObj.Flight_Number_txt__c}
+                    </td>
+                    <td style="width:15%; text-align: center;">
+                        
+                    </td>
+                    <td style="width:15%; text-align: center;">
+                        
+                    </td>
+                    <td style="width:10%;text-align:right; ">
+                        
+                    </td>
+                    <td style="width:5%;text-align:right; ">
+                        
+                    </td>
+                    <td style="width:10%;text-align:right; ">
+                        
+                    </td>
+                    <td style="width:5%;text-align:right; ">
+                        
+                    </td>
+                </tr>
+                <!-- </apex:repeat> -->
+                <tr>
+                    <td colspan="5" style="width:50%;border-bottom: 0;border-right: 0;padding-left: 10px;">
+                        Approved by
+                    </td>
+                    <td colspan="5" style="width:50%;border-bottom: 0;padding-left: 10px;">
+                        Received by
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="width:25%;border-bottom: 0;border-right: 0;border-top: 0;" />
+                    <td colspan="2" style="width:25%;border-bottom: 0;border-left: 0;border-top: 0;">
+                        <p>Position : {!view.position}</p>
+                        <p>Date ..................................................</p>
+                    </td>
+                    <td colspan="3" rowspan="4" style="width:25%;border-right: 0;border-top: 0;padding-left: 10px;">
+                        <p>.......................................................</p>
+                        <p>.......................................................</p>
+                        <p>(NAME IN BLOCK LETTER)</p>
+                    </td>
+                    <td colspan="2" rowspan="4" style="width:25%;border-left: 0;border-top: 0;">
+                        <p>Date ....................................</p>
+                        <p>Func. code ...........................</p>
+                        <p>ID No. ..................................</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="width:50%;border-bottom: 0;border-right: 0;padding-left: 10px;">
+                        Auth Sig. Finance &amp; Accounting Dept.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-right: 0;border-top: 0;" />
+                    <td colspan="2" style="height:25px;border-left: 0;border-top: 0;">
+                        <p>Date ..................................................</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="clear" />
+    </body>
+</apex:page>

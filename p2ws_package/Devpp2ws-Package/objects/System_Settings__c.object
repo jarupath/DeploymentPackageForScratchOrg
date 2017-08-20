@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Object to hold what types of messages to log and how long to keep them for</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Debug__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True – log debug messages in this org</description>
+        <externalId>false</externalId>
+        <label>Debug</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Error__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True – log errors in this org</description>
+        <externalId>false</externalId>
+        <label>Error</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True – log info messages in this org</description>
+        <externalId>false</externalId>
+        <label>Info</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Log_Purge_Days__c</fullName>
+        <description>The number of days of logs to keep</description>
+        <externalId>false</externalId>
+        <label>Log Purge (Days)</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Warning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True – log warning messages in this org</description>
+        <externalId>false</externalId>
+        <label>Warning</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>System_Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

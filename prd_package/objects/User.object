@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>A_C_REG__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C REG</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>A_C_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Authorized_Department_EN__c</fullName>
+        <externalId>false</externalId>
+        <label>Authorized Department EN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorized_Department_TH__c</fullName>
+        <externalId>false</externalId>
+        <label>Authorized Department TH</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorized_Position_EN__c</fullName>
+        <externalId>false</externalId>
+        <label>Authorized Position EN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Authorized_Position_TH__c</fullName>
+        <externalId>false</externalId>
+        <label>Authorized Position TH</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Federation_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>for Crew Mapping Upload</description>
+        <externalId>true</externalId>
+        <inlineHelpText>for Crew Mapping Upload</inlineHelpText>
+        <label>Federation ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Schedule_Next_Hour__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Schedule Next Hour</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Schedule_Previous_Hour__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Schedule Previous Hour</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Name_TH__c</fullName>
+        <externalId>false</externalId>
+        <label>Name TH</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Port__c</fullName>
+        <externalId>false</externalId>
+        <label>Port</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Refresh_Interval__c</fullName>
+        <externalId>false</externalId>
+        <label>Refresh Interval</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Station__c</fullName>
+        <defaultValue>&quot;BKK&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Station</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

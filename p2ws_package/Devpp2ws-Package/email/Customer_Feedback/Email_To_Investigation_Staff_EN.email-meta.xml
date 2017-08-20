@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>Email To Investigation Staff EN</name>
+    <style>formalLetter</style>
+    <subject>{!User.Station__c}{!User.Department}/{!Case.CaseNumber}-{!User.Alias}</subject>
+    <textOnly>Passenger Name : {!Passenger__c.Name}
+e-mail address : {!Case.Contact_Email_txt__c}
+&lt;HTML&gt;
+Case Reference : {!User.Department}/{!Case.Case_Number_Custom__c}-{!User.Alias} &lt;P&gt;Date : 16 November 2016
+&lt;/HTML&gt;</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

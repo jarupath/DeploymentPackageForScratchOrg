@@ -1,0 +1,100 @@
+<apex:page contentType="{!if(isDownload,'application/msword#sfdc_document.doc','text/HTML')}" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="{!if(!isDownload,'pdf','')}" standardController="Case" extensions="UpgradeConfirmationController">
+
+    <head>
+        <style type="text/css">
+        @page {
+            size: 7in 9.25in;
+            margin: 20mm 16mm 20mm 16mm;
+        }
+        
+        body {
+            font-family: Arial Unicode MS;
+            font-size: 12px;
+        }
+
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            border: 1px solid black;
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            padding: 0;
+        }
+
+        </style>
+    </head>
+
+    <body>
+         <table style="width:100%;table-layout: fixed;">
+            <tr>
+                <td style="width:50%; height: 110px;">
+                    <!--<img src="{!URLFOR($Resource.THAI_LOGO_TH, '')}" />-->
+                </td>
+                <td style="width:10%;" />
+                <td style=""></td>
+            </tr>
+            <tr>
+                <td>
+                    <!--<span>บริษัท การบินไทย จำกัด (มหาชน)</span>
+                    <br/>
+                    <span style="font-size: 10px;">89 ถนนวิภาวดี-รังสิต แขวงจอมพล เขตจตุจักร กทม 10900</span>-->
+                </td>
+                <td />
+                <td />
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputPanel rendered="{!view.needTGDoc}">
+                        <span>ที่กบ {!view.tgLetter}</span><br />
+                    </apex:outputPanel>
+                </td>
+                <td></td>
+                <td />
+            </tr>
+            <tr>
+                <td />
+                <td></td>
+                <td style="text-align: left;">
+                    {!case.Date_Full_Name_Thai__c}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">    
+                    <span>เรื่อง {!view.subject}</span><br />
+                    <span>เรียน {!view.passengerName}</span><br />
+                   <!--  <span>อ้างถึง {!case.CreatedBy.Station__c & case.CreatedBy.Department & '/' & case.CaseNumber & '-' & case.Owner.Alias}</span><br /> -->
+                    <span>อ้างถึง {!view.referenceTo}</span><br />
+                    <span>สิ่งที่ส่งมาด้วย {!view.attachName} </span><br />
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <apex:outputText value="{!view.letterBody}" style="white-space:pre-wrap;" escape="false" />
+                </td>
+            </tr>
+            <tr>
+                <td />
+                <td></td>
+                <td>
+                    <br/><br/>
+                   <p>ขอแสดงความนับถือ</p>
+                    <br/><br/>
+                    {!view.authorizedBy}<br />
+                    {!view.authorizedPosition}<br />
+                    {!view.authorizedDepartment}<br />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br /><br /><br />
+                    {!view.authorizedDepartment}<br />
+                    โทร. {!view.authorizedPhone}<br />
+                    อีเมล์ {!view.comment1}<br />
+                </td>
+                <td />
+                <td></td>
+            </tr>
+        </table>
+    </body>
+</apex:page>

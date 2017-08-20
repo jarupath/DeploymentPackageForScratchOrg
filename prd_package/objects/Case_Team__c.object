@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ActiveStatus__c</fullName>
+        <description>Displays the icon active or inactive for the Case Teams</description>
+        <externalId>false</externalId>
+        <formula>IMAGE(&quot;/resource/icon_case/&quot;&amp;IF(Active__c == true,&quot;Status_Acknowledge.png&quot;,&quot;Status_Inactive.png&quot;),&quot;&quot;,24,24)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Displays the Status active or inactive for the Case Teams</description>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Queue_ID__c</fullName>
+        <description>This field use mapping with case owner for point to Case Team</description>
+        <externalId>false</externalId>
+        <label>Queue ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>URLsrc__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS($Api.Enterprise_Server_URL_290,&quot;.force.com&quot;), 
+MID( $Api.Enterprise_Server_URL_290, FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0)), 
+FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0))+1) - FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0)) 
+) , &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>URLsrc</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Case Team</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Assignment Group Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Case Teams</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Active</fullName>
+        <active>true</active>
+        <label>Active</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Inactive</fullName>
+        <active>true</active>
+        <label>Inactive</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Active_Group</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Active Group</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)} 
+
+var rrg = new sforce.SObject(&quot;Case_Team__c&quot;); 
+rrg.id = &quot;{!Case_Team__c.Id}&quot;; 
+rrg.active__c = &quot;1&quot;; 
+rrg.recordtypeid = &quot;{!$Setup.System_Configuration__c.Active_Case_Team_ID__c}&quot;; 
+result = sforce.connection.update([rrg]); 
+location.reload(true);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Inactive_Group</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Inactive Group</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)} 
+
+var rrg = new sforce.SObject(&quot;Case_Team__c&quot;); 
+rrg.id = &quot;{!Case_Team__c.Id}&quot;; 
+rrg.active__c = &quot;0&quot;; 
+rrg.recordtypeid = &quot;{!$Setup.System_Configuration__c.Inactive_Case_Team_ID__c}&quot;;
+result = sforce.connection.update([rrg]); 
+location.reload(true);</url>
+    </webLinks>
+</CustomObject>

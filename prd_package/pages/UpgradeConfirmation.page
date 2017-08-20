@@ -1,0 +1,302 @@
+<apex:page contentType="{!if(isDownload,'application/msword#'+docName,'text/HTML')}" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="{!if(!isDownload,'pdf','')}" standardController="Case" extensions="UpgradeConfirmationController">
+
+    <head>
+        <style type="text/css" media="print">
+            div.header {
+                padding-top: 50px;
+                position: running(header);
+            }
+
+            @page {
+                @top-center {
+                    content: element(header);
+                }
+            
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+        </style>    
+        
+        <style type="text/css">
+        @page {
+           size: A4;
+           margin: 20mm 16mm 20mm 16mm;
+        }
+        
+        body {
+            font-family: Times New Roman Georgia;
+            font-size: 16px;
+            padding-top: 35px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            border: none;
+        }
+        
+        td,
+        th {
+            text-align: left;
+        }
+        
+        .text-above {
+            margin-top: 0px;
+        }
+        
+        .text-below {
+            margin-bottom: 0px;
+            color: black;
+        }
+        
+        .col {
+            float: left;
+        }
+        
+        .clear {
+            display: table;
+            clear: both;
+        }
+        
+        .gray-box {
+            background-color: rgb(185, 185, 185);
+            color: black;
+            font-weight: bold;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 5px 10px 5px 10px;
+        }
+        
+        .padded {
+            padding: 10px 10px 10px 10px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
+        
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            border: 1px solid rgb(180, 6, 170);
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .with-checkbox {
+            width: 9%;
+            margin-left: 28px;
+            margin-top: 7px;
+        }
+
+        ul {
+            list-style-type: square;
+            padding:0;
+            margin:0;
+        }
+
+        li { 
+            padding-left: 1em; 
+            text-indent: -.7em;
+        }
+
+        .header_download {
+            padding-right: 15px;
+            position: running(header);
+        }
+
+        .list-row {
+    background:#f4f4f4;
+    display:inline-block;
+    border:2px solid red;}
+
+.list-left {
+    width:auto;
+    padding:10px;
+    float:left;
+    border: 2px solid blue;}
+
+.list-right {
+    padding:10px;
+    float:right;
+    border:2px solid green;}
+
+        </style>
+    </head>
+    <apex:outputPanel layout="block" styleClass="header" rendered="{!!isDownload}">
+        <div align="right">{!view.runningNumber}</div>
+    </apex:outputPanel>
+    <body>
+        <apex:outputPanel layout="block" styleClass="header_download" rendered="{!isDownload}">
+            <div align="right">{!view.runningNumber}</div><br/> 
+        </apex:outputPanel>
+        <div class="clear" />
+        <div class="row">
+            <table style="width:100%;table-layout: inherit;">
+                <tr>
+                    <td>
+                        <div align="center"><span style="font-weight: bold;">CONFIRMED UPGRADE CERTIFICATE</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                        <div align="left">
+                            <p style="text-indent: 50px; overflow:auto;">
+                                This  certificate  entitles  you  to <span style="text-decoration: underline;">a {!view.travelType} confirmed  upgrade</span> to  one  class  higher  from that stated  on  your ticket,  except STA/SATA,  bartered,  redeemed,  award  or  no  fare  tickets, on  Thai Airways  International  operated  flight only.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 50px;padding-right: 20px;">
+                        <div align="left">
+                            <ul>
+                                <li>
+                                    This certificate is exclusively used for the passenger whose name appears on the certificate.<br />
+                                </li>
+                                <li>
+                                    Upgrade travel must be completed before the expiry date.<br />
+                                </li>
+                                <li>
+                                    Mileages will be accrued according to the class of service as indicated in the original ticket.<br />
+                                </li>
+                                <li>
+                                    Any other certificates or award tickets may not be applied with this certificate in order  to obtain a double upgrade.<br />
+                                </li>
+                                <li>
+                                    Any additional applicable taxes and fee surcharges relevant to the upgrade are under passenger's own responsibility.<br />
+                                </li>
+                                <li>
+                                    This certificate cannot be reissued to replace the original one in case of loss, damage or missing.<br />
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                        <div align="left">
+                            <p style="text-indent: 50px;">
+                                Please  present  this  certificate  to  THAI  staff  at  any  THAI <span style="font-weight: bold;">town  ticketing  offices</span> for reservation  in  advance,  no  later  than  7  working  days  prior  to  the  date  of  travel,  subject  to  seat availability  at the time of making  reservation.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                        <table>
+                            <tr>
+                                <td>Customer's Name:</td>
+                                <td><span style="font-weight: bold;">{!view.passengerName}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Reference No.:</td>
+                                <td><span style="font-weight: bold;">ID/{!view.ownerStation & view.ownerDepartment & '/' & case.CaseNumber & '-' & case.Owner.Alias}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Date of Issue:</td>
+                                <td>
+                                    <span style="font-weight: bold;">
+                                        <apex:outputText value="{0, date, dd/MM/yyyy}">
+                                            <apex:param value="{!view.dateIssue}"/>
+                                        </apex:outputText>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date of Expiry:</td>
+                                <td>
+                                    <span style="font-weight: bold;">
+                                        <apex:outputText value="{0, date, dd/MM/yyyy}">
+                                            <apex:param value="{!view.dateExpire}"/>
+                                        </apex:outputText>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100%;height:20px;" />
+                </tr>
+                <tr style="border-bottom: 1 important;">
+                    <td style="padding-left: 300px;padding-right: 20px;">
+                        <div align="center">
+                            ............................................. <br />
+                            {!view.authorizedBy}<br />
+                            {!view.authorizedPosition}<br />
+                            {!view.authorizedDepartment}<br />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="clear" />
+        <div class="row" style="position: fixed; bottom: 25px;">
+            <table>
+                 <tr>
+                    <td style="width:100%;height:20px; border-left: 0!important;border-top: 0!important;border-right: 0!important; overflow: hidden; text-align: center; font-weight: bold;">
+                    ....................................................................................................................................................................................
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100%;height:10px;" />
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                        <p><span style="font-weight: bold;">For THAI use only</span> (Please return this part to {!view.ownerStation}{!view.ownerDepartment} ref : {!view.ownerStation & view.ownerDepartment & '/' & case.CaseNumber & '-' & case.Owner.Alias})</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                        <table style="vertical-align: bottom;">
+                            <tr>
+                                <td>Ticket No.</td>
+                                <td>________________</td>
+                            </tr>
+                            <tr>
+                                <td>Flight/Date</td>
+                                <td>________________</td>
+                            </tr>
+                            <tr>
+                                <td>Sector:</td>
+                                <td>________________</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td style="width:100%;height:10px;" />
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;padding-right: 20px;">
+                    <div>
+                        To :
+                        <span style="font-weight: bold;">{!view.passengerName}</span><br />
+                        <apex:outputPanel rendered="{!IF(view.passengerEmail != '',true,false)}">
+                            {!view.passengerEmail}<br/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(view.passengerAddress != '',true,false)}">
+                          {!view.passengerAddress}<br />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(view.passengerAddress == '',true,false)}">
+                            <apex:outputPanel rendered="{!IF(view.passengerStreet1 != '',true,false)}">
+                                {!view.passengerStreet1}<br />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(view.passengerStreet2 != '',true,false)}">
+                                {!view.passengerStreet2}<br />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(view.passengerCity != '',true,false)}">{!view.passengerCity}&nbsp;</apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(view.passengerCountry != '',true,false)}">{!view.passengerCountry}&nbsp;</apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(view.passengerPostalCode != '',true,false)}">{!view.passengerPostalCode}</apex:outputPanel><br />
+                        </apex:outputPanel>
+                    </div>
+                    </td>
+                </tr> -->
+            </table>
+        </div>
+    </body>
+</apex:page>

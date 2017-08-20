@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ROP application is sent to ROP department via email.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>Apply for ROP</name>
+    <style>freeForm</style>
+    <subject>New Royal Orchid Plus Enrollment</subject>
+    <textOnly>ROP Application Information
+
+
+Personal Information
+------------------------------------------------------------------------------------------
+Salutation: Mr.
+First Name: Takeshi
+Family Name: Kashihara
+Date of Birth: 04 June 1984
+
+Travel Document
+-------------------------------------------------------------------------------------------
+Passport No.: AA09283
+Identication No.
+
+Contact Details
+-------------------------------------------------------------------------------------------
+Address: 603/2 Wang Thong Lang
+Country: Thailand
+State:
+City/Province: Bangkok
+Postal Code: 11011
+
+Email Information
+-------------------------------------------------------------------------------------------
+Email Address: takeshi.k@beryl8.com</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

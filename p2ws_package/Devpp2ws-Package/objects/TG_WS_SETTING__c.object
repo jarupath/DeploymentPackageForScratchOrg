@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>TG web service setting.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>TG_WS_VALUE__c</fullName>
+        <description>Web service value</description>
+        <externalId>false</externalId>
+        <label>TG_WS_VALUE</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>TG web service setting</label>
+    <visibility>Protected</visibility>
+</CustomObject>

@@ -1,0 +1,48 @@
+<apex:page showHeader="true" sidebar="true" controller="Manual_Callout_Controller">
+<apex:form id="form">
+	<apex:pageBlock title="Manual Callout">
+	<apex:pagemessages />
+		<apex:pageBlockButtons >
+			<apex:commandButton value="Run" action="{!run}" />
+		</apex:pageBlockButtons>
+
+		<apex:pageBlockSection columns="1">
+			<apex:pageBlockSectionItem >
+				Callout options
+				<apex:selectList value="{!selectedCallout}" multiselect="false" size="1" label="Callout options">
+					<apex:actionSupport event="onchange" action="{!selectCallout}" reRender="form" />
+					<apex:selectOptions value="{!calloutOptions}" />
+				</apex:selectList>
+			</apex:pageBlockSectionItem>
+
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel value="Default Request" />
+				<apex:inputCheckbox value="{!defaultRequest}" />
+			</apex:pageBlockSectionItem>
+			
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel value="Request URL" />
+				<apex:inputText value="{!requestUrl}" size="100" label="Request URL" />
+			</apex:pageBlockSectionItem>
+
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel value="Method" />
+				<apex:selectList value="{!selectedMethod}" multiselect="false" size="1">
+					<apex:selectOptions value="{!methodOptions}" />
+				</apex:selectList>
+			</apex:pageBlockSectionItem>
+
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel value="Request" />
+				<apex:inputTextarea value="{!request}" label="Request" rows="10" cols="100" />
+			</apex:pageBlockSectionItem>
+
+			<apex:pageBlockSectionItem > 
+				<apex:outputLabel value="Response" />
+				<apex:outputText value="{!response}" label="Response" />
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,21 @@
+<messaging:emailTemplate subject="Compensation Approval Result" recipientType="User" relatedToType="Case">
+    <messaging:htmlEmailBody >
+        
+        <br/>
+        {!relatedTo.Owner.firstname} {!relatedTo.Owner.lastname} has been requested your approved for the following item: <a href="https://cs6.salesforce.com/{!relatedTo.id}" >{!relatedTo.Casenumber}</a>
+        <br/><br/>
+        
+        Passenger Class : {!relatedTo.Accepted_Class__c} <br/>
+        Passenger ROP : {!relatedTo.ROP_Tier__c} <br/>
+        
+        <br/><br/>
+        <c:CompensationResultlist />
+        <br/>
+        <br/>
+        Please click this link to approve or reject this record.
+        <br/><br/>
+        Thank you,<br/>
+        {!relatedTo.Owner.firstname} {!relatedTo.Owner.lastname} 
+        <br/><br/>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

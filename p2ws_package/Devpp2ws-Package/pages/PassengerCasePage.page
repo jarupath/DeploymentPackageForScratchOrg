@@ -1,0 +1,61 @@
+<apex:page standardController="Flight__c" extensions="PassengerCaseController" sidebar="false" standardStylesheets="true">
+<apex:includeScript value="/support/console/29.0/integration.js" />
+<apex:includeScript value="/xdomain/xdomain.js" />
+<apex:includeScript value="/soap/ajax/26.0/connection.js" />
+<apex:includeScript value="/support/console/30.0/integration.js" />
+<apex:includeScript value="{!$Resource.serviceConsoleUtils}" />
+    <style>
+        .bPageBlock {
+            border-top: 0 !important;
+        }
+    </style>
+
+    <script> 
+    function navSObject(recordId) 
+    { 
+        sforce.one.navigateToSObject(recordId,"detail"); 
+    };
+    </script>
+    <apex:form >
+        <apex:pageBlock id="resultId">
+            <apex:pageBlockSection columns="1">
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <div style="text-align:right">
+                    Total Records Found: {!Con.resultSize}&nbsp;
+                    <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}" />
+                    <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}" />
+                    <apex:commandLink action="{!Previous}" title="Previous" value="Previous" rendered="{!Con.HasPrevious}" />
+                    <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous</apex:outputPanel>
+                    &nbsp;
+                    <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next</apex:outputPanel>
+                    <apex:commandLink title="Next" value="Next" rendered="{!Con.HasNext}" action="{!Next}" />&nbsp;
+                    <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}" />
+                    <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}" />
+                    <img src="/s.gif" title="Last Page" alt="Last Page" class="last" />
+                </div>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable value="{!caseList}" var="each" rendered="{!caseList.size > 0}">
+                    <apex:column rendered="{!theme!='theme4t'}" value="{!each.Case_Number_Link_For_Console__c}" />
+                    <apex:column rendered="{!theme=='theme4t'}">
+                        <apex:facet name="header">Case Number</apex:facet>
+                        <apex:outputLink onclick="navSObject('{!each.Id}')">
+                                {!each.Case_Number_Custom_F__c}
+                        </apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Passenger Name</apex:facet>
+                        {!each.PassengerId__r.Name}
+                    </apex:column>
+                    <apex:column value="{!each.Subject}" />
+                    <apex:column value="{!each.Origin}" />
+                    <apex:column value="{!each.Priority}" />
+                    <apex:column value="{!each.Status}" />
+                    <apex:column value="{!each.Case_Type__c}" />
+                    <apex:column value="{!each.CreatedDate}" />
+                </apex:PageblockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,3 @@
+public interface MobileIncidentStatusHandler {
+	MB_RestResponseInfoModel.incident_model assignIncidentStatusFromSFDCToMobile(String status, MB_RestResponseInfoModel.incident_model incident);
+}

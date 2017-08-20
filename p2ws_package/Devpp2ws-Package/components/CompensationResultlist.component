@@ -1,0 +1,65 @@
+<apex:component controller="Approval_Result_Templete_Controller" access="global">
+
+	<style>
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+		
+		th, td {
+		    padding: 8px;
+		    text-align: left;
+		    border-bottom: 1px solid #ddd;
+		}
+		
+		tr:hover{background-color:#f5f5f5}
+	</style>
+
+    <br/>
+		<table>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Type
+				</th>
+				<th>
+					Total
+				</th>
+				<th>
+					Unit
+				</th>
+				<th>
+					Total THB
+				</th>
+				<th>
+					Status {!parametersid}
+				</th>
+			</tr>
+			<apex:repeat value="{!Compensations}" var="comp">
+				<tr>
+					<td>
+						{!comp.Compensation_Tools__c}
+					</td>
+					<td>
+						{!comp.Compensation_Type__c}
+					</td>
+					<td>
+						{!IF(comp.Total__c > 0, comp.Total__c, comp.Amount__c)}
+					</td>
+					<td>
+						{!IF(comp.Unit__c == "Cash", comp.Currency__c , comp.Unit__c)}
+					</td>
+					<td>
+						{!comp.Total_THB__c}
+					</td>
+					<td>
+						{!comp.Status__c}
+					</td>
+				</tr>
+			</apex:repeat>
+			
+			Comments : {!processistep.Comments}
+		</table>
+</apex:component>

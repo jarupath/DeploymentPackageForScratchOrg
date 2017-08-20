@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Devpp2ws-Package</fullName>
+    <types>
+        <members>CFMS AO</members>
+        <members>CFMS Chief</members>
+        <members>CFMS Director</members>
+        <members>CFMS Manager</members>
+        <members>CFMS SD%2FSR</members>
+        <members>CFMS Tier 1</members>
+        <members>CFMS Tier 2</members>
+        <members>CFMS VP</members>
+        <members>Custom System Administrator</members>
+        <members>DT Admin</members>
+        <members>DT Staff</members>
+        <members>Ground Customer Service</members>
+        <members>Ground Customer Service Not BKK</members>
+        <members>SSO</members>
+        <members>SZR Admin</members>
+        <members>SZR Chief</members>
+        <members>SZR Director</members>
+        <members>SZR Manager</members>
+        <members>SZR Staff</members>
+        <members>System Integration</members>
+        <members>TG System Administrator</members>
+        <name>Profile</name>
+    </types>
+    <version>40.0</version>
+</Package>

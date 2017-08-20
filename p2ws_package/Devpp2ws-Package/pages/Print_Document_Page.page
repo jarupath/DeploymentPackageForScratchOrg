@@ -1,0 +1,601 @@
+<apex:page extensions="Print_Document_Controller" sidebar="false" showheader="false" standardController="Case" id="printPage">
+    <apex:includeScript value="{!$Resource.jquery}" />
+    <apex:includeScript value="/soap/ajax/30.0/connection.js" />
+    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="{!URLFOR($Resource.sfdc_bs3, 'dist/js/bootstrap.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.sfdc_bs3, 'dist/css/bootstrap-bs3.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.css')}" />
+    <style>
+    @page {
+        size: 8.27in 11.75in;
+        /* A4 width and height */
+        margin: 30px 60px;
+        @bottom-center {
+            font-family: Arial Unicode MS;
+            content: "Page " counter(page) " of " counter(pages);
+        }
+    }
+    
+    body {
+        font-family: Arial Unicode MS;
+    }
+
+    .compensationTable {
+        /*border: 1px !important;*/
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .compensationTable th {
+        text-align: center;
+        padding-left: 8px;
+        padding-right: 8px;
+        background-color: #d9edf7;
+        border: 1px solid #bce8f1;
+        color: #31708f;
+    }
+
+    .compensationTable td {
+        padding-left: 8px;
+        padding-right: 8px;
+        border: 1px solid #bce8f1;
+    }
+
+    </style>
+    <script type="text/javascript">
+    function enableDisableVersion(cb) {
+        var setTo = j(cb).prop('checked');
+        console.log('setTo' + setTo);
+        // $("input:checkbox[id*=isNewVersion]").prop('checked', false);
+        // $("input:checkbox[id*=isReplaceOldVersion]").prop('checked', false);
+        j(cb).prop('checked', setTo);
+
+        console.log('j(cb).attr("id")' + j(cb).attr("id"));
+        console.log('j(cb).attr("id") includes' + j(cb).attr("id").includes("isReplaceOldVersion"));
+        if (j(cb).attr("id").includes("isReplaceOldVersion")) {
+            j("select[id*=oldVersionSelection]").prop('disabled', !setTo);
+
+            j("input[id*=isReplaceOldVersion]").prop('checked', setTo);
+            j("input[id*=isNewVersion]").prop('checked', !setTo);
+        } else {
+            j("select[id*=oldVersionSelection]").prop('disabled', setTo);
+            j("input[id*=isNewVersion]").prop('checked', setTo);
+            j("input[id*=isReplaceOldVersion]").prop('checked', !setTo);
+        }
+    }
+
+    function enableDisablePaymentType(cb) {
+        var setTo = j(cb).prop('checked');
+        j("input:checkbox[id*=isChequeCheckbox]").prop('checked', false);
+        j("input:checkbox[id*=isCashCheckbox]").prop('checked', false);
+        j(cb).prop('checked', setTo);
+
+        // console.log(j(cb));
+        // console.log(j(cb).attr('id'));
+    }
+
+    function testSetTabTitle() {
+        //Set the current tab's title
+        sforce.console.setTabTitle("Print {!case.Case_Number_Custom_F__c}");
+    }
+    var pageLoad = window.onload;
+    window.onload = function() {
+        if (pageLoad) {
+            pageLoad();
+        }
+        testSetTabTitle();
+    }
+
+    // var latestAttachmentSubTabId = undefined;
+
+    function openAttahment(attachmentURL) {
+        console.log('attachmentURL :' + attachmentURL);
+        var openSuccess = function openSuccess(result) {
+            hideLoading();
+        }
+
+        var openSubtab = function(result) {
+            sforce.console.openSubtab(result.id, attachmentURL, true, 'Attachment: {!thisCase.Case_Number_Custom_F__c}', null, openSuccess, null);
+        };
+        sforce.console.getEnclosingPrimaryTabId(openSubtab);
+    }
+    </script>
+    <apex:outputPanel id="openAttachmentPanel">
+        <script>
+        if ({!needToOpenAttachment}) {
+            showLoading();
+            openAttahment("{!previewURLForPrint}");
+        } else if ({!needToDownloadAttachment}) {
+            showLoading();
+            window.location.assign("{!previewURLForDownload}");
+        } else {
+            console.log("scroll to top");
+            window.scrollTo(0, 0);
+        }
+        </script>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="moveToTop">
+        <script>
+            console.log("HasErrorMessage " +  {!HasErrorMessage});
+            if({!HasErrorMessage}) {
+                window.scrollTo(0, 0);
+            }
+        </script>
+    </apex:outputPanel>
+    <apex:form id="editForm">
+        <apex:pageMessages id="pageMessage"></apex:pageMessages>
+        <br/>
+        <div class="bs3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div id="panelheading" class="panel-heading">
+                                Select Document Template
+                            </div>
+                            <div id="panelbody" class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="documentSelect" class="control-label">Document:</label>
+                                            <apex:selectList value="{!FilterTemplate}" multiselect="false" size="1" id="documentSelect" styleClass="form-control">
+                                                <apex:actionSupport event="onchange" action="{!changeDocument}" rerender="editForm" onsubmit="showLoading();" oncomplete="hideLoading();" />
+                                                <apex:selectOptions value="{!Templatelist}" />
+                                            </apex:selectList>
+                                        </div>
+                                        <apex:outputPanel rendered="{!FilterTemplate == 'PV'}">
+                                        </apex:outputPanel>
+                                    </div>
+                                    <apex:outputPanel rendered="{! 
+                                        FilterTemplate=='LetterEN' || 
+                                        FilterTemplate=='LetterTH1'||
+                                        FilterTemplate=='LetterTH2'}">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="documentSelect" class="control-label">Template:</label>
+                                                <apex:selectList id="letterBody" value="{!letterBodyId}" multiselect="false" size="1" styleClass="form-control">
+                                                    <apex:actionSupport event="onchange" action="{!changeTemplate}" rerender="editForm" onsubmit="showLoading();" oncomplete="hideLoading();" />
+                                                    <apex:selectOptions value="{!letterBodyList}" />
+                                                </apex:selectList>
+                                            </div>
+                                            <!-- <apex:commandButton styleClass="btn btn-primary" value="Preview" action="{!preview}" reRender="preview" /> -->
+                                        </div>
+                                    </apex:outputPanel>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- <apex:outputPanel rendered="{!FilterTemplate != 'PV'}"> -->
+                                        <apex:outputPanel >
+                                            <label>Passenger</label>
+                                            <apex:selectList value="{!selectedCaseGroupMemberId}" multiselect="false" size="1" styleClass="form-control">
+                                                <apex:actionSupport event="onchange" action="{!changePassenger}" reRender="editForm" onsubmit="showLoading();" oncomplete="hideLoading();" />
+                                                <apex:selectOptions value="{!CaseGroupMemberSelectOptions}" />
+                                            </apex:selectList>
+                                        </apex:outputPanel>
+                                        <!-- <apex:outputPanel rendered="{!FilterTemplate == 'PV'}">
+                                            <label>Account Center</label>
+                                            <apex:selectList value="{!selectedAccountCenter}" multiselect="false" size="1" styleClass="form-control">
+                                                <apex:selectOptions value="{!AccountCenterSelectOptions}" />
+                                            </apex:selectList>
+                                            <label>Account Number</label>
+                                            <apex:selectList value="{!selectedAccountNumber}" multiselect="false" size="1" styleClass="form-control">
+                                                <apex:selectOptions value="{!AccountNumberSelectOptions}" />
+                                            </apex:selectList>
+                                        </apex:outputPanel> -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Version</label>
+                                        <table width="100%">
+                                            <tr>
+                                                <td>
+                                                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                                                        <label>
+                                                            <apex:inputCheckbox style="text-align: right; margin-top: 0px;" id="isNewVersion" value="{!isNewVersion}" onclick="enableDisableVersion(this)" />New Version</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                                                        <label>
+                                                            <apex:inputCheckbox style="text-align: right; margin-top: 0px;" id="isReplaceOldVersion" value="{!isReplaceOldVersion}" onclick="enableDisableVersion(this)" />Replace old version</label>
+                                                    </div>
+                                                    <apex:selectList id="oldVersionSelection" value="{!selectedOldVersion}" multiselect="false" size="1" styleClass="form-control">
+                                                        <apex:selectOptions value="{!OldVersionSelectOptions}" />
+                                                    </apex:selectList>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <apex:outputPanel rendered="{!FilterTemplate == 'LCD' || FilterTemplate == 'PV'}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label>Compensation Tool</label>
+                                            <apex:selectList value="{!selectedCompensationTool}" multiselect="false" size="1" styleClass="form-control">
+                                                <apex:actionSupport event="onchange" action="{!changeCompensationTool}" rerender="editForm" onsubmit="showLoading();" oncomplete="hideLoading();" />
+                                                <apex:selectOptions value="{!compensationTools}" />
+                                            </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                            <label>Compensation List</label>
+                                            <apex:dataTable value="{!customCompensations}" var="customCompensation" styleClass="compensationTable">
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Select</apex:facet>
+                                                    <apex:inputCheckbox value="{!customCompensation.isSelected}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">No.</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.rowNo}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Name</apex:facet>
+                                                    <apex:outputField value="{!customCompensation.compensation.Name}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Is Individual</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensationType}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Account Center</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Compensation_Account_Center__c}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Account Number</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Compensation_Account_Number__c}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: left;">
+                                                    <apex:facet name="header">Compensation Type</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Compensation_Type__c}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Compensation Tools</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Compensation_Tools__c}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: right;">
+                                                    <apex:facet name="header">Total</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Total__c}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: right;">
+                                                    <apex:facet name="header">Amount</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.amountPerPassenger}" />
+                                                </apex:column>
+                                                <apex:column style="text-align: center;">
+                                                    <apex:facet name="header">Currency</apex:facet>
+                                                    <apex:outputText value="{!customCompensation.compensation.Currency__c}" />
+                                                </apex:column>
+                                            </apex:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel id="editBody" styleClass="editBodyClass">
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'LCD'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Name</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerName}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Passenger_Ticket_Number__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Passenger_Ticket_Number__c}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Baggage_Check_Number__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Baggage_Check_Number__c}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Excess_Bag_Ticket_Number__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Excess_Bag_Ticket_Number__c}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.LCD_Detail__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.LCD_Detail__c}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Account_Debited__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Account_Debited__c}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Flight_Number_Manual__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Flight_Number_Manual__c}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Flight_Date_Manual__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Flight_Date_Manual__c}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Flight_From_Manual__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Flight_From_Manual__c}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{!$ObjectType.Case.fields.Flight_To_Manual__c.Label}</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Flight_To_Manual__c}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'PV' || FilterTemplate == 'LCD'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <label>Display currency as</label>
+                                                <div class="checkbox" style="margin-top: 0px; margin-bottom: 0px;">
+                                                    <label>
+                                                        <apex:inputCheckbox style="text-align: right; margin-top: 0px;" id="displayTHB" value="{!displayTHB}">
+                                                            <apex:actionSupport event="onclick" action="{!changeDisplayTHB}" reRender="editForm" onsubmit="showLoading();" oncomplete="hideLoading();" />
+                                                        </apex:inputCheckbox>
+                                                        THB</label>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Currency</label>
+                                                        <apex:inputText styleClass="form-control" value="{!currencyWord}" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label>Sub Currency</label>
+                                                        <apex:inputText styleClass="form-control" value="{!subCurrencyWord}" />
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'PV'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="15%">
+                                                            <apex:outputLabel value="Cheque" for="inputIsCheque" />
+                                                        </td>
+                                                        <td>
+                                                            <apex:inputCheckbox style="text-align: right;" id="isChequeCheckbox" value="{!isCheque}" onclick="enableDisablePaymentType(this)" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <apex:outputLabel value="Cash" for="inputIsCash" />
+                                                        </td>
+                                                        <td>
+                                                            <apex:inputCheckbox id="isCashCheckbox" value="{!isCash}" onclick="enableDisablePaymentType(this)" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Compensation Description</label>
+                                                <apex:inputTextarea styleClass="form-control" value="{!comment}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'LetterTH1' || FilterTemplate == 'LetterTH2'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Subject</label>
+                                                <apex:inputText styleClass="form-control" value="{!subject}" />
+                                            </div>
+                                            <apex:outputPanel rendered="{!FilterTemplate == 'LetterTH1'}">
+                                                <div class="col-md-6">
+                                                    <label>สิ่งที่ส่งมาด้วย</label>
+                                                    <apex:inputText styleClass="form-control" value="{!attachName}" />
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="row">
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'LetterTH1'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Name</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerName}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>อ้างถึง</label>
+                                                <apex:inputText styleClass="form-control" value="{!referenceTo}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'UpgradeConfirmation' || FilterTemplate == 'UpgradeStandby' || FilterTemplate == 'LetterEN' || FilterTemplate == 'LetterTH2'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Name</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerName}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!--<label>Passenger Email</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerEmail}" />-->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Mailling Address Street 1</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerStreet1}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Passenger Mailling Address Street 2</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerStreet2}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Mailling Address City</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerCity}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Passenger Mailling Address Country</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerCountry}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Passenger Mailling Address Postal Code</label>
+                                                <apex:inputText styleClass="form-control" value="{!passengerPostalCode}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'UpgradeConfirmation' || FilterTemplate == 'UpgradeStandby'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Issue Date</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Issue_Date__c}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Expiry Date</label>
+                                                <apex:inputField styleClass="form-control" value="{!thisCase.Expiry_Date__c}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!FilterTemplate == 'LCD'}">
+
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!FilterTemplate=='LetterTH1'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>ที่กบ.</label>
+                                                <apex:inputText styleClass="form-control" value="{!tgLetter}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>แสดง ที่กบ</label>
+                                                <br/>
+                                                <apex:inputCheckbox id="needTGDocCheckbox" value="{!needTGDoc}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{! 
+                                        FilterTemplate=='LetterEN' || 
+                                        FilterTemplate=='LetterTH1'||
+                                        FilterTemplate=='LetterTH2'}">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label>Template Body</label>
+                                                <apex:inputTextarea styleClass="form-control" style=" resize: vertical; width: 660px;" value="{!templateBody}" rows="{!templateBodyLineLength}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate=='LetterTH2'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Authorized Phone</label>
+                                                <apex:inputText styleClass="form-control" value="{!authorizedPhone}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Authorized Email</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment1}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!FilterTemplate=='UpgradeConfirmation'}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Travel type</label>
+                                                <apex:selectList value="{!travelType}" multiselect="false" size="1" styleClass="form-control">
+                                                    <apex:selectOptions value="{!travelTypeList}" />
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <!-- <apex:outputPanel rendered="{!FilterTemplate == 'LetterEN' || FilterTemplate == 'LetterTH1' || FilterTemplate == 'LetterTH2'}">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Comment 1</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment1}" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Comment 2</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment2}" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Comment 3</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment3}" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Comment 4</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment4}" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Comment 5</label>
+                                                <apex:inputText styleClass="form-control" value="{!comment5}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel> -->
+                                    <!--</apex:outputPanel> -->
+                                    <!--</div> -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br />&nbsp;&nbsp;&nbsp;
+                                            <apex:actionFunction action="{!saveAndAttach}" name="JSSaveAndAttach" reRender="editForm, openAttachmentPanel" oncomplete="hideLoading();" />
+                                            <apex:actionFunction action="{!saveAndDownload}" name="JSSaveAndDownload" reRender="editForm, openAttachmentPanel" oncomplete="hideLoading();" />
+                                            <apex:commandLink styleClass="btn btn-primary" value="Save Draft" action="{!updateBody}" reRender="preview, editForm, moveToTop" onclick="showLoading();" oncomplete="hideLoading();" /> &nbsp;
+                                            <apex:commandLink styleClass="btn btn-primary" value="Save and attach" action="{!updateBody}" target="_blank" reRender="preview, editForm" onclick="showLoading();" oncomplete="JSSaveAndAttach();" />
+                                            <apex:outputPanel id="downloadButton" rendered="{!FilterTemplate == 'LetterTH1' || FilterTemplate == 'LetterTH2' || FilterTemplate == 'LetterEN' || FilterTemplate == 'UpgradeConfirmation' || FilterTemplate == 'UpgradeStandby'}">
+                                                &nbsp;
+                                                <!-- <apex:commandLink styleClass="btn btn-primary" value="Download" action="{!updateBodyWithDownload}" reRender="preview, editForm"  onclick="showLoading();" oncomplete="hideLoading();"/> -->
+                                                <apex:commandLink styleClass="btn btn-primary" value="Download" action="{!updateBody}" reRender="preview, editForm" onclick="showLoading();" oncomplete="JSSaveAndDownload();" />
+                                            </apex:outputPanel>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        j(document).ready(function() {
+            if (j("input[id*=isNewVersion]").prop('checked')) {
+                j("select[id*=oldVersionSelection]").prop('disabled', true);
+            }
+        });
+        </script>
+    </apex:form>
+    <div class="bs3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <apex:outputPanel id="preview" layout="block">
+                        <iframe id="previewFrame" src="{!previewURL}" style="width:100%; height:800px;"></iframe>
+                    </apex:outputPanel>
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:page>

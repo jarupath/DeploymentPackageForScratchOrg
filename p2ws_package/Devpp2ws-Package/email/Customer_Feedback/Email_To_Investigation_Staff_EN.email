@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<span style="font-family: Arial, sans-serif;">Case Reference :&nbsp;{!User.Department}/{!Case.Case_Number_Custom__c}-{!User.Alias}</span><div><div>{!Today}</div></div><div><br></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div><span style="font-family: Arial, sans-serif; font-size: 12pt; text-align: justify;">Dear</span></div><div><p class="MsoNormal" style="text-align: justify;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p><div><br></div><div><span style="font-size: 12pt;">Description :&nbsp;{!Case.Description}</span></div><p class="MsoNormal" style="text-align: justify;"><br></p><p class="MsoNormal" style="text-align: justify;"><span style="font-family: Arial; text-align: left; white-space: pre-wrap; background-color: rgb(255, 255, 255);">Sincerely yours,</span></p><p class="MsoNormal" style="text-align: justify;"><br></p><p class="MsoNormal" style="text-align: justify;"><font face="Arial, sans-serif"><br></font></p><p class="MsoNormal" style="text-align: justify;"><font style="text-align: start;" face="Arial, sans-serif">{!Case.Authorize_Signature_for_Email_En__c}</font></p><div><font face="Arial, sans-serif">{!Case.Position_EN__c}</font></div><div><font><font face="Arial, sans-serif">{!Case.Department_EN__c}</font></font></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial;"><span style="background-color: rgb(255, 255, 255);">{!Case.Department_EN__c}</span></div><div><font face="arial" style="color: rgb(0, 0, 0); font-family: arial;">Tel.&nbsp;</font><font face="arial">{!User.Phone}</font></div><div><font face="arial"><font style="color: rgb(0, 0, 0); font-family: arial;">Fax.&nbsp;</font><font>{!User.Fax}</font><br></font><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial"><br></font></div></div>]]></td>
+</tr>
+</table>

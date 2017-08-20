@@ -1,0 +1,7 @@
+<apex:page standardController="Passenger__c" standardStylesheets="false" applyBodyTag="false">
+<apex:includeScript value="/soap/ajax/29.0/connection.js"/>
+<script>
+
+sforce.one.navigateToURL('/500/e?CF00NN0000001ts2y=TG910%20%2F%2008NOV16&CF00NN0000001ts2y_lkid=a02N0000007IEZU&CF00NN0000001tnXc=ANURIT%20MR%20KERDSINCHAI&CF00NN0000001tnXc_lkid=a00N000000FOFtz&RecordType=012N000000053da&ekp=500&ent=Case');
+</script>
+</apex:page>

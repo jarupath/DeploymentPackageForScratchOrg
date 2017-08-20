@@ -1,0 +1,11 @@
+@isTest
+global class CrewAppraisal_HttpCalloutMock implements HttpCalloutMock {
+    // Implement this interface method
+    global HTTPResponse respond(HTTPRequest req) {
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/xml');
+        res.setBody('<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header>   <ResHeader xmlns="http://xml.accenture.com/common/header" xmlns:ns="http://xml.thaiairways.com/crew/insert/crewappraisal/insertcrewappraisal/v1_0" xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://ws.thaiairways.com/crew/insert/crewappraisal/v1_0" xmlns:tns1="http://ws.thaiairways.com/crew/insert/crewappraisal" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">      <ResDateTime>2017-02-21T11:31:54.725+07:00</ResDateTime>      <ReqTxnID>null20170209-152418</ReqTxnID>      <MWTxnID>SY_TGAIP_1487651512162</MWTxnID>      <IsLastTxn>true</IsLastTxn>      <ResCode>SUCCESS</ResCode>   </ResHeader></SOAP-ENV:Header><SOAP-ENV:Body>   <ns0:InsertCrewAppraisalRes xmlns="http://xml.thaiairways.com/crew/insert/crewappraisal/insertcrewappraisal/v1_0" xmlns:ns0="http://xml.thaiairways.com/crew/insert/crewappraisal" xmlns:ns2="http://xml.accenture.com/common/header" xmlns:tns="http://ws.thaiairways.com/crew/insert/crewappraisal/v1_0" xmlns:tns1="http://ws.thaiairways.com/crew/insert/crewappraisal">      <return>         <description>Insert score data not completed</description>         <evaluateStaffID>11285</evaluateStaffID>         <evaluatedAirlineCode>TG</evaluatedAirlineCode>         <evaluatedArrPort>HKG</evaluatedArrPort>         <evaluatedDepPort>BKK</evaluatedDepPort>         <evaluatedFlightDate>2017-02-21</evaluatedFlightDate>         <evaluatedFlightNumber>0600</evaluatedFlightNumber>         <flagFormComplete>03</flagFormComplete>         <formNumber>06</formNumber>         <staffID>25515</staffID>      </return>   </ns0:InsertCrewAppraisalRes></SOAP-ENV:Body></SOAP-ENV:Envelope>');
+        res.setStatusCode(200);
+        return res;
+    }
+}

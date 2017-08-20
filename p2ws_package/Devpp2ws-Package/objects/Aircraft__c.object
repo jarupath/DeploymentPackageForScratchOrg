@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Aircraft_Case_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  Number_Of_NoActions__c  &gt; 0 , IMAGE(&quot;/resource/OrangeCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,IMAGE(&quot;/resource/WhiteCase&quot;,&quot;&quot;,20,20))&amp; 
+
+IF(  Number_Of_Blocks__c  &gt; 0 , IMAGE(&quot;/resource/RedCase&quot;,&quot;&quot;,20,20) + &apos; &apos;, IMAGE(&quot;/resource/WhiteCase&quot;,&quot;&quot;,20,20))&amp; 
+
+IF(  Number_Of_Malfunctions__c  &gt; 0 , IMAGE(&quot;/resource/YellowCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,IMAGE(&quot;/resource/WhiteCase&quot;,&quot;&quot;,20,20))&amp; 
+
+IF(  Number_Of_Serviceables__c  &gt; 0, IMAGE(&quot;/resource/BlueCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,IMAGE(&quot;/resource/WhiteCase&quot;,&quot;&quot;,20,20))</formula>
+        <label>Aircraft Case Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C CONF.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Model</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Main_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Aircraft Main Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Name_EN__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Name EN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Name_TH__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Name TH</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Registration__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Aircraft Registration</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Aircraft Sub Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Type</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Duty__c</fullName>
+        <description>The role of an air cabin crew member is to provide excellent customer service to passengers while ensuring their comfort and safety throughout the flight.</description>
+        <externalId>false</externalId>
+        <label>Cabin Duty</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Ver__c</fullName>
+        <externalId>false</externalId>
+        <label>Cabin Ver.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DEP_STN__c</fullName>
+        <externalId>false</externalId>
+        <label>DEP STN</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_LOPA_Ready__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To identify that LOPA is ready for this aircraft.</description>
+        <externalId>false</externalId>
+        <label>Is LOPA Ready</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LOPA_Business_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>LOPA Business Class</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LOPA_Economy_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>LOPA Economy Class</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LOPA_First_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>LOPA First Class</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Line_no__c</fullName>
+        <externalId>false</externalId>
+        <label>Line no.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Msn__c</fullName>
+        <externalId>false</externalId>
+        <label>Msn.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Blocks__c</fullName>
+        <description>Displays the number of cases with action being blocked</description>
+        <externalId>false</externalId>
+        <label>Number Of Blocks</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Completes__c</fullName>
+        <description>Displays the number of cases with action being complete</description>
+        <externalId>false</externalId>
+        <label>Number Of Completes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Malfunctions__c</fullName>
+        <description>Displays the number of cases with action being malfunction</description>
+        <externalId>false</externalId>
+        <label>Number Of Malfunctions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_Of_NoActions__c</fullName>
+        <description>Displays the number of cases with no action</description>
+        <externalId>false</externalId>
+        <label>Number Of NoActions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Serviceables__c</fullName>
+        <description>Displays the number of cases with action being serviceable</description>
+        <externalId>false</externalId>
+        <label>Number Of Serviceables</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Aircraft</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>NAME</columns>
+        <columns>Aircraft_Name_EN__c</columns>
+        <columns>Cabin_Duty__c</columns>
+        <columns>Msn__c</columns>
+        <columns>Cabin_Ver__c</columns>
+        <columns>Delivery__c</columns>
+        <columns>Aircraft_Description__c</columns>
+        <columns>Aircraft_Configuration__c</columns>
+        <columns>Aircraft_Type__c</columns>
+        <columns>Aircraft_Main_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>A/C REG</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Aircrafts</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Aircraft_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Aircraft_Configuration__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Aircraft_Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DEP_STN__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

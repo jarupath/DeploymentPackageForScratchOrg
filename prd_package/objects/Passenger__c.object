@@ -1,0 +1,1755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Customer</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Passengers</relationshipLabel>
+        <relationshipName>Passengers</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Assigned_Seat__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicate whether this passenger has been assigned with booking seat or accepted seat</description>
+        <externalId>false</externalId>
+        <label>Assigned Seat</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Board_Point__c</fullName>
+        <description>Board point of this passenger</description>
+        <externalId>false</externalId>
+        <label>Board Point</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Class__c</fullName>
+        <description>Booking class of the passenger which could be any value from A-Z depending on the ticket and the reservation of the passenger</description>
+        <externalId>false</externalId>
+        <label>Booking Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Seat__c</fullName>
+        <description>The seat that has been booked by the passenger since the reservation was placed</description>
+        <externalId>false</externalId>
+        <label>Booking Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Class_Description__c</fullName>
+        <description>The full name of the Cabin Class which are</description>
+        <externalId>false</externalId>
+        <formula>CASE( Cabin_Code__c ,
+&quot;F&quot;, &quot;Royal First&quot;,
+&quot;C&quot;, &quot;Royal Silk&quot;,
+&quot;U&quot;, &quot;Premium Economy&quot;,
+&quot;Y&quot;, &quot;Economy&quot;,
+&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cabin Class Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Code_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( Cabin_Code__c , &quot;F&quot;, &quot;First&quot;, &quot;C&quot;, &quot;Business&quot;, &quot;Y&quot;, &quot;Economy&quot;, &quot;U&quot;, &quot;Premium Economy&quot;, &quot;&quot;)</formula>
+        <label>Cabin Class Full Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cabin_Code__c</fullName>
+        <description>Cabin class of the passenger which could be F, Y, U, or C.</description>
+        <externalId>false</externalId>
+        <label>Cabin Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Cabin_Class_Full_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(  Change_Cabin_Class__c  , &quot;F&quot;, &quot;First&quot;, &quot;C&quot;, &quot;Business&quot;, &quot;Y&quot;, &quot;Economy&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change Cabin Class Full Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Cabin_Class__c</fullName>
+        <description>Cabin Code changed to</description>
+        <externalId>false</externalId>
+        <label>Change Cabin Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Seat__c</fullName>
+        <externalId>false</externalId>
+        <label>Change Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Checkin_Seat__c</fullName>
+        <description>The seat that will be assigned after the passenger has checked in</description>
+        <externalId>false</externalId>
+        <label>Accepted Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Child__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Child</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Class__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Travel Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Class_of_Service__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(  RBD_Travel_Class__c  , &quot;F&quot;, &quot;1&quot;, &quot;C&quot;, &quot;2&quot;,&quot;U&quot;,&quot;3&quot;,&quot;Y&quot;,&quot;4&quot;,&quot;G&quot;,&quot;5&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Class of Service</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Connecting_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Connecting Date</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Connecting_Flight__c</fullName>
+        <externalId>false</externalId>
+        <label>Connecting Flight</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Connecting_STD__c</fullName>
+        <externalId>false</externalId>
+        <label>Connecting STD</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Connecting_Segment__c</fullName>
+        <externalId>false</externalId>
+        <label>Connecting Segment</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Continent__c</fullName>
+        <externalId>false</externalId>
+        <label>Continent</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_of_Birth_Display__c</fullName>
+        <description>Used for input.</description>
+        <externalId>false</externalId>
+        <formula>Date_of_Birth_Input__c</formula>
+        <label>Date of Birth</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Birth_Input__c</fullName>
+        <externalId>false</externalId>
+        <label>Date of  Birth</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Birth__c</fullName>
+        <description>Used for display. Value sent from backend</description>
+        <externalId>false</externalId>
+        <label>Date of Birth</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Doc_Issuing_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Doc Issuing Country</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Eligible_for_Upgrade_Seat_Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Eligible for Upgrade Seat Priority</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Eligible_for_Upgrade_Seat__c</fullName>
+        <externalId>false</externalId>
+        <label>Eligible for Upgrade Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_1__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Email 1</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_2__c</fullName>
+        <description>Passenger email.</description>
+        <externalId>false</externalId>
+        <label>Email 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enroll_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Enroll Date</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enroll_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Enroll Source</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <label>FFP Carrier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Number__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>FFP Number</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Tier_WS__c</fullName>
+        <description>Data of FFP Tier from Web Service without conversion</description>
+        <externalId>false</externalId>
+        <label>FFP Tier WS</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Tier__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>FFP Tier</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP__c</fullName>
+        <description>Display : FFP_Carrier__c-FFP_Number__c, Example TG-ZD95870</description>
+        <externalId>false</externalId>
+        <formula>FFP_Carrier__c + &apos;-&apos; +  FFP_Number__c</formula>
+        <label>FFP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Section__c</fullName>
+        <description>User for report</description>
+        <externalId>false</externalId>
+        <formula>IF(
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+)
+&gt;= 500 &amp;&amp;
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+) &lt;= 1200
+
+, TRUE,FALSE)</formula>
+        <label>First Section</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FlightId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Flight Number</label>
+        <referenceTo>Flight__c</referenceTo>
+        <relationshipLabel>Passengers</relationshipLabel>
+        <relationshipName>Passengers</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE( Flight_Date__c )</formula>
+        <label>Flight Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date_UTC__c</fullName>
+        <description>Used for verifying result of PaxFlowDetail_Batch</description>
+        <externalId>false</externalId>
+        <formula>FlightId__r.Flight_Date_UTC_F__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Date UTC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Date__c</fullName>
+        <description>Flight Date local time</description>
+        <externalId>false</externalId>
+        <label>Flight Date</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Destination__c</fullName>
+        <externalId>false</externalId>
+        <formula>FlightId__r.Destination__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Destination</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Leg__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(FlightId__r.Leg_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Leg</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Master__c</fullName>
+        <description>Flight Master used for group LEG by the same flight date and flight number, Example data = TG676_16OCT16</description>
+        <externalId>false</externalId>
+        <label>Flight Master</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Name__c</fullName>
+        <description>Used for New Case Custom Button</description>
+        <externalId>false</externalId>
+        <formula>FlightId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Origin__c</fullName>
+        <externalId>false</externalId>
+        <formula>FlightId__r.Origin__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Origin</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_Routing_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sector__c &amp; &apos; &apos; &amp;
+&apos;STA/ETD: &apos; &amp;  FlightId__r.STD__c &amp; &apos;/&apos; &amp;  FlightId__r.ETD__c &amp; &apos; &apos; &amp;
+&apos;ATA: &apos; &amp;  FlightId__r.ATA__c &amp; &apos; &apos; &amp; 
+&apos;Flying Time: &apos; &amp;  FlightId__r.Flying_Time_Elapsed_Time__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Routing</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flight_STD__c</fullName>
+        <externalId>false</externalId>
+        <formula>FlightId__r.STD_LT_DateTime__c</formula>
+        <label>Flight STD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Gender__c</fullName>
+        <externalId>false</externalId>
+        <label>Gender</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Group Name (Clarify)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IgnoreProcessBuilder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>A flag used for controlling process builder.
+To prevent process builder execute while inserting new PAX.</description>
+        <externalId>false</externalId>
+        <label>IgnoreProcessBuilder</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Inbound__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Inbound</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Infant_Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE( 
+SUBSTITUTE( 
+TEXT(FLOOR( 
+(( (YEAR( TODAY()) * 12)+ MONTH(TODAY())) 
+- ( 
+(YEAR( Infant_Date_of_Birth_Date__c ) * 12) 
++ MONTH( Infant_Date_of_Birth_Date__c ) 
+))/12) 
+) + &apos; year(s) &apos; + 
+TEXT(MOD( 
+(( (YEAR( TODAY()) * 12)+ MONTH(TODAY())) 
+- ( 
+(YEAR ( Infant_Date_of_Birth_Date__c ) * 12) 
++ MONTH( Infant_Date_of_Birth_Date__c ) 
+)),12) 
+) + &apos; month(s)&apos; 
+, &apos; 0 month(s)&apos;, &apos;&apos;) 
+, &apos; year(s) month(s)&apos;, &apos;N/A&apos;)</formula>
+        <label>Infant Age</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Infant_Date_of_Birth_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE( Infant_Date_of_Birth__c )</formula>
+        <label>Infant Date of Birth Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Infant_Date_of_Birth__c</fullName>
+        <externalId>false</externalId>
+        <label>Infant Date of Birth</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Infant_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Infant Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Infant__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Infant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Accepted_Seat__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Checkin_Seat__c = &quot;&quot;  , &quot;Booking&quot;, &quot;Accepted&quot;)</formula>
+        <label>Is Accepted Seat</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Language</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Change_Seat_DateTime__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Change Seat Date/Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Match_with_ROP__c</fullName>
+        <description>Check if the passenger is ROP member with matching last name and date of birth</description>
+        <externalId>false</externalId>
+        <formula>AND(FFP_Carrier__c == &apos;TG&apos;, AccountId__r.ROP_Number__c != null, AccountId__c != null, AccountId__r.Last_Name__c == Last_Name__c, AccountId__r.Date_of_Birth__c == Date_of_Birth_Input__c)</formula>
+        <label>Match with ROP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Middle_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Middle Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mileage__c</fullName>
+        <externalId>false</externalId>
+        <label>Mileage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile__c</fullName>
+        <externalId>false</externalId>
+        <label>Mobile (Clarify)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nationality_Fullname__c</fullName>
+        <description>Display Nationality Full name, for In-Flight and Customer Service</description>
+        <externalId>false</externalId>
+        <label>Nationality</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nationality__c</fullName>
+        <description>Nationality for Integration and Ground</description>
+        <externalId>false</externalId>
+        <label>Nationality</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>No_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(   FlightId__r.STD_LT_DateTime__c   - ( NOW() + 420/1440 )  &lt;= 0.03125 &amp;&amp; Checkin_Seat__c = &quot;&quot;, TRUE, FALSE)</formula>
+        <label>No Show</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Off_Point__c</fullName>
+        <externalId>false</externalId>
+        <label>Off Point</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outbound__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Outbound</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PNR__c</fullName>
+        <externalId>false</externalId>
+        <label>PNR</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_First_Name_Auto__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger First Name Auto</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Name_Formatted__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger Name Formatted</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Salutation_Auto__c</fullName>
+        <description>This field stores the value of salutation of this passenger which is the result of automatic detection of salutation from passenger&apos;s first name.</description>
+        <externalId>false</externalId>
+        <label>Passenger Salutation Auto</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PaxKey__c</fullName>
+        <externalId>false</externalId>
+        <formula>First_Name__c &amp; &apos;_&apos; &amp;  Last_Name__c &amp; &apos;_&apos; &amp;  PNR__c &amp; &apos;_&apos; &amp; Flight_Master__c</formula>
+        <label>PaxKey</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pax_Key_txt__c</fullName>
+        <description>Text version of PaxKey__c</description>
+        <externalId>true</externalId>
+        <label>Pax Key txt</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postal_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Address</label>
+        <length>130000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RBD_Travel_Class_SORT__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( RBD_Travel_Class__c , &quot;F&quot;, &quot;1-F&quot;, &quot;C&quot;, &quot;2-C&quot;, &quot;U&quot;, &quot;3-U&quot;, &quot;Y&quot;, &quot;4-Y&quot;, &quot;G&quot;, &quot;5-G&quot;, &quot;&quot;)</formula>
+        <label>RBD Travel Class (SORT)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RBD_Travel_Class__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Booking_Class__c = &quot;G&quot;, &quot;G&quot;,   Cabin_Code__c  )</formula>
+        <label>RBD Travel Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROP_KEY__c</fullName>
+        <description>ROP KEY</description>
+        <externalId>true</externalId>
+        <label>ROP_KEY</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Religion__c</fullName>
+        <externalId>false</externalId>
+        <label>Religion</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Route_Info__c</fullName>
+        <description>Used for debugging / verifying result of PaxFlowDetail_Batch and  Per Million report
+
+Create report group by this field to validate passenger count</description>
+        <externalId>false</externalId>
+        <formula>FlightId__r.Scheduling_Type__c &amp; &quot;,&quot; &amp;
+ FlightId__r.Flight_Region__c &amp; &quot;,&quot; &amp;
+ FlightId__r.Flight_Area__c &amp; &quot;,&quot; &amp;
+Cabin_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Route Info</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SSR_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>Service</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SSR__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SSR</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Salutation__c</fullName>
+        <externalId>false</externalId>
+        <label>Salutation</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Seat_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Seat Number (Delete)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Seat__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Checkin_Seat__c != &quot;&quot;,  Checkin_Seat__c ,  Booking_Seat__c )</formula>
+        <label>Seat</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Second_Section__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+)
+&gt;= 1200 &amp;&amp;
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+) &lt;= 2100
+
+, TRUE,FALSE)</formula>
+        <label>Second Section</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <description>Used to display. Information displayed is the origin and destination of the whole flight of the passenger</description>
+        <externalId>false</externalId>
+        <label>Sector</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sector_with_Class__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sector__c &amp; &quot; &quot; &amp; &quot;(&quot; &amp; Cabin_Code__c &amp; &quot;)&quot;</formula>
+        <label>Sector with Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Segment_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Segment Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Source_Data__c</fullName>
+        <description>Source of data. web service ? 
+Example data :WEB_SERVICE.</description>
+        <externalId>false</externalId>
+        <label>Source Data</label>
+        <length>25</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Special_Meal__c</fullName>
+        <externalId>false</externalId>
+        <label>Special Meal</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Staff_Booking__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Staff Booking</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Staff_Waitlist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Staff Waitlist</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Suffix__c</fullName>
+        <externalId>false</externalId>
+        <label>Suffix</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Third_Section__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+)
+&gt;= 2100 ||
+(  
+( 
+
+IF(
+
+LEFT(TEXT(Flight_STD__c), 10) = LEFT(TEXT(NOW()+ 1), 10)
+
+
+
+
+
+,TRUE, FALSE)
+
+&amp;&amp;
+VALUE(
+SUBSTITUTE(
+TRIM
+(
+MID
+
+(TEXT( Flight_STD__c ),
+FIND
+(&quot;:&quot;, TEXT( Flight_STD__c ))
+
+
+ - 2, 5)
+)
+, &quot;:&quot;,&quot;&quot;)
+) &lt;= 200)
+)
+, TRUE,FALSE)</formula>
+        <label>Third Section</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Ticket_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Ticket Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticket_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Ticket Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticket__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Ticket</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Travel_Class_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( Class__c , &quot;F&quot;, &quot;First&quot;, &quot;C&quot;, &quot;Business&quot;,&quot;U&quot;,&quot;Premium Economy&quot;,&quot;Y&quot;,&quot;Economy&quot;,&quot;&quot;)</formula>
+        <label>Travel Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Travel_Document_Expiry_Date__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Travel Document Expiry Date</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Travel_Document_Number__c</fullName>
+        <description>Used for display</description>
+        <externalId>false</externalId>
+        <label>Travel Document Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VIP_VVIP_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>VIP/VVIP Flag</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>WS_KEY__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Flight number + Flight date + RLOC + First name + Last name</description>
+        <externalId>true</externalId>
+        <label>WS KEY</label>
+        <length>150</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>test_datetime__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW() + 1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>test datetime</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Passenger</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Cabin_Class_not_Y</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cabin_Code__c</field>
+            <operation>equals</operation>
+            <value>F,C,U</value>
+        </filters>
+        <label>All Cabin Class not Y</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Passenger_jing_jing</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Passenger</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>First_Class</fullName>
+        <columns>NAME</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cabin_Code__c</field>
+            <operation>equals</operation>
+            <value>F</value>
+        </filters>
+        <label>First Class</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ROP_Basic</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FFP_Tier__c</field>
+            <operation>equals</operation>
+            <value>BASE</value>
+        </filters>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ROP Basic</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ROP_Gold</fullName>
+        <columns>NAME</columns>
+        <columns>PNR__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FFP_Tier__c</field>
+            <operation>equals</operation>
+            <value>Gold</value>
+        </filters>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ROP Gold</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ROP_Platinum</fullName>
+        <columns>NAME</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FFP_Tier__c</field>
+            <operation>equals</operation>
+            <value>PLAT</value>
+        </filters>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ROP Platinum</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ROP_Silver</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FFP_Tier__c</field>
+            <operation>equals</operation>
+            <value>silv</value>
+        </filters>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ROP Silver</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>VIP_VVIP_Status</fullName>
+        <columns>NAME</columns>
+        <columns>Last_Name__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>PNR__c</columns>
+        <columns>FlightId__c</columns>
+        <columns>FFP_Number__c</columns>
+        <columns>FFP_Tier__c</columns>
+        <columns>VIP_VVIP_Flag__c</columns>
+        <columns>Checkin_Seat__c</columns>
+        <columns>Cabin_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>VIP_VVIP_Flag__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Flight_Date_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>VIP/VVIP Status</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Ground_Service_Team</group>
+            <role>Ground_Customer_Service_Abroad_Station</role>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Passenger Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Passengers</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Ground_Service_Passenger</fullName>
+        <active>true</active>
+        <label>Ground Service Passenger</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>New_Passenger</fullName>
+        <active>true</active>
+        <description>New Passenger</description>
+        <label>New Passenger</label>
+    </recordTypes>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>FFP_Tier__c</searchFilterFields>
+        <searchFilterFields>Class__c</searchFilterFields>
+        <searchFilterFields>Checkin_Seat__c</searchFilterFields>
+        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FlightId__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PNR__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Checkin_Seat__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Travel_Document_Number__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>New_Passenger</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Passenger</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>srcUp(&quot;/{!$Setup.System_Configuration__c.Passenger_Object_ID__c}/e?{!$Setup.System_Configuration__c.Flight_Passenger_Name_SFDC_ID__c}={!Flight__c.Name}&amp;{!$Setup.System_Configuration__c.Flight_Passenger_ID_SFDC_ID__c}={!Passenger__c.FlightId__c}&amp;RecordType={!$Setup.System_Configuration__c.Passenger_Record_Type_New_Passenger__c}&amp;ekp=a00&amp;ent={!$Setup.System_Configuration__c.Passenger_Name_SFDC_ID__c}&amp;Name=TempPassengerName&quot;);</url>
+    </webLinks>
+</CustomObject>

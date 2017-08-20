@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>DGC Email Template</name>
+    <style>formalLetter</style>
+    <subject>DGC CASE</subject>
+    <textOnly>CASE TYPE: {!Case.Case_Type__c}
+
+FLIGHT DATE: {!Case.Flight_Number_for_Email_Template__c}
+
+CONFIGURATION  :  {!Case.EMT_Aircraft_Configuration_Case__c}
+
+SALABLE  ( SEATS )  :   {!Case.EMT_Saleable_Seats__c}
+
+BOOKING  :   {!Case.EMT_Booking_Passenger__c}
+
+OVER BOOKED  :
+
+TOTAL PASSENGER ONBOARD  : {!Case.EMT_Accepted_Passenger__c}
+
+TOTAL DOWNGRADED PASSENGER  :
+
+REASON OF DOWNGRADING  :   {!Case.Description}
+
+PASSENGER LIST  :
+{!Case.DGC_DBC_Email_Body__c}
+
+TOTAL DGC PAID  : {!Case.Total_Compensation__c} {!Case.Currency_from_Compensation__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related to the customer that this enrollment belong to</description>
+        <externalId>false</externalId>
+        <label>Customer</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>ROP Enrollment</relationshipLabel>
+        <relationshipName>ROP_Enrollment</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Area_Code__c</fullName>
+        <description>Area code of phone number</description>
+        <externalId>false</externalId>
+        <label>Area Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Birthdate__c</fullName>
+        <externalId>false</externalId>
+        <label>Birthdate</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_Code__c</fullName>
+        <description>Country code of phone number</description>
+        <externalId>false</externalId>
+        <label>Country Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_By_Crew__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The crew that created this ROP Enrollment record or the air purser that was responsible for the In-flight App</description>
+        <externalId>false</externalId>
+        <label>Created By Crew</label>
+        <referenceTo>Crew__c</referenceTo>
+        <relationshipLabel>ROP Enrollments</relationshipLabel>
+        <relationshipName>ROP_Enrollments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Email of the customer</description>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enrollment_Date__c</fullName>
+        <description>The date that this ROP Enrollment occured</description>
+        <externalId>false</externalId>
+        <label>Enrollment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Enrollment_Status__c</fullName>
+        <description>Date of birth of the customer enrolling</description>
+        <externalId>false</externalId>
+        <formula>IF( TEXT(Status__c) == &apos;Enroll&apos;, &apos;Enroll&apos;, IF(AND(TEXT(Status__c) == &apos;Void&apos;,  ROP_Number__r.Name == NULL) ,&apos;Void Before Sync&apos;, IF(AND(TEXT(Status__c) == &apos;Void&apos;,  ROP_Number__r.Name != NULL),&apos;Void After Sync&apos;, &apos;&apos; ) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Enrollment Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enrollment_Type__c</fullName>
+        <description>The type of enrollment whether it is via TG Web Service or manually enrolled</description>
+        <externalId>false</externalId>
+        <label>Enrollment Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Web Service</fullName>
+                    <default>false</default>
+                    <label>Web Service</label>
+                </value>
+                <value>
+                    <fullName>Manual</fullName>
+                    <default>false</default>
+                    <label>Manual</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ExternalId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>External Id of this ROP Enrollment which is ROP Number + PaxKey</description>
+        <externalId>true</externalId>
+        <label>ExternalId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <description>First name of the customer</description>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FlightId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Flight that originated this ROP Enrollment</description>
+        <externalId>false</externalId>
+        <label>Flight</label>
+        <referenceTo>Flight__c</referenceTo>
+        <relationshipLabel>ROP Enrollments</relationshipLabel>
+        <relationshipName>ROP_Enrollments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gender__c</fullName>
+        <description>Gender of the customer</description>
+        <externalId>false</externalId>
+        <label>Gender</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integration_Error_Reason__c</fullName>
+        <description>The error from Web Service Callout</description>
+        <externalId>false</externalId>
+        <label>Integration Error Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integration_Error__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicate whether this ROP Enrollment encountered error during Web Service Callout</description>
+        <externalId>false</externalId>
+        <label>Integration Error</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <description>Last name of the customer</description>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manual_Enrollment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicate wheter this ROP Enrollment must be done manually because the salutation cannot be extracted from the customer&apos;s name</description>
+        <externalId>false</externalId>
+        <label>Manual Enrollment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>MembershipId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related to the membership object</description>
+        <externalId>false</externalId>
+        <label>Membership</label>
+        <referenceTo>Membership__c</referenceTo>
+        <relationshipLabel>ROP Enrollment</relationshipLabel>
+        <relationshipName>ROP_Enrollment</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Nationality__c</fullName>
+        <description>Nationality of the customer in 3 alphabets</description>
+        <externalId>false</externalId>
+        <label>Nationality</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PassengerId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Passenger that enrolled</description>
+        <externalId>false</externalId>
+        <label>Passenger</label>
+        <referenceTo>Passenger__c</referenceTo>
+        <relationshipLabel>ROP Enrollment</relationshipLabel>
+        <relationshipName>ROP_Enrollment</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PaxKey__c</fullName>
+        <description>PaxKey of the passenger</description>
+        <externalId>true</externalId>
+        <label>PaxKey</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone_Number__c</fullName>
+        <description>Phone number of the customer</description>
+        <externalId>false</externalId>
+        <label>Phone Number</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone_Type__c</fullName>
+        <description>Phone type of the customer wheter it is business, home or mobile phone</description>
+        <externalId>false</externalId>
+        <label>Phone Type</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROP_Number_F__c</fullName>
+        <description>The text version of the ROP Number</description>
+        <externalId>false</externalId>
+        <formula>ROP_Number__r.ROP_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ROP Number Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROP_Number__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related to the assigned ROP Number record</description>
+        <externalId>false</externalId>
+        <label>ROP Number</label>
+        <referenceTo>ROP_Number_Inventory__c</referenceTo>
+        <relationshipLabel>ROP Enrollments</relationshipLabel>
+        <relationshipName>ROP_Enrollments</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reported_By_Crew__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The crew that actually reported this ROP Enrollment</description>
+        <externalId>false</externalId>
+        <label>Reported By Crew</label>
+        <referenceTo>Crew__c</referenceTo>
+        <relationshipLabel>ROP Enrollments (Reported By Crew)</relationshipLabel>
+        <relationshipName>ROP_Enrollments1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Response_from_THAI__c</fullName>
+        <description>Response from Web Service Callout to TG</description>
+        <externalId>false</externalId>
+        <label>Response from THAI</label>
+        <length>131072</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Salutation__c</fullName>
+        <description>Salutation of the customer</description>
+        <externalId>false</externalId>
+        <label>Salutation</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Status of the ROP Enrollment whether</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Enroll</fullName>
+                    <default>true</default>
+                    <label>Enroll</label>
+                </value>
+                <value>
+                    <fullName>Void</fullName>
+                    <default>false</default>
+                    <label>Void</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>ROP Enrollment</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Integration_Error__c</columns>
+        <columns>Status__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>ROP Enrollment Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>ROP Enrollments</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

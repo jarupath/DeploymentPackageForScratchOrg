@@ -1,0 +1,93 @@
+<apex:component controller="Approval_Email_Templete_Controller" access="global">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+       /* tr th {
+            text-align: center;
+        }
+
+        tr td {
+            text-align: right;
+        }
+
+        table {
+            border: 1;
+        }*/
+        
+        tr:hover{background-color:#f5f5f5}
+    </style>
+
+    <br/>
+        <table>
+            <tr>
+                <th>Apply Type</th>
+                <th>Name</th>
+                <th>Passenger</th>
+                <th>Compensation Tools</th>
+                <th>Type</th>
+                <th>Per Passenger</th>
+                <th>Total</th>
+                <th>Currency</th>
+                <th>Total THB</th>
+            </tr>
+            <apex:repeat value="{!Compensations}" var="comp">
+                <tr>
+                    <td>
+                        <apex:outputPanel rendered="{!!comp.Is_Individual__c}">
+                        Mass
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!comp.Is_Individual__c}">
+                        Individual
+                        </apex:outputPanel>
+                    </td>
+                    <td>
+                        {!comp.Name}
+                    </td>
+                    <td>
+                        {!comp.Passenger_Name__c}
+                    </td>
+                    <td>
+                        {!comp.Compensation_Tools__c}
+                    </td>
+                    <td>
+                        {!comp.Compensation_Type__c}
+                    </td>
+                    <!-- <td>
+                        {!IF(comp.Total__c > 0, comp.Total__c, comp.Amount__c)}
+                    </td> -->
+                    <td>
+                        {!comp.Amount__c}
+                    </td>
+                    <td>
+                        {!IF(comp.Is_Individual__c, comp.Amount__c, comp.Amount__c * caseGroupMemberSize)}
+                    </td>
+                    <td>
+                        {!IF(comp.Compensation_Tools__c == "Cash", comp.Currency__c , comp.Unit__c)}
+                    </td>
+                    <td>
+                        {!IF(comp.Is_Individual__c, comp.Total_THB__c, comp.Total_THB__c * caseGroupMemberSize) }
+                    </td>
+                </tr>
+            </apex:repeat>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{!totalAmount}</td>
+                <td>{!currencyWord}</td>
+                <td>{!totalAmountTHB}</td>
+            </tr>
+        </table>
+</apex:component>

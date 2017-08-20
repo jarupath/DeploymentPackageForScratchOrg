@@ -1,0 +1,23 @@
+<apex:page showHeader="false" sidebar="false" standardController="Flight__c" standardStylesheets="true">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1" title="Flight by Route">
+            <apex:include pageName="FlightSummary" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1" title="Passenger Sector">
+            <apex:include pageName="PassengerSectorPage" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1" title="Maintenance Case">
+            <apex:include pageName="MaintenanceCasePage" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1" title="Passenger Case">
+            <apex:include pageName="PassengerCasePage" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

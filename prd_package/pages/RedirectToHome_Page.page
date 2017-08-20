@@ -1,0 +1,17 @@
+<apex:page showHeader="true" sidebar="true">
+
+    <!-- <apex:includeScript value="{!$Resource.jquery}" />
+    <apex:includeScript value="/support/console/28.0/integration.js"/> -->
+    <script type="text/javascript">
+    console.log('start navigate');
+    if(sforce&&sforce.one) {
+        // sforce.one.navigateToURL('', true);
+        // sforce.one.navigateToURL('https://thaiairways--devpm2.lightning.force.com/one/one.app', true);
+//          sforce.one.navigateToFeed('{!$User.Id}', 'NEWS');      
+//        window.location.href = 'javascript:sforce.one.navigateToURL(\'/one/one.app#/sObject/Dashboard/home\')';
+      //  window.location.href = 'javascript:sforce.one.navigateToFeed(\'{!$User.Id}\', \'NEWS\')';
+   //     console.log('after navigate');
+   window.location = '/one/one.app';
+    }
+    </script>
+</apex:page>

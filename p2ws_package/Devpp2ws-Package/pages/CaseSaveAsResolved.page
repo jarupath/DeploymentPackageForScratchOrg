@@ -1,0 +1,32 @@
+<apex:page standardController="Case" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" >
+<apex:includeScript value="/soap/ajax/29.0/connection.js"/>
+<script>
+sforce.connection.sessionId = '{!GETSESSIONID()}';
+var thiscase = sforce.connection.query("SELECT Compensation_Count__c from Case where id ='{!Case.Id}' limit 1");
+
+records = thiscase.getArray("records"); 
+
+var compcount = records[0].Compensation_Count__c; 
+
+var ucase = new sforce.SObject('Case'); 
+
+ucase.id = "{!Case.Id}"; 
+ucase.Ground_Customer_Service__c = "1";
+
+if(compcount > 0){
+ucase.status = "Resolved"; 
+}
+else{
+ucase.status = "Closed"; 
+}
+
+var r = confirm("This will close the Case if no compensations are present. Are you sure you want to save as Resolved?"); 
+if (r == true) { 
+result = sforce.connection.update([ucase]); 
+} 
+
+window.parent.close();
+sforce.one.navigateToURL('/{!Case.Id}?retUrl=/500');
+
+</script>
+</apex:page>

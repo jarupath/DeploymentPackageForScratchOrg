@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>false</active>
+    <businessHours>Default</businessHours>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.Case_Status_blue__c</field>
+        <operation>equals</operation>
+        <value>Cancel</value>
+    </exitCriteriaFilterItems>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c == &quot;First&quot; ||  ROP_Tier__c == &quot;PLAT&quot;) &amp;&amp;
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp;
+ Text(Status)!= &quot;Resolved&quot; &amp;&amp;
+ Text(Status)!= &quot;Duplicate&quot; &amp;&amp;
+ Text(Status)!= &quot;Closed&quot;)
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>First%2FPlatinum Overdue 7 days</milestoneName>
+        <minutesToComplete>3360</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c == &quot;First&quot; || ROP_Tier__c == &quot;PLAT&quot;) &amp;&amp; 
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp; 
+Text(Status)!= &quot;Resolved&quot; &amp;&amp; 
+Text(Status)!= &quot;Duplicate&quot; &amp;&amp; 
+Text(Status)!= &quot;Closed&quot;) 
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>First%2FPlatinum Overdue 10 days</milestoneName>
+        <minutesToComplete>4800</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c == &quot;First&quot; || ROP_Tier__c == &quot;PLAT&quot;) &amp;&amp; 
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp; 
+Text(Status)!= &quot;Resolved&quot; &amp;&amp; 
+Text(Status)!= &quot;Duplicate&quot; &amp;&amp; 
+Text(Status)!= &quot;Closed&quot;) 
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>First%2FPlatinum Overdue 15 days</milestoneName>
+        <minutesToComplete>7200</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c != &quot;First&quot; &amp;&amp; ROP_Tier__c != &quot;PLAT&quot;) &amp;&amp; 
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp; 
+Text(Status)!= &quot;Resolved&quot; &amp;&amp; 
+Text(Status)!= &quot;Duplicate&quot; &amp;&amp; 
+Text(Status)!= &quot;Closed&quot;) 
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>STD Passenger Overdue 10 days</milestoneName>
+        <minutesToComplete>4800</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c != &quot;First&quot; &amp;&amp; ROP_Tier__c != &quot;PLAT&quot;) &amp;&amp; 
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp; 
+Text(Status)!= &quot;Resolved&quot; &amp;&amp; 
+Text(Status)!= &quot;Duplicate&quot; &amp;&amp; 
+Text(Status)!= &quot;Closed&quot;) 
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>STD Passenger Overdue 15 days</milestoneName>
+        <minutesToComplete>7200</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFormula>if( 
+(Accepted_Class__c != &quot;First&quot; &amp;&amp; ROP_Tier__c != &quot;PLAT&quot;) &amp;&amp; 
+(Text(Status)!= &quot;Customer Response&quot; &amp;&amp; 
+Text(Status)!= &quot;Resolved&quot; &amp;&amp; 
+Text(Status)!= &quot;Duplicate&quot; &amp;&amp; 
+Text(Status)!= &quot;Closed&quot;) 
+,true,false)</milestoneCriteriaFormula>
+        <milestoneName>STD Passenger Overdue 20 days</milestoneName>
+        <minutesToComplete>9600</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Case_Overdue</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <criteriaBooleanFilter>1 AND 2 AND 3 AND 4</criteriaBooleanFilter>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Owner_Role_Name__c</field>
+            <operation>equals</operation>
+            <value>S4</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Case_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Commendation</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>notEqual</operation>
+            <value>Customer Response, Resolved, Duplicate, Closed</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Profile_Name__c</field>
+            <operation>equals</operation>
+            <value>CFMS Tier 1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Tier 1 Overdue 4 days</milestoneName>
+        <minutesToComplete>1920</minutesToComplete>
+        <timeTriggers>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Case_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Commendation</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>notEqual</operation>
+            <value>Customer Response, Resolved, Duplicate, Closed</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Owner_Role_Name__c</field>
+            <operation>equals</operation>
+            <value>S4</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Profile_Name__c</field>
+            <operation>equals</operation>
+            <value>CFMS Tier 1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Tier 1 Overdue 20 days</milestoneName>
+        <minutesToComplete>9600</minutesToComplete>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneName>Total Case Overdue 20 days</milestoneName>
+        <minutesToComplete>9600</minutesToComplete>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+</EntitlementProcess>

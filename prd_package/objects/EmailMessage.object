@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Internal_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+CONTAINS(SUBSTITUTE(FromAddress , LEFT(FromAddress , FIND(&quot;@&quot;, FromAddress )), &quot;&quot;) , $Setup.System_Configuration__c.Internal_Email__c) &amp;&amp;
+CONTAINS(SUBSTITUTE(ToAddress , LEFT(ToAddress , FIND(&quot;@&quot;, ToAddress )), &quot;&quot;) , $Setup.System_Configuration__c.Internal_Email__c)
+,true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Internal Email</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Internal__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+CONTAINS(SUBSTITUTE(FromAddress , LEFT(FromAddress , FIND(&quot;@&quot;, FromAddress )), &quot;&quot;) , $Setup.System_Configuration__c.Internal_Email__c)
+,true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>From Internal</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Original_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Original Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Email Messages</relationshipLabel>
+        <relationshipName>Email_Messages</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>To_Internal__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+CONTAINS(SUBSTITUTE(ToAddress , LEFT(ToAddress , FIND(&quot;@&quot;, ToAddress )), &quot;&quot;) , $Setup.System_Configuration__c.Internal_Email__c),true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>To Internal</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>isMerge_Demerge__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>flag that used to identified the email record that created by merge / demerge purpose</description>
+        <externalId>false</externalId>
+        <label>isMerge/Demerge</label>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

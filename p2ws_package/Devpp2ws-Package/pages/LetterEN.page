@@ -1,0 +1,76 @@
+<apex:page contentType="{!if(isDownload,'application/msword#sfdc_document.doc','text/HTML')}" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="{!if(!isDownload,'pdf','')}" standardController="Case" extensions="UpgradeConfirmationController">
+
+    <head>
+        <style type="text/css">
+        @page {
+            size: 7in 9.25in;
+            margin: 20mm 16mm 20mm 16mm;
+        }
+        
+        body {
+            font-family: Arial Unicode MS;
+            font-size: 12px;
+        }
+        </style>
+    </head>
+    <body>
+        <table style="width:100%;table-layout: fixed;">
+            <tr style="height: 110px;" />
+            <tr>
+                <td style="width:40%;height:40px;">
+                    {!view.passengerName}<br />
+                    <apex:outputPanel rendered="{!IF(view.passengerAddress != '',true,false)}">
+                        {!view.passengerAddress}<br />
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!IF(view.passengerAddress == '',true,false)}">
+                        <apex:outputPanel rendered="{!IF(view.passengerStreet1 != '',true,false)}">
+                            {!view.passengerStreet1}<br />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(view.passengerStreet2 != '',true,false)}">
+                            {!view.passengerStreet2}<br />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(view.passengerCity != '',true,false)}">{!view.passengerCity}&nbsp;</apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(view.passengerPostalCode != '',true,false)}">{!view.passengerPostalCode}</apex:outputPanel><br />
+                        <apex:outputPanel rendered="{!IF(view.passengerCountry != '',true,false)}">{!view.passengerCountry}</apex:outputPanel><br />
+                    </apex:outputPanel>
+                    <hr />
+                </td>
+                <td style="width:10%;" />
+                <td></td>
+            </tr>
+            <tr style="padding-top: 50px;">
+                <td>
+                    {!case.CreatedBy.Station__c & case.CreatedBy.Department & '/' & case.CaseNumber & '-' & case.Owner.Alias}
+                </td>
+                <td></td>
+                <td>
+                    
+                    <apex:outputText value="{0,date,d MMMM yyyy}">
+                        <apex:param value="{!TODAY()}" />
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <p>Dear {!view.passengerName},</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: justify;text-justify: inter-word;">
+                    <apex:outputText value="{!view.letterBody}" escape="false" style="white-space:pre-wrap;"/>
+                </td>
+            </tr>
+            <tr>
+                <td/>
+                <td></td>
+                <td>
+                   <p>Yours sincerely,</p>
+                    <br/><br/>
+                    {!view.authorizedBy}<br />
+                    {!view.authorizedPosition}<br />
+                    {!view.authorizedDepartment}<br />
+                </td>
+            </tr>
+        </table>
+    </body>
+</apex:page>

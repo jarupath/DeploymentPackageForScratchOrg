@@ -1,0 +1,31 @@
+<apex:page showHeader="true" sidebar="true" controller="BatchManager">
+    <apex:form >
+        <apex:pageBlock title="Batch">
+            <apex:messages />
+            <apex:pageBlockSection title="Paramaters" columns="2">
+                <apex:inputText value="{!flightNumber}" label="Flight Number" />
+                <apex:pageBlockSectionItem helpText="The format should be 2017-02-12 (YYYY-MM-DD)">
+                    Flight Date
+                    <apex:inputText value="{!flightDate}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Run Batch" action="{!runBatch}" />
+                <apex:commandButton value="Flight Batch 1" action="{!runFlightBatch1}" />
+                <apex:commandButton value="Flight Batch 2" action="{!runFlightBatch2}" />
+                <apex:commandButton value="Flight Batch 3" action="{!runFlightBatch3}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock id="jobList">
+            <apex:pageBlockSection columns="1">
+                <apex:outputText >Number of Job in Queue: {!jobList.size}</apex:outputText>
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!jobList}" var="each">
+                <apex:column value="{!each.ApexClass.Name}" />
+                <apex:column value="{!each.Status}" />
+                <apex:column value="{!each.CreatedDate}" />
+            </apex:pageBlockTable>
+            <apex:actionPoller reRender="jobList" interval="10" />
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

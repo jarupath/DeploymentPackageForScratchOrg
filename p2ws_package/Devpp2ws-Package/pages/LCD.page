@@ -1,0 +1,275 @@
+<apex:page applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf" standardController="Case" extensions="LCDController">
+
+    <head>
+        <style type="text/css">
+        @page {
+            /*size: 794px 612px;*/
+            size: A4;
+            /* A4 width and height */
+            margin: 10px 10px;
+        }
+        
+        body {
+            font-family: Arial Unicode MS;
+            color: rgb(180, 6, 170);
+            font-size: 10px;
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        
+        td,
+        th {
+            border: 1px solid rgb(180, 6, 170);
+            text-align: left;
+        }
+        
+        .text-above {
+            margin-top: 0px;
+        }
+        
+        .text-below {
+            margin-bottom: 0px;
+            color: black;
+        }
+        
+        .col {
+            float: left;
+        }
+        
+        .clear {
+            display: table;
+            clear: both;
+        }
+        
+        .gray-box {
+            background-color: rgb(185, 185, 185);
+            color: black;
+            font-weight: bold;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 5px 10px 5px 10px;
+        }
+        
+        .padded {
+            padding: 10px 10px 10px 10px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
+        
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            border: 1px solid rgb(180, 6, 170);
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .with-checkbox {
+            width: 9%;
+            margin-left: 28px;
+            margin-top: 7px;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="row">
+            <div class="col" style="width:40%;">
+                <div style="width:100%">
+                    <img src="{!URLFOR($Resource.THAI_LOGO_EN, '')}" style="width:50px;" />
+                </div>
+                <div style="margin-top: -8px;">
+                    Thai Airways International Public Company Limited
+                </div>
+            </div>
+            <div class="col" style="width:60%;margin-top:17px;">
+                <div>LIABILITY CLAIM DISCHARGE (LCD) ใบปลดปล่อยหนี้</div>
+                <div>Cargo/Passenger พัสดุภัณฑ์/ผู้โดยสาร No. 00000000003005</div>
+            </div>
+        </div>
+        <div class="clear" />
+        <div class="row">
+            <table style="width:100%;">
+                <tr>
+                    <td colspan="2" style="width:40%;">
+                        <p class="text-above">หมายเลขพัสดุภัณฑ์/ชื่อผู้โดยสาร AWB No./Passengers name</p>
+                        <p class="text-below">{!view.passengerName}</p>
+                    </td>
+                    <td style="width:20%;">
+                        <p class="text-above">วันเดินทาง Date of flight</p>
+                        <p class="text-below">{!view.flightDate}</p>
+                    </td>
+                    <td style="width:40%;">
+                        <div style="float: left;width:40%;">
+                            <p class="text-above">เที่ยวบินที่ Flight No.</p>
+                            <p class="text-below">{!view.flightNumber}</p>
+                        </div>
+                        <div style="float: left;width:30%;">
+                            <p class="text-above">จาก from</p>
+                            <p class="text-below">{!view.origin}</p>
+                        </div>
+                        <div style="float: left;width:30%;">
+                            <p class="text-above">ถึง to</p>
+                            <p class="text-below">{!view.destination}</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:20%;">
+                        <p class="text-above">ตั๋วเดินทางหมายเลข
+                            <br/>Passenger Ticket No.</p>
+                        <p class="text-below">{!view.passengerTicketNumber}</p>
+                    </td>
+                    <td style="width:20%;">
+                        <p class="text-above">ป้ายผูกกระเป๋าหมายเลข
+                            <br/>Baggage Check No.</p>
+                        <p class="text-below">{!view.baggageCheckNumber}</p>
+                    </td>
+                    <td style="width:20%;">
+                        <p class="text-above">ตั๋วเสียเงินค่าน้ำหนักเกินหมายเลข
+                            <br/>Excess Bag Ticket No.</p>
+                        <p class="text-below">{!view.excessBagTicketNumber}</p>
+                    </td>
+                    <td style="width:40%;">
+                        <p class="text-above">ผู้จ่ายเงิน Settlement authorized by</p>
+                        <p class="text-below">{!case.CreatedBy.Station__c & case.CreatedBy.Department & '/' & case.CaseNumber & '-' & case.Owner.Alias}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="row">
+                            <p class="padded">
+                                I/We hereby declare that the sum of
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="width:60%;">
+                                <div class="gray-box" style="min-height: 12px;">
+                                    {!view.amountInWords}
+                                </div>
+                            </div>
+                            <div class="col" style="width:40%;">
+                                <div class="gray-box" style="text-align: right; min-height: 12px;">
+                                    <apex:outputText value="{0, number, ###,###,##0.00}">
+                                        <apex:param value="{!view.amountInFigures}" />
+                                    </apex:outputText>
+                                    <!-- BAHT -->
+                                    {!view.displayCurrency}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                        <div class="row">
+                            <div class="col" style="width:60%; text-align: center;">
+                                Amount in words
+                            </div>
+                            <div class="col" style="width:40%; text-align: center;">
+                                and in figures
+                            </div>
+                        </div>
+                        <div class="clear" />
+                        <div class="row">
+                            <div class="col" style="width:50%; text-align: justify;">
+                                <p class="padded">
+                                    when received by me/us will constitute full and final settlement of and release THAI INTERNATIONAL carrier(s) represented by THAI INTERNATIONAL and their officers, employees, agents and servants from all claims of whatsoever nature, arising out of, or in any way connected with the loss of/damage to/delay of the above reference cargo/baggage or(other reason).
+                                </p>
+                            </div>
+                            <div class="col" style="width:50%; text-align: justify;">
+                                <p class="padded">
+                                    ข้าพเจ้า ขอรับรองว่า บริษัทฯ ได้ชดใช้ค่าเสียหายแก่ข้าพเจ้า ตามจำนวนที่ระบุไว้ข้างต้นเป็นที่เรียบร้อยข้าพเจ้าถือว่าเป็นการยุติการเรียกร้องตลอดไป และข้าพเจ้าตกลงไม่เรียกร้องค่าเสียหายหรือค่าชดใช้ใดๆ อันเกิดจาก ความสูญหาย/ความเสียหาย/ความล่าช้า ที่เกิดขึ้นกับข้าพเจ้า/สัมภาระเดินทาง/พัสดุภัณฑ์ ของข้าพเจ้าจากบริษัท การบินไทย จำกัด ตามเอกสาร PIR/BAH/DPR เลขที่
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                        <div class="row">
+                            <div class="col" style="color:black;word-wrap: break-word; width:760px;">
+                                {!view.detail}
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="width:80%;">
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                หากพบสิ่งของที่สูญหายทั้งหมดภายหลัง
+                                <br/> Should my property be found at a later date (to be filed out in case of total loss)
+                            </div>
+                        </div>
+                        <div class="clear" />
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col with-checkbox">
+                                <input type="checkbox" />
+                            </div>
+                            <div class="col" style="width:30%;">
+                                ข้าพเจ้าขอรับสิ่งของพร้อมทั้งคืนเงิน 50% ของจำนวนเงินชดเชยค่าเสียหายในครั้งนี้ I wish it to be returned to be against my paying THAI 50% of the above amount
+                            </div>
+                            <div class="col with-checkbox">
+                                <input type="checkbox" />
+                            </div>
+                            <div class="col" style="width:30%;">
+                                ข้าพเจ้าขอยกสิ่งของให้ตกเป็นของบริษัท I release the property to THAI for disposal
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                <p class="text-above">
+                                    หมายเลขบัญชี
+                                    <br/> *Account debited (Compulsory)
+                                </p>
+                                <p class="text-below">{!view.accountDebited}</p>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                <p class="text-above">สถานที่ Place</p>
+                                <p class="text-below">&nbsp;</p>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                <p class="text-above">วันที่ Date</p>
+                                <p class="text-below">&nbsp;</p>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                    <td colspan="2">
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                <p class="text-above">ลงนามผู้เรียกร้องค่าเสียหาย Signature of claimant</p>
+                                <p class="text-below">&nbsp;</p>
+                            </div>
+                        </div>
+                        <div class="clear" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col" style="width:100%; text-align: center; vertical-align: center;">
+                This is not a receipt for money
+            </div>
+        </div>
+        <div class="clear" />
+    </body>
+</apex:page>

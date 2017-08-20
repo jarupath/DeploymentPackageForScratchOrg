@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>Email To Customer TH ORG</name>
+    <style>formalLetter</style>
+    <subject>{!User.Station__c}{!User.Department}/{!Case.CaseNumber}-{!User.Alias}</subject>
+    <textOnly>{!Case.Passenger_Email__c}
+เลขที่อ้างอิง : {!User.Department}/{!Case.Case_Number_Custom__c}-{!User.Alias}
+28 พฤศจิกายน 2559
+
+เรื่อง {!Case.Subject}
+
+เรียน {!Case.Passengerid__c}
+
+
+
+
+
+
+{!Case.Email_Body_txt__c}
+
+
+
+
+
+
+
+ขอแสดงความนับถือ
+
+{!Case.Authorize_Signature_for_Email_TH__c}
+{!Case.Position_TH__c}
+{!Case.Department_TH__c}
+{!Case.Department_TH__c}
+โทร. {!User.Phone}
+โทรสาร. {!User.Fax}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

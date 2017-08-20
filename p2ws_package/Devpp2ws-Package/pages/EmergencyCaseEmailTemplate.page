@@ -1,0 +1,168 @@
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardController="Case">
+    <html>
+    <body>
+        <center>
+            <table cellpadding="0" width="500" cellspacing="0" id="topTable" height="450">
+                <tbody>
+                    <tr valign="top">
+                        <td style=" background-color:#FFFFFF; bEditID:r1st1; bLabel:header; vertical-align:top; height:100; text-align:left;">
+                            <img border="0" beditid="r1sp1" blabel="headerImage" id="r1sp1" src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000WJVM&oid=00DN0000000AfvZ&lastMod=1478604277000" />
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td style=" background-color:#663366; bEditID:r2st1; bLabel:accent1; height:5;"></td>
+                    </tr>
+                    <tr valign="top">
+                        <td styleinsert="1" height="300" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;">
+                            <table border="0" cellpadding="5" width="550" cellspacing="5" height="400">
+                                <tbody>
+                                    <tr valign="top" height="400">
+                                        <td teditid="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aeditid="c1r1" locked="0">
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font style="font-size: 12pt;"><b>Flight Information</b></font>
+                                                <div style="font-size: 12pt;">
+                                                    <font color="#663366"><b>--------------------------------------------------</b></font>
+                                                </div>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>FLT No.: <b><i>{!Case.Flightid__r.Name}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>A/C Reg: <b><i>{!Case.Flightid__r.Aircraftid__r.Name}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>STD: <b><i>{!Case.Flightid__r.STD_UTC__c}</i></b> ETD <b><i>{!Case.Flightid__r.ETD_UTC__c}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>STA: <b><i>{!Case.Flightid__r.STA_UTC__c}</i></b> ETA: <b><i>{!Case.Flightid__r.ETA_UTC__c}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>A/C: <b><i>{!Case.Flightid__r.Aircraft_Description__c}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>Origin: <b><i>{!Case.Flightid__r.Origin__c}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font>Destination: <b><i>{!Case.Flightid__r.Destination__c}</i></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font><b><i><br/></i></b></font>
+                                            </div>
+                                            <font color="#663366" style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);"><b>Passenger Information</b></font>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font color="#663366"><b>--------------------------------------------------</b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font face="arial">
+                                                    <div>
+                                                        Name: <b><i>{!Case.Passengerid__r.Name}</i></b>
+                                                    </div>
+                                                    <div>
+                                                        Seat: <b><i>{!Case.Passengerid__r.Checkin_Seat__c}</i></b>
+                                                    </div>
+                                                    <div>
+                                                        ROP No.: <b><i>{!Case.Passengerid__r.AccountId__r.ROP_Number__c}</i></b>
+                                                    </div>
+                                                    <div>
+                                                        ROP Tier: <b><i>{!Case.Passengerid__r.AccountId__r.ROP_Tier__c}</i></b>
+                                                    </div>
+                                                    <div>
+                                                        Gender: <b><i>{!Case.Passengerid__r.AccountId__r.Gender__c}</i></b>
+                                                    </div>
+                                                    <div>
+                                                        Nationality: <b><i>{!Case.Passengerid__r.AccountId__r.Nationality__c}</i></b>
+                                                    </div>
+                                                </font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <font color="#663366"><b><br/></b></font>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <b>Passenger Involved</b>
+                                            </div>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <div>
+                                                    <font color="#663366">
+                                                        <b>--------------------------------------------------</b>
+                                                    </font>
+                                                </div>
+                                                <apex:repeat var="cx" value="{!Case.Case_Group_Members__r}">
+                                                    <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                        Name : <b><i>{!cx.Passengerid__r.Name}</i></b>
+                                                    </div>
+                                                    <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                        Seat : <i><b>{!cx.Passengerid__r.Checkin_Seat__c}</b></i>
+                                                    </div>
+                                                    <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                        Role : <i><b>{!cx.Role__c}</b></i>
+                                                    </div>
+                                                    <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                        <br/>
+                                                    </div>
+                                                </apex:repeat>
+                                            </div>
+                                            <br/>
+                                            <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                <b>Description</b>
+                                            </div>
+                                            <div>
+                                                <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                    <font color="#663366">
+                                                        <b>--------------------------------------------------</b>
+                                                    </font>
+                                                </div>
+                                                <div>
+                                                    <font style="font-family: arial; font-size: 12pt;">
+                                                        Emergency Type:&nbsp;
+                                                    </font>
+                                                    <font face="arial">
+                                                        <b><i>{!Case.Emergency_Type__c}</i></b>
+                                                    </font>
+                                                </div>
+                                                <div style="font-family: arial; font-size: 12pt; color: rgb(0, 0, 0);">
+                                                    <font face="arial">
+                                                        <div style="color: rgb(0, 0, 0);">
+                                                            {!Case.Description}
+                                                        </div>
+                                                        <div style="color: rgb(0, 0, 0);">
+                                                            <br/>
+                                                        </div>
+                                                        <div style="color: rgb(0, 0, 0);">
+                                                            <div style="font-size: 12pt;"><b>Report By</b></div>
+                                                            <div>
+                                                                <div style="font-size: 12pt;">
+                                                                    <font color="#663366">
+                                                                        <b>--------------------------------------------------</b>
+                                                                    </font>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="font-size: 12pt;">
+                                                            <font>AP / IM: <b><i>{!Case.Reported_By_Crew__c}</i></b></font>
+                                                        </div>
+                                                        <br/>
+                                                    </font>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td style=" background-color:#663366; bEditID:r4st1; bLabel:accent2; height:5;"></td>
+                    </tr>
+                    <tr valign="top">
+                        <td style=" background-color:#FFFFFF; bEditID:r5st1; bLabel:footer; vertical-align:top; height:100; text-align:left;">
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td style=" background-color:#AAAAFF; bEditID:r6st1; bLabel:accent3; height:0;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </body>
+    </html>
+</apex:page>

@@ -1,0 +1,185 @@
+<apex:page controller="AddCasePassengerListController" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" showQuickActionVfHeader="false" readOnly="false">
+
+	<apex:includeScript value="{!$Resource.jquery}" />
+    <apex:includeScript value="/support/console/29.0/integration.js" />
+    <apex:includeScript value="{!URLFOR($Resource.sfdc_bs3, 'dist/js/bootstrap.js')}" />
+    <apex:includeScript value="{!$Resource.angularjs}" />
+    <apex:includeScript value="/support/console/28.0/integration.js"/>
+    <apex:stylesheet value="{!URLFOR($Resource.sfdc_bs3, 'dist/css/bootstrap-bs3.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap_theme, '')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrapcss, '')}" />
+    <apex:includeScript value="{!$Resource.bootstrapjs}" />
+
+	<script type="text/javascript">
+		
+		function addTextFiltering() {
+			$('#searchTxt').keyup(function(){
+			   var valThis = $(this).val().toLowerCase();
+			    $('.navList .datarow .datavalue').each(function(){
+			     var text = $(this).text().toLowerCase();
+
+			     	if(valThis) {
+			        	(text.indexOf(valThis) > -1) ? $(this).parent().show() : $(this).parent().hide();    
+			     	} else {
+			     		$(this).parent().show();
+			     	}
+			   });
+			});
+		}
+
+		var previousOnload = window.onload; window.onload = function() { 
+			if (previousOnload) { 
+				previousOnload(); 
+			} 
+			addTextFiltering(); 
+			if(!'{!primaryPassenger}') {
+				$('.datarow').find('.primary').first().prop('checked', true);
+			}
+			$('.navList .dataCol').hide();
+			
+		}
+
+		function selectAllPassengers() {
+
+			$('.datarow').each(function() {
+
+				if($(this).css('display')!='none') {
+					$(this).find('.select').prop('checked', true);
+				}
+		   	});
+			   
+		}
+
+		function clearAllPassengers() {
+
+			$('.datarow').each(function() {
+
+				if($(this).css('display')!='none') {
+					$(this).find('.select').prop('checked', false);
+				}
+		   	});
+			   
+		}
+
+		function addSelectedToPassengerList() {
+
+			var passengerArr = [];
+			var index = 0;
+			var primary;
+
+			$('.datarow').each(function() {
+
+				if($(this).find('.select').prop('checked')==true) {
+					passengerArr[index++] = $(this).find('.passengerId').text();
+
+					if($(this).find('.primary').prop('checked')==true) {
+						primary = $(this).find('.passengerId').text();
+					}
+				}
+
+		   	});
+
+		   	if(passengerArr.length>0){
+		   		$('#msg').text('')
+		   		addToPassengerList(passengerArr.join(), primary);
+		   		closePopup();
+		   	} else {
+		   		alert('No record has been saved. Please select at least one passenger before saving.');
+		   		closePopup();
+		   	}
+ 	
+		}
+
+		function closePopup() {
+
+			if(sforce&&sforce.one){
+				console.log('closepopup');
+				//window.top.location.href = '/one/one.app#/sObject/' + '{!thisCase.Id}' + '/view';
+				sforce.one.navigateToSObject('{!thisCase.Id}');
+			} else if('{!topURL}'.includes('console') || '{!topURL}'.includes('servicedesk')
+				|| '{!topURL}'==''){
+				window.top.location.href = '/console';
+			} else {
+				window.top.location.href = '{!retURL}';
+			}
+			
+		}
+
+		console.log('sforce :' + sforce);
+		console.log('sforce.one :' + sforce.one);
+		
+	</script>
+
+	<apex:form >
+		<apex:actionFunction name="addToPassengerList" action="{!addToPassengerList}" rerender="showstate">
+			<apex:param id="thisPassengerIds" name="thisPassengerIds" value="" assignTo="{!thisPassengerIds}" />
+			<apex:param id="primaryPassenger" name="primaryPassenger" value="" assignTo="{!primaryPassenger}" />
+		</apex:actionFunction>
+	</apex:form>
+
+
+	<apex:pageBlock id="showstate">
+		<apex:pageBlockSection >
+			<div class="panel panel-default">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">
+			  	<nav class="navbar navbar-default" width="100%">
+				  <div class="container-fluid">	    
+
+				    <!-- Collect the nav links, forms, and other content for toggling -->
+				      <form class="navbar-form navbar-left">
+				        <div class="form-group container-fluid">
+				        	<div class="row" style="width:100% overflow:hidden;">
+					          	<div class="col-xs-6" style="width:50%"><input id="searchTxt" type="text" class="form-control" placeholder="Search" /></div>
+						        <div class="col-xs-6" style="width:50%"><button type="submit" class="btn btn-default" onclick="addSelectedToPassengerList();">Save</button>
+								<button class="btn btn-default" onclick="closePopup();">Cancel</button></div>
+							</div>
+				        </div>
+				      </form>
+				  </div><!-- /.container-fluid -->
+				</nav>
+			  </div>
+
+			  <!-- Table -->
+			  <table class="navList table" style="width: 100%; table-layout: fixed;">
+			  <colgroup span="9"/>
+
+			  	<thead>
+				  	<tr>
+				  		<th style="width: 10%;word-wrap: break-word;"><a id="selectAll" onclick="selectAllPassengers();" href="#"><img src='/img/checkbox_checked.gif' width='25' height='20' /></a> | <a id="clearAll" onclick="clearAllPassengers();" href="#"><img src='/img/checkbox_unchecked.gif' width='25' height='20' /></a></th>
+				  		<th style="width: 20%;word-wrap: break-word;">Passenger Name</th>
+				  		<th style="width: 10%;word-wrap: break-word;">PNR</th>
+				  		<th style="width: 10%;word-wrap: break-word;">FFP Number</th>
+				  		<th style="width: 10%;word-wrap: break-word;">FFR Tier</th>
+				  		<th style="width: 10%;word-wrap: break-word;">Seat Number</th>
+				  		<th style="width: 10%;word-wrap: break-word;">VIP Flag</th>			  	
+				  		<th style="width: 10%;word-wrap: break-word;">Travel Class</th>
+				  		<th style="width: 10%;word-wrap: break-word;">Primary</th>
+				  	</tr>
+			  	</thead>
+			  	
+			  	<tbody>
+			  		<apex:repeat value="{!passengerListList}" var="paxList">
+				  		<apex:repeat value="{!paxList}" var="p" id="theRepeat">
+						  	<tr class="datarow">
+						  		<td style="width: 10%;word-wrap: break-word;"><p align="center" width="100%"><input class="select" type="checkbox" /></p></td>
+						  		<td class="datavalue" style="display: none;">{!p.Name} {!p.PNR__c} {!p.FFP_Number__c}</td>
+						  		<td class="passengerId" style="display: none;">{!p.Id}</td>
+						  		<td style="width: 20%;word-wrap: break-word;">{!p.Name}</td>
+						  		<td style="width: 10%;word-wrap: break-word;">{!p.PNR__c}</td>
+						  		<td style="width: 10%;word-wrap: break-word;">{!p.FFP_Number__c}</td>
+						  		<td style="width: 10%;word-wrap: break-word;">{!p.FFP_Tier__c}</td>
+						  		<td style="width: 10%;word-wrap: break-word;">{!p.Seat__c}</td>
+						  		<td style="width: 10%;word-wrap: break-word;"><p align="center" width="100%"><img src='/img/checkbox_checked.gif' width='25' height='20' style='{!if(p.VIP_VVIP_Flag__c,"display: block;","display: none;")}' /></p></td>
+						  		<td style="width: 10%;word-wrap: break-word;">{!p.Cabin_Code__c}</td>
+						  		<td style="width: 10%;word-wrap: break-word;"><input class="primary" type="radio" name="primary" /></td>
+						  	</tr>
+					  	</apex:repeat>
+			  		</apex:repeat>
+			  		
+			  	</tbody>
+			  </table>
+			</div>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Age__c</fullName>
+        <description>How long this Job Queue has been created</description>
+        <externalId>false</externalId>
+        <formula>IF ( NOT(ISNULL(Queued_Time__c))
+,TODAY() - DATEVALUE(Queued_Time__c),0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Class_Name__c</fullName>
+        <description>Which class originated this Job Queue</description>
+        <externalId>false</externalId>
+        <label>Class Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Job_Name__c</fullName>
+        <description>Name of the Job Queue</description>
+        <externalId>true</externalId>
+        <label>Job Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manual_Run__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Force this job to run immediately without waiting for the Schedule Time to be reached</description>
+        <externalId>false</externalId>
+        <label>Manual Run</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parameter__c</fullName>
+        <description>Parameter for the Apex Job or Batch to run</description>
+        <externalId>false</externalId>
+        <label>Parameter</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Queued_Time__c</fullName>
+        <description>The timestamp when this Job Queue entered Scheduled Job in Salesforce</description>
+        <externalId>false</externalId>
+        <label>Queued Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Reference_Id__c</fullName>
+        <description>The Id that is used to reference the record that originated this Job Queue</description>
+        <externalId>false</externalId>
+        <label>Reference Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Result__c</fullName>
+        <description>Result when the Job is scheduled into Scheuled Job in Salesforce</description>
+        <externalId>false</externalId>
+        <label>Result</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Schedule_Time__c</fullName>
+        <description>The time that this Job Queue should run</description>
+        <externalId>false</externalId>
+        <label>Schedule Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the Job Queue has been scheduled</description>
+        <externalId>false</externalId>
+        <label>Scheduled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Job Queue</label>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Scheduled</fullName>
+        <columns>NAME</columns>
+        <columns>Class_Name__c</columns>
+        <columns>Schedule_Time__c</columns>
+        <columns>Queued_Time__c</columns>
+        <columns>Job_Name__c</columns>
+        <columns>Parameter__c</columns>
+        <columns>Reference_Id__c</columns>
+        <columns>Result__c</columns>
+        <columns>Scheduled__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Scheduled__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Scheduled</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Specific_Flight_1</fullName>
+        <columns>Job_Name__c</columns>
+        <columns>Schedule_Time__c</columns>
+        <columns>Scheduled__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Job_Name__c</field>
+            <operation>contains</operation>
+            <value>926_16AUG</value>
+        </filters>
+        <label>Specific Flight</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Unscheduled</fullName>
+        <columns>NAME</columns>
+        <columns>Job_Name__c</columns>
+        <columns>Class_Name__c</columns>
+        <columns>Schedule_Time__c</columns>
+        <columns>Parameter__c</columns>
+        <columns>Reference_Id__c</columns>
+        <columns>Result__c</columns>
+        <columns>Scheduled__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Scheduled__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Unscheduled</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>{0000000000}</displayFormat>
+        <label>Job Queue Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Job Queues</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Job_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Schedule_Time__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Scheduled__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

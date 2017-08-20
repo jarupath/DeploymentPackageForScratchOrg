@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <validationRules>
+        <fullName>Lock_Reply_Comment</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND($User.Id ==  CreatedById, ISCHANGED( Reply_Comment__c )),AND(ISNEW(),ISCHANGED( Reply_Comment__c )))</errorConditionFormula>
+        <errorDisplayField>Reply_Comment__c</errorDisplayField>
+        <errorMessage>Creator cannot modify this reply comment.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Lock_Task</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND($User.Id !=  CreatedById,
+OR(
+ISCHANGED(Subject),ISCHANGED(WhoId),ISCHANGED(  Priority),ISCHANGED(Status),ISCHANGED(Description),ISCHANGED(WhatId),ISCHANGED(ActivityDate),ISCHANGED(Investigation_Department__c),ISCHANGED( Investigation_Category__c)
+)
+)</errorConditionFormula>
+        <errorMessage>You can modify only Reply Comment and Assigned To.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,19 @@
+<apex:page standardController="Case" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false">
+<apex:includeScript value="/soap/ajax/29.0/connection.js"/>
+<script>
+sforce.connection.sessionId = '{!GETSESSIONID()}';
+var ucase = new sforce.SObject('Case'); 
+
+ucase.id = "{!Case.Id}"; 
+ucase.Delete_Flag__c = 0;
+
+var r = confirm("Are you sure you want to undelete?");
+if (r == true) { 
+result = sforce.connection.update([ucase]); 
+}
+
+window.parent.close();
+sforce.one.navigateToURL('/{!Case.Id}?retUrl=/500');
+
+</script>
+</apex:page>

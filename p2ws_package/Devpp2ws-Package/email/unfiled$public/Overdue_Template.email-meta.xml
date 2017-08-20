@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>THAI_Letterhead_Logo</letterhead>
+    <name>Overdue Template</name>
+    <style>freeForm</style>
+    <subject>{!Case.Priority} :: Case {!Case.Case_Number_Custom_F__c} OVERDUE!!</subject>
+    <textOnly>The following case is assigned to you.
+
+Case Number  : {!Case.Case_Number_Custom__c}
+Channel  : {!Case.Origin}
+Case Type  : {!Case.Case_Type__c}
+Flight Number : {!Case.Flightid__c}
+Passenger : {!Case.Passengerid__c}
+ROP : {!Case.ROP_Tier__c}
+
+Description :
+{!Case.Description}
+
+
+Thank you
+{!Case.OwnerFullName}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

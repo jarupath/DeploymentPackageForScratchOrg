@@ -1,0 +1,4039 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>มูลค่าเป็นเงินของสิ่งที่ Compensate</description>
+        <externalId>false</externalId>
+        <label>Amount (Cash/EMD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approval_Status__c</fullName>
+        <description>Status of this approval request.</description>
+        <externalId>false</externalId>
+        <formula>IMAGE(
+If(Text(Status__c) == &quot;Approved&quot;, 
+&quot;/resource/icon_case/Status_Approved.gif&quot;,
+If(Text(Status__c) == &quot;Rejected&quot;, 
+&quot;/resource/icon_case/Status_Rejected.gif&quot;,
+IF(Text(Status__c) == &quot;Pending&quot;,
+&quot;/resource/icon_case/Status_Pending.gif&quot;,
+IF(Text(Status__c) == &quot;Draft&quot;,
+&quot;/resource/icon_case/Status_Draft.gif&quot;,
+IF(Text(Status__c) == &quot;Obsolete&quot;,
+&quot;/resource/icon_case/Status_Obsolete.gif&quot;,
+&quot;/resource/icon_case/Status_New.gif&quot;)))))
+,&quot;&quot;,25,30)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Approval Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CaseId__c</fullName>
+        <description>ID of the case associated with this compensation.</description>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Compensations</relationshipLabel>
+        <relationshipName>Compensations</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Case_Group_Member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>ID of the case group member associated with this compensation.</description>
+        <externalId>false</externalId>
+        <label>Case Group Member</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.CaseId__c</field>
+                <operation>equals</operation>
+                <valueField>Case_Group_Member__c.Caseid__r.Id</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Case_Group_Member__c</referenceTo>
+        <relationshipLabel>Compensations</relationshipLabel>
+        <relationshipName>Compensations</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Compensation_Account_Center__c</fullName>
+        <externalId>false</externalId>
+        <label>Compensation Account Center</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1030100</fullName>
+                    <default>false</default>
+                    <label>1030100</label>
+                </value>
+                <value>
+                    <fullName>1015519</fullName>
+                    <default>false</default>
+                    <label>1015519</label>
+                </value>
+                <value>
+                    <fullName>1301220</fullName>
+                    <default>false</default>
+                    <label>1301220</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Compensation_Account_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Compensation Account Number</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Compensation_Account_Center__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>631070</fullName>
+                    <default>false</default>
+                    <label>631070 - Baggage Claims Compensation</label>
+                </value>
+                <value>
+                    <fullName>631071</fullName>
+                    <default>false</default>
+                    <label>631071 - Injury</label>
+                </value>
+                <value>
+                    <fullName>631080</fullName>
+                    <default>false</default>
+                    <label>631080 - Compensation EX-Gratia Passenger Complaint&amp;Claim</label>
+                </value>
+                <value>
+                    <fullName>631130</fullName>
+                    <default>false</default>
+                    <label>631130 - DBC / DGC</label>
+                </value>
+                <value>
+                    <fullName>631140</fullName>
+                    <default>false</default>
+                    <label>631140 - Customer Relations EMD</label>
+                </value>
+                <value>
+                    <fullName>631150</fullName>
+                    <default>false</default>
+                    <label>631150 - Inflight Service Compliment</label>
+                </value>
+                <value>
+                    <fullName>811106</fullName>
+                    <default>false</default>
+                    <label>811106 -  Int.Charge for Other Flight Kitchen (for Lounge Access Voucher)</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <valueName>631070</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <valueName>631071</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <valueName>631080</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <valueName>631130</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <controllingFieldValue>1015519</controllingFieldValue>
+                <valueName>631140</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1030100</controllingFieldValue>
+                <valueName>631150</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>1301220</controllingFieldValue>
+                <valueName>811106</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Compensation_Detail__c</fullName>
+        <description>Detail of the compensation.</description>
+        <externalId>false</externalId>
+        <label>Compensation Detail</label>
+        <length>130000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Compensation_Tools__c</fullName>
+        <externalId>false</externalId>
+        <label>Compensation Tools</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Compensation_Account_Number__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Cash</fullName>
+                    <default>false</default>
+                    <label>Cash</label>
+                </value>
+                <value>
+                    <fullName>Complimentary Ticket</fullName>
+                    <default>false</default>
+                    <label>Complimentary Ticket</label>
+                </value>
+                <value>
+                    <fullName>Duty Free</fullName>
+                    <default>false</default>
+                    <label>Duty Free</label>
+                </value>
+                <value>
+                    <fullName>EMD</fullName>
+                    <default>false</default>
+                    <label>EMD</label>
+                </value>
+                <value>
+                    <fullName>Excess Baggage</fullName>
+                    <default>false</default>
+                    <label>Excess Baggage</label>
+                </value>
+                <value>
+                    <fullName>Gifts</fullName>
+                    <default>false</default>
+                    <label>Gifts</label>
+                </value>
+                <value>
+                    <fullName>Lounge Access Voucher</fullName>
+                    <default>false</default>
+                    <label>Lounge Access Voucher</label>
+                </value>
+                <value>
+                    <fullName>Mileage Compensation</fullName>
+                    <default>false</default>
+                    <label>Mileage Compensation</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Upgrading</fullName>
+                    <default>false</default>
+                    <label>Upgrading</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>631070</controllingFieldValue>
+                <controllingFieldValue>631071</controllingFieldValue>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <controllingFieldValue>631130</controllingFieldValue>
+                <controllingFieldValue>N/A</controllingFieldValue>
+                <valueName>Cash</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <valueName>Complimentary Ticket</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <valueName>Excess Baggage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <valueName>Gifts</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <valueName>Mileage Compensation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <controllingFieldValue>N/A</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631080</controllingFieldValue>
+                <valueName>Upgrading</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631140</controllingFieldValue>
+                <valueName>EMD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>631150</controllingFieldValue>
+                <valueName>Duty Free</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>811106</controllingFieldValue>
+                <valueName>Lounge Access Voucher</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Compensation_Type__c</fullName>
+        <description>Displays the compensation tools</description>
+        <externalId>false</externalId>
+        <label>Compensation Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Baggage Damage</fullName>
+                    <default>false</default>
+                    <label>Baggage Damage</label>
+                </value>
+                <value>
+                    <fullName>Baggage Delay</fullName>
+                    <default>false</default>
+                    <label>Baggage Delay</label>
+                </value>
+                <value>
+                    <fullName>Baggage Loss</fullName>
+                    <default>false</default>
+                    <label>Baggage Loss</label>
+                </value>
+                <value>
+                    <fullName>Baggage Pilferage</fullName>
+                    <default>false</default>
+                    <label>Baggage Pilferage</label>
+                </value>
+                <value>
+                    <fullName>Boarding</fullName>
+                    <default>false</default>
+                    <label>Boarding</label>
+                </value>
+                <value>
+                    <fullName>Check in Service</fullName>
+                    <default>false</default>
+                    <label>Check in Service</label>
+                </value>
+                <value>
+                    <fullName>Contact Center</fullName>
+                    <default>false</default>
+                    <label>Contact Center</label>
+                </value>
+                <value>
+                    <fullName>Denied Boarding</fullName>
+                    <default>false</default>
+                    <label>Denied Boarding</label>
+                </value>
+                <value>
+                    <fullName>Downgrade</fullName>
+                    <default>false</default>
+                    <label>Downgrade</label>
+                </value>
+                <value>
+                    <fullName>EC261</fullName>
+                    <default>false</default>
+                    <label>EC261</label>
+                </value>
+                <value>
+                    <fullName>Food poisoning</fullName>
+                    <default>false</default>
+                    <label>Food poisoning</label>
+                </value>
+                <value>
+                    <fullName>Foreign object</fullName>
+                    <default>false</default>
+                    <label>Foreign object</label>
+                </value>
+                <value>
+                    <fullName>Handling of Flight Irregularity</fullName>
+                    <default>false</default>
+                    <label>Handling of Flight Irregularity</label>
+                </value>
+                <value>
+                    <fullName>IFE (in-flight entertainment) malfunction</fullName>
+                    <default>false</default>
+                    <label>IFE (in-flight entertainment) malfunction</label>
+                </value>
+                <value>
+                    <fullName>Inadmissible passenger</fullName>
+                    <default>false</default>
+                    <label>Inadmissible passenger</label>
+                </value>
+                <value>
+                    <fullName>In-Flight Service</fullName>
+                    <default>false</default>
+                    <label>In-Flight Service</label>
+                </value>
+                <value>
+                    <fullName>Injury before boarding/after/on arrival/Medical assistance</fullName>
+                    <default>false</default>
+                    <label>Injury before boarding/after/on arrival/Medical assistance</label>
+                </value>
+                <value>
+                    <fullName>Injury on Board</fullName>
+                    <default>false</default>
+                    <label>Injury on Board</label>
+                </value>
+                <value>
+                    <fullName>Lounge</fullName>
+                    <default>false</default>
+                    <label>Lounge</label>
+                </value>
+                <value>
+                    <fullName>Medical assistance</fullName>
+                    <default>false</default>
+                    <label>Medical assistance</label>
+                </value>
+                <value>
+                    <fullName>On board Catering</fullName>
+                    <default>false</default>
+                    <label>On board Catering</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Reservation Service</fullName>
+                    <default>false</default>
+                    <label>Reservation Service</label>
+                </value>
+                <value>
+                    <fullName>Schedule Deviation</fullName>
+                    <default>false</default>
+                    <label>Schedule Deviation</label>
+                </value>
+                <value>
+                    <fullName>Seat malfunction</fullName>
+                    <default>false</default>
+                    <label>Seat malfunction</label>
+                </value>
+                <value>
+                    <fullName>Special meal request</fullName>
+                    <default>false</default>
+                    <label>Special meal request</label>
+                </value>
+                <value>
+                    <fullName>Ticketing Service</fullName>
+                    <default>false</default>
+                    <label>Ticketing Service</label>
+                </value>
+                <value>
+                    <fullName>Web Booking</fullName>
+                    <default>false</default>
+                    <label>Web Booking</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Created_At_Mobile__c</fullName>
+        <externalId>false</externalId>
+        <label>Created At (Mobile)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <description>SO code of the currency. Must be one of the valid alphabetic, three-letter currency ISO codes defined by the ISO 4217 standard, such as USD, GBP, or JPY.</description>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Unit__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+                <value>
+                    <fullName>THB</fullName>
+                    <default>false</default>
+                    <label>THB</label>
+                </value>
+                <value>
+                    <fullName>GBP</fullName>
+                    <default>false</default>
+                    <label>GBP</label>
+                </value>
+                <value>
+                    <fullName>AUD</fullName>
+                    <default>false</default>
+                    <label>AUD</label>
+                </value>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>BHD</fullName>
+                    <default>false</default>
+                    <label>BHD</label>
+                </value>
+                <value>
+                    <fullName>BDT</fullName>
+                    <default>false</default>
+                    <label>BDT</label>
+                </value>
+                <value>
+                    <fullName>KHR</fullName>
+                    <default>false</default>
+                    <label>KHR</label>
+                </value>
+                <value>
+                    <fullName>CAD</fullName>
+                    <default>false</default>
+                    <label>CAD</label>
+                </value>
+                <value>
+                    <fullName>CNY</fullName>
+                    <default>false</default>
+                    <label>CNY</label>
+                </value>
+                <value>
+                    <fullName>DKK</fullName>
+                    <default>false</default>
+                    <label>DKK</label>
+                </value>
+                <value>
+                    <fullName>HKD</fullName>
+                    <default>false</default>
+                    <label>HKD</label>
+                </value>
+                <value>
+                    <fullName>INR</fullName>
+                    <default>false</default>
+                    <label>INR</label>
+                </value>
+                <value>
+                    <fullName>IDR</fullName>
+                    <default>false</default>
+                    <label>IDR</label>
+                </value>
+                <value>
+                    <fullName>IRR</fullName>
+                    <default>false</default>
+                    <label>IRR</label>
+                </value>
+                <value>
+                    <fullName>JPY</fullName>
+                    <default>false</default>
+                    <label>JPY</label>
+                </value>
+                <value>
+                    <fullName>KRW</fullName>
+                    <default>false</default>
+                    <label>KRW</label>
+                </value>
+                <value>
+                    <fullName>LAK</fullName>
+                    <default>false</default>
+                    <label>LAK</label>
+                </value>
+                <value>
+                    <fullName>MOP</fullName>
+                    <default>false</default>
+                    <label>MOP</label>
+                </value>
+                <value>
+                    <fullName>MYR</fullName>
+                    <default>false</default>
+                    <label>MYR</label>
+                </value>
+                <value>
+                    <fullName>MMK</fullName>
+                    <default>false</default>
+                    <label>MMK</label>
+                </value>
+                <value>
+                    <fullName>NPR</fullName>
+                    <default>false</default>
+                    <label>NPR</label>
+                </value>
+                <value>
+                    <fullName>NZD</fullName>
+                    <default>false</default>
+                    <label>NZD</label>
+                </value>
+                <value>
+                    <fullName>NOK</fullName>
+                    <default>false</default>
+                    <label>NOK</label>
+                </value>
+                <value>
+                    <fullName>OMR</fullName>
+                    <default>false</default>
+                    <label>OMR</label>
+                </value>
+                <value>
+                    <fullName>PKR</fullName>
+                    <default>false</default>
+                    <label>PKR</label>
+                </value>
+                <value>
+                    <fullName>PHP</fullName>
+                    <default>false</default>
+                    <label>PHP</label>
+                </value>
+                <value>
+                    <fullName>RUB</fullName>
+                    <default>false</default>
+                    <label>RUB</label>
+                </value>
+                <value>
+                    <fullName>SGD</fullName>
+                    <default>false</default>
+                    <label>SGD</label>
+                </value>
+                <value>
+                    <fullName>LKR</fullName>
+                    <default>false</default>
+                    <label>LKR</label>
+                </value>
+                <value>
+                    <fullName>SEK</fullName>
+                    <default>false</default>
+                    <label>SEK</label>
+                </value>
+                <value>
+                    <fullName>CHF</fullName>
+                    <default>false</default>
+                    <label>CHF</label>
+                </value>
+                <value>
+                    <fullName>TWD</fullName>
+                    <default>false</default>
+                    <label>TWD</label>
+                </value>
+                <value>
+                    <fullName>AED</fullName>
+                    <default>false</default>
+                    <label>AED</label>
+                </value>
+                <value>
+                    <fullName>VND</fullName>
+                    <default>false</default>
+                    <label>VND</label>
+                </value>
+                <value>
+                    <fullName>XDR</fullName>
+                    <default>false</default>
+                    <label>XDR</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>USD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>THB</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>GBP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>AUD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>EUR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>BHD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>BDT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>KHR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>CAD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>CNY</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>DKK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>HKD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>INR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>IDR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>IRR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>JPY</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>KRW</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>LAK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>MOP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>MYR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>MMK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>NPR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>NZD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>NOK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>OMR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>PKR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>PHP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>RUB</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>SGD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>LKR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>SEK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>CHF</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>TWD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>AED</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>VND</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Currency</controllingFieldValue>
+                <valueName>XDR</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>From_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>From Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>From_Seat__c</fullName>
+        <externalId>false</externalId>
+        <label>From Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goodwill_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Goodwill Detail</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Goodwill__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Goodwill</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ISC_Form_No__c</fullName>
+        <description>For In-flight compensation</description>
+        <externalId>false</externalId>
+        <label>ISC Form No.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Individual__c</fullName>
+        <description>Checks whether the compensation is meant for an individual</description>
+        <externalId>false</externalId>
+        <formula>!ISBLANK(Case_Group_Member__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Individual</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Item_Code_No__c</fullName>
+        <description>for in-flight compensation</description>
+        <externalId>false</externalId>
+        <label>Item Code No.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_Description__c</fullName>
+        <description>for in-flight compensation</description>
+        <externalId>false</externalId>
+        <label>Item Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Liability__c</fullName>
+        <externalId>false</externalId>
+        <label>Liability</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                    <default>false</default>
+                    <label>Act of Legislation 2015 for International Air Transportation</label>
+                </value>
+                <value>
+                    <fullName>EC261/2004</fullName>
+                    <default>false</default>
+                    <label>EC261/2004</label>
+                </value>
+                <value>
+                    <fullName>Local Laws</fullName>
+                    <default>false</default>
+                    <label>Local Laws</label>
+                </value>
+                <value>
+                    <fullName>MC99 (The Montreal Convention)</fullName>
+                    <default>false</default>
+                    <label>MC99 (The Montreal Convention)</label>
+                </value>
+                <value>
+                    <fullName>US Laws</fullName>
+                    <default>false</default>
+                    <label>US Laws</label>
+                </value>
+                <value>
+                    <fullName>Warsaw Convention</fullName>
+                    <default>false</default>
+                    <label>Warsaw Convention</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Mobile_App_Key__c</fullName>
+        <externalId>false</externalId>
+        <label>Mobile App Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PassengerId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>ID of the passenger associated with this compensation.</description>
+        <externalId>false</externalId>
+        <label>Passenger</label>
+        <referenceTo>Passenger__c</referenceTo>
+        <relationshipLabel>Compensations</relationshipLabel>
+        <relationshipName>Compensations</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Passenger_Name__c</fullName>
+        <description>Name of the passenger.</description>
+        <externalId>false</externalId>
+        <formula>Case_Group_Member__r.Passengerid__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Passenger Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>CaseId__r.Effect_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Passenger Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Problem__c</fullName>
+        <externalId>false</externalId>
+        <label>Problem</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROE_US_Dollars__c</fullName>
+        <description>Rate of exchange (USD)</description>
+        <externalId>false</externalId>
+        <label>ROE (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROE__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Rate of exchange</description>
+        <externalId>false</externalId>
+        <label>ROE</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>RecordType.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Record Type Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>true</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Obsolete</fullName>
+                    <default>false</default>
+                    <label>Obsolete</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>To_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>To Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>To_Seat__c</fullName>
+        <externalId>false</externalId>
+        <label>To Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TotalTotal_sum_of_CGM__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+Is_Individual__c ,
+Total__c ,
+Total__c * CaseId__r.SUM_Involved_Passenger_Amount__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Cash_EMD__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+ Is_Individual__c ,
+ Amount__c ,
+ Amount__c * CaseId__r.SUM_Involved_Passenger_Amount__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount (Cash/EMD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_THB__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ROE__c &gt; 0 &amp;&amp; Total_Amount_Cash_EMD__c &gt; 0 , Total_Amount_Cash_EMD__c * ROE__c , Total_Amount_Cash_EMD__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount (THB)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_THB__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ROE__c &gt; 0 &amp;&amp;  Amount__c &gt; 0 , Amount__c * ROE__c ,  Amount__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total (THB)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_USD__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ROE_US_Dollars__c  &gt; 0 &amp;&amp; Amount__c &gt; 0 , Amount__c *  ROE_US_Dollars__c  , Amount__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>จำนวนของสิ่งที่ Compensate</description>
+        <externalId>false</externalId>
+        <label>Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>&apos;&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type_of_Irregularity__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of Irregularity</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>URLsrc__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS($Api.Enterprise_Server_URL_290,&quot;.force.com&quot;), 
+MID( $Api.Enterprise_Server_URL_290, FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0)), 
+FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0))+1) - FIND(&quot;/&quot;, $Api.Enterprise_Server_URL_290, FIND(&quot;.force.com/&quot;, $Api.Enterprise_Server_URL_290, 0)) 
+) , &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>URLsrc</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit__c</fullName>
+        <description>Displays the unit of the compensation</description>
+        <externalId>false</externalId>
+        <label>Unit</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Currency</fullName>
+                    <default>false</default>
+                    <label>Currency</label>
+                </value>
+                <value>
+                    <fullName>Kilogramme</fullName>
+                    <default>false</default>
+                    <label>Kilogramme</label>
+                </value>
+                <value>
+                    <fullName>Miles</fullName>
+                    <default>false</default>
+                    <label>Miles</label>
+                </value>
+                <value>
+                    <fullName>Sector</fullName>
+                    <default>false</default>
+                    <label>Sector</label>
+                </value>
+                <value>
+                    <fullName>Ticket</fullName>
+                    <default>false</default>
+                    <label>Ticket</label>
+                </value>
+                <value>
+                    <fullName>Person</fullName>
+                    <default>false</default>
+                    <label>Person</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>UpgradeCertificate__c</fullName>
+        <description>for in-flight compensation</description>
+        <externalId>false</externalId>
+        <label>Upgrade Certificate</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Stand-by Upgrade Certificate</fullName>
+                    <default>false</default>
+                    <label>Stand-by Upgrade Certificate</label>
+                </value>
+                <value>
+                    <fullName>Confirmed Upgrade Certificate</fullName>
+                    <default>false</default>
+                    <label>Confirmed Upgrade Certificate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Compensation</label>
+    <nameField>
+        <displayFormat>CMP-{0000000000}</displayFormat>
+        <label>Running Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Compensations</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>CFMS_Compensation</fullName>
+        <active>true</active>
+        <label>CFMS Compensation</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>1015519</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1030100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1301220</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>631070</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631071</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631080</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631130</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631140</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631150</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>811106</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complimentary Ticket</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duty Free</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excess Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gifts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge Access Voucher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upgrading</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warsaw Convention</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kilogramme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>CFMS_Compensation_Final</fullName>
+        <active>true</active>
+        <label>CFMS Compensation Final</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>1015519</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1030100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1301220</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>631070</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631071</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631080</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631130</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631140</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631150</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>811106</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complimentary Ticket</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duty Free</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excess Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gifts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge Access Voucher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upgrading</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warsaw Convention</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kilogramme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>GS_Compensation</fullName>
+        <active>true</active>
+        <label>GS Compensation</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>In_flight_Compensation</fullName>
+        <active>true</active>
+        <description>for in-flight compensation</description>
+        <label>In-flight Compensation</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>1015519</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1030100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1301220</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>631070</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631071</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631080</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631130</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631140</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631150</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>811106</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complimentary Ticket</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duty Free</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excess Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gifts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge Access Voucher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upgrading</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warsaw Convention</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kilogramme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SD_SR_Compensation</fullName>
+        <active>true</active>
+        <description>Compensation for SD/SR (non BKK)</description>
+        <label>SD/SR Compensation</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>1015519</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1030100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1301220</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>631070</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631071</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631080</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631130</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631140</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631150</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>811106</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complimentary Ticket</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duty Free</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excess Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gifts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge Access Voucher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upgrading</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warsaw Convention</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kilogramme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SD_SR_Compensation_Final</fullName>
+        <active>true</active>
+        <description>Compensation for SD/SR - Final (non BKK)</description>
+        <label>SD/SR Compensation Final</label>
+        <picklistValues>
+            <picklist>Compensation_Account_Center__c</picklist>
+            <values>
+                <fullName>1015519</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1030100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1301220</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Account_Number__c</picklist>
+            <values>
+                <fullName>631070</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631071</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631080</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631130</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631140</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>631150</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>811106</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Tools__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complimentary Ticket</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duty Free</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excess Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gifts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge Access Voucher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upgrading</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Compensation_Type__c</picklist>
+            <values>
+                <fullName>Baggage Damage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Delay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Loss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Pilferage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check in Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contact Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denied Boarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downgrade</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food poisoning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Foreign object</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling of Flight Irregularity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFE %28in-flight entertainment%29 malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Flight Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadmissible passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury before boarding%2Fafter%2Fon arrival%2FMedical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Injury on Board</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lounge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical assistance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On board Catering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservation Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Schedule Deviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seat malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special meal request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketing Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Booking</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Liability__c</picklist>
+            <values>
+                <fullName>Act of Legislation 2015 for International Air Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC261%2F2004</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC99 %28The Montreal Convention%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>US Laws</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warsaw Convention</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Obsolete</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit__c</picklist>
+            <values>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kilogramme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UpgradeCertificate__c</picklist>
+            <values>
+                <fullName>Confirmed Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stand-by Upgrade Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ROE_USD</fullName>
+        <active>true</active>
+        <description>Validation Rule for ROE</description>
+        <errorConditionFormula>AND( 
+OR($Profile.Name &lt;&gt; &quot;Ground Customer Service&quot;) 
+
+, 
+OR($Profile.Name &lt;&gt; &quot;Ground Customer Service Not BKK&quot;) 
+
+,
+OR(RecordType.Name == &quot;SD/SR Compensation&quot;, 
+RecordType.Name == &quot;SD/SR Compensation Final&quot;) 
+, 
+OR(Ispickval(Compensation_Tools__c , &quot;Cash&quot;), 
+Ispickval(Compensation_Tools__c , &quot;EMD&quot;)) 
+, 
+OR( 
+NOT(Ispickval(Currency__c , &quot;USD&quot;)), 
+ISBLANK(TEXT(Currency__c))) 
+, 
+OR( ROE_US_Dollars__c  &lt;= 0, ISBLANK( ROE_US_Dollars__c )))</errorConditionFormula>
+        <errorDisplayField>ROE_US_Dollars__c</errorDisplayField>
+        <errorMessage>ROE (USD) is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ROE_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR($Profile.Name &lt;&gt; &quot;Ground Customer Service&quot;)
+
+,
+OR($Profile.Name &lt;&gt; &quot;Ground Customer Service Not BKK&quot;) 
+
+,
+OR(RecordType.Name == &quot;CFMS Compensation&quot;,
+RecordType.Name == &quot;CFMS Compensation Final&quot;)
+,
+OR(Ispickval(Compensation_Tools__c , &quot;Cash&quot;),
+Ispickval(Compensation_Tools__c , &quot;EMD&quot;))
+,
+OR(
+NOT(Ispickval(Currency__c , &quot;THB&quot;)),
+ISBLANK(TEXT(Currency__c)))
+,
+OR(ROE__c &lt;= 0, ISBLANK(ROE__c)))</errorConditionFormula>
+        <errorDisplayField>ROE__c</errorDisplayField>
+        <errorMessage>ROE is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Amount</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+OR(ISPICKVAL(Compensation_Tools__c,&apos;Cash&apos;), ISPICKVAL(Compensation_Tools__c,&apos;EMD&apos;)), 
+OR(  Amount__c == 0,ISBLANK(Amount__c)), 
+OR($User.Department == &apos;S4&apos;, $User.Department = &apos;S3&apos;, $User.Department = &apos;AO&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>Amount__c</errorDisplayField>
+        <errorMessage>Please identify Amount if compensation tool is &apos;Cash&apos; or &apos;EMD&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Approved_Status_OnCeate</fullName>
+        <active>true</active>
+        <errorConditionFormula>(  RecordType.DeveloperName == &apos;CFMS_Compensation&apos; || RecordType.DeveloperName == &apos;SD_SR_Compensation&apos;) &amp;&amp; ISNEW() &amp;&amp; ISPICKVAL(Status__c , &apos;Approved&apos; )</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Cannot create new compensation with Approved status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_total</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(ISPICKVAL(Compensation_Tools__c,&apos;Cash&apos;)), NOT(ISPICKVAL(Compensation_Tools__c,&apos;EMD&apos;)), 
+OR( Total__c == 0,ISBLANK(Total__c )), 
+OR($User.Department == &apos;S4&apos;, $User.Department = &apos;S3&apos;, $User.Department = &apos;AO&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>Total__c</errorDisplayField>
+        <errorMessage>Please identify Total if compensation tool is not &apos;Cash&apos; or &apos;EMD&apos;.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Confirm</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Confirm</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/26.0/connection.js&quot;)}
+
+if({!ISPICKVAL( Compensation__c.Status__c , &quot;Draft&quot;)}){
+
+     if (confirm(&quot;Are you sure?&quot;) == true) { 
+         var updatedCompensation = new sforce.SObject(&apos;Compensation__c&apos;); 
+         updatedCompensation.id = &quot;{!Compensation__c.Id}&quot;;
+         updatedCompensation.status__c = &quot;New&quot;;
+         sforce.connection.update([updatedCompensation]);
+         window.location.reload();
+     }
+
+}else{alert(&quot;This already confirm!&quot;);}</url>
+    </webLinks>
+</CustomObject>

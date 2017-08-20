@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Customer Feedback</name>
+    <publicFolderAccess>ReadWrite</publicFolderAccess>
+    <sharedTo>
+        <group>AO_Tier_2_Team</group>
+        <group>Abroad_Station</group>
+        <group>CFMS_Management_Group</group>
+        <group>S3_Chief_Team</group>
+        <group>S3_Tier_1_Team</group>
+        <group>S4_First_Platinum_Team</group>
+        <group>S4_Level_8_Ground_Team</group>
+        <group>S4_Level_8_In_Flight_Team</group>
+        <group>S4_Level_8_Team</group>
+        <group>S4_Tier_1_Team</group>
+        <group>S4_Tier_2_Team</group>
+        <role>SZ</role>
+    </sharedTo>
+</EmailFolder>

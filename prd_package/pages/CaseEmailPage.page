@@ -1,0 +1,145 @@
+<apex:page showHeader="true" sidebar="true" standardController="Case" extensions="CaseEmailController">
+    
+    <style> 
+        .wrapping { 
+            white-space: nowrap;
+            word-wrap: break-word; /* Internet Explorer 5.5+ */ 
+            width:300px;
+            display:inline-block;
+            overflow:hidden !important;
+            text-overflow: ellipsis;
+        } 
+    </style>
+    <apex:includeScript value="/support/console/22.0/integration.js"/>
+    <script type="text/javascript">
+        // Opens a subtab when a related Case Number is clicked
+        function openEmailSubtab(emailId) {
+            // Check if user is in the Console, otherwise open as a regular URL
+            if (sforce.console.isInConsole()) {
+                sforce.console.getEnclosingPrimaryTabId(function(result){
+                    sforce.console.openSubtab(result.id, '/' + emailId, true, '', null);
+                });
+            } else {
+                window.open('/' + emailId);
+            }
+        };
+    </script>
+    <apex:form id="formId">
+        <apex:pageMessages id="errorMsg" />
+        <apex:pageBlock title="Internal Emails" id="internalBlock">
+            <!-- <div class="blockTable" id="internalBlockTable"> -->
+                <apex:actionRegion >
+                <apex:pageBlockTable value="{!internalEmailList}" var="eachEmail" id="internalResultBlock">
+                    <apex:column headerValue="Status">
+                        <font color="#16325c"><apex:outputField value="{!eachEmail.Status}"/></font>
+                    </apex:column>
+                    <apex:column headerValue="Subject">
+                        <a onClick="openEmailSubtab('{!eachEmail.Id}')" href="javascript:;" class="wrapping"><font color="#006cb5">{!eachEmail.Subject}</font></a>
+                    </apex:column>
+                    <apex:column headerValue="Body">
+                       <font color="#16325c"><apex:outputText value="{!eachEmail.TextBody}" styleClass="wrapping" style="width: 400px;"/></font>
+                    </apex:column>
+                    <apex:column headerValue="From Address">
+                        <font color="#16325c"><apex:outputText value="{!eachEmail.FromAddress}"/></font>
+                    </apex:column>
+                    <!--apex:column headerValue="To Address">
+                        <font color="#16325c"><apex:outputText value="{!eachEmail.ToAddress}"/></font>
+                    </apex:column>-->
+                    <apex:column headerValue="Message Date"  width="20%">
+                        <font color="#16325c"><apex:outputField value="{!eachEmail.MessageDate}"/></font>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:actionRegion>
+            <!-- </div> -->
+            <div align="center">
+                <table style="width: 100%">
+                    <tr>
+                        <td align="left">
+                            <apex:outputText value="{!currentInternalPage}"/>    
+                        </td>
+                        <td align="center">
+                            <apex:commandLink action="{!PrevInternalPage}" reRender="internalBlock" rendered="{!internalPrevRender}">
+                                <img src="{!imageStringPrev}" alt="No Previous Page" width="5" height="8" /> Previous Page
+                            </apex:commandlink>
+
+                            <apex:outputPanel rendered="{!not(internalPrevRender)}"> 
+                                <img src="{!imageStringPrev}" alt="No Previous Page" width="5" height="8" />
+                                <apex:outputText value=" Previous Page"/> 
+                            </apex:outputPanel>
+                            <apex:outputText value="   "/>
+                            <apex:commandLink action="{!NextInternalPage}" reRender="internalBlock" rendered="{!internalNextRender}">Next Page 
+                                <img src="{!imageStringNext}" alt="Next Page" width="5" height="8"/>
+                            </apex:commandlink>
+                        
+                            <apex:outputPanel rendered="{!not(internalNextRender)}"> 
+                                <apex:outputText value="Next Page "/> 
+                                <img src="{!imageStringNext}" alt="No Next Page" width="5" height="8" />
+                            </apex:outputPanel>
+                        </td>
+                        <td align="right">
+                            <apex:outputText value="{!internalPageIndex}"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="External Emails" id="externalBlock">
+            <!-- <div class="blockTable" id="externalBlockTable"> -->
+                <apex:actionRegion >
+                <apex:pageBlockTable value="{!externalEmailList}" var="eachEmail" id="externalResultBlock">
+                     <apex:column headerValue="Status">
+                        <font color="#16325c"><apex:outputField value="{!eachEmail.Status}" /></font>
+                    </apex:column>
+                    <apex:column headerValue="Subject">
+                        <a onClick="openEmailSubtab('{!eachEmail.Id}')" href="javascript:;" class="wrapping"><font color="#006cb5">{!eachEmail.Subject}</font></a>
+                    </apex:column>
+                    <apex:column headerValue="Body">
+                        <font color="#16325c"><apex:outputText value="{!eachEmail.TextBody}" styleClass="wrapping" style="width:400px;"/></font>
+                    </apex:column>
+                    <apex:column headerValue="From Address">
+                        <font color="#16325c"><apex:outputText value="{!eachEmail.FromAddress}"/></font>
+                    </apex:column>
+                    <!--apex:column headerValue="To Address">
+                        <font color="#16325c"><apex:outputText value="{!eachEmail.ToAddress}"/></font>
+                    </apex:column>  -->
+                    <apex:column headerValue="Message Date">
+                        <font color="#16325c"><apex:outputField value="{!eachEmail.MessageDate}"/></font>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:actionRegion>
+            <!-- </div> -->
+            <div align="center">
+                <table style="width: 100%">
+                    <tr>
+                        <td align="left">
+                            <apex:outputText value="{!currentExternalPage}"/>    
+                        </td>
+                        <td align="center">
+                            <apex:commandLink action="{!PrevExternalPage}" reRender="externalBlock" rendered="{!externalPrevRender}">
+                                <img src="{!imageStringPrev}" alt="No Previous Page" width="5" height="8" /> Previous Page
+                            </apex:commandlink>
+
+                            <apex:outputPanel rendered="{!not(externalPrevRender)}"> 
+                                <img src="{!imageStringPrev}" alt="No Previous Page" width="5" height="8" />
+                                <apex:outputText value=" Previous Page"/> 
+                            </apex:outputPanel>
+                            <apex:outputText value="   "/>
+                            <apex:commandLink action="{!NextExternalPage}" reRender="externalBlock" rendered="{!externalNextRender}">Next Page 
+                                <img src="{!imageStringNext}" alt="Next Page" width="5" height="8"/>
+                            </apex:commandlink>
+                        
+                            <apex:outputPanel rendered="{!not(externalNextRender)}"> 
+                                <apex:outputText value="Next Page "/> 
+                                <img src="{!imageStringNext}" alt="No Next Page" width="5" height="8" />
+                            </apex:outputPanel>
+                        </td>
+                        <td align="right">
+                            <apex:outputText value="{!externalPageIndex}"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

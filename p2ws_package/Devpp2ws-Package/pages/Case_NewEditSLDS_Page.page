@@ -1,0 +1,1662 @@
+<apex:page showHeader="false" sidebar="false" standardController="Case" extensions="Case_NewEditSLDS_Controller,Case_RemoteAction" action="{!validatePage}" docType="html-5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <apex:includeScript value="/support/console/37.0/integration.js" />
+    <apex:remoteObjects >
+        <apex:remoteObjectModel name="Flight__c" jsShorthand="Flight" fields="Name,Id,AircraftId__c,A_C_Reg__c,Departure_STN__c,Flight_Date_UTC__c">
+        </apex:remoteObjectModel>
+        <apex:remoteObjectModel name="Aircraft__c" jsShorthand="Aircraft" fields="Name,Id">
+        </apex:remoteObjectModel>
+        <apex:remoteObjectModel name="Master_Map__c" jsShorthand="MasterMap" fields="Name,Id,Field_Name__c,Depend_On_Object__c,Depend_On_Object_Name__c,Location__c">
+        </apex:remoteObjectModel>
+        <apex:remoteObjectModel name="User" fields="Name,Id,isActive">
+        </apex:remoteObjectModel>
+    </apex:remoteObjects>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <style>
+        ::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            color: rgba(124, 130, 142, 0.42);
+        }
+        
+        :-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: rgba(124, 130, 142, 0.42);
+            opacity: 1;
+        }
+        
+        ::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: rgba(124, 130, 142, 0.42);
+            opacity: 1;
+        }
+        
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: rgba(124, 130, 142, 0.42);
+        }
+        
+        .slds-card__body {
+            padding: 10px 10px 10px 10px;
+        }
+        
+        .block {
+            background-color: #F54544;
+            border-color: #F54544;
+        }
+        
+        .malfunction {
+            background-color: #FDA62D;
+            border-color: #FDA62D;
+        }
+        
+        .serviceable {
+            background-color: #24C7CE;
+            border-color: #24C7CE;
+        }
+        
+        .seqNoInput {
+            width: 20%;
+        }
+        
+        .descriptionTextArea {
+            height: 240px;
+        }
+        
+        .slds-show {
+            width: 100% !important;
+        }
+        </style>
+        <c:SLDSLibraryFiles ></c:SLDSLibraryFiles>
+        <!-- <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js" /> -->
+        <apex:includeScript value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.js')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.css')}" />
+    </head>
+    <!-- {{caseForm}} -->
+
+    <body ng-app="casePage" ng-controller="Controller as ctrl" ng-cloak="true">
+        <form name="caseForm" novalidate="novalidate">
+            <div class="LDS slds">
+                <div id="errorModal" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="modal-heading-1" class="slds-modal slds-fade-in-open slds-hide">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <h2 id="modal-heading-1" class="slds-text-heading--medium">Error</h2>
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" data-aljs-dismiss="modal">
+                                <!-- <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+                                </svg> -->
+                                <apex:image styleClass="slds-button__icon slds-button__icon--large" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/close_60.png')}" width="16px" />
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--medium">
+                            <div>
+                                <p>{{ctrl.errorMessage}}</p>
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <button class="slds-button slds-button--neutral" data-aljs-dismiss="modal">Cancel</button>
+                            <!-- <button class="slds-button slds-button--neutral slds-button--brand" data-aljs-dismiss="modal">Save</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div id="spin" style="display:none;" class="slds-spinner_container">
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--large" aria-hidden="false" role="alert">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap slds-grid--pull-padded" ng-if="ctrl.debugMode==true">
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        Debug Mode : is SF one {{ctrl.isSF1}}
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        Return URL is : {{ctrl.retURL}}
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        Record : {{ctrl.record}}
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        Edit Mode : {{ctrl.isEditMode}}
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        Message : Now Testing for Reference Field
+                    </div>
+                </div>
+                <div class="slds-page-header">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media slds-no-space slds-grow">
+                                <div class="slds-media__figure">
+                                    <!-- <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                        <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#description')}"></use>
+                                    </svg> -->
+                                    <apex:image styleClass="slds-icon slds-icon-standard-user" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/description_60.png')}" width="16px" />
+                                </div>
+                                <!-- {{ctrl.thisRecord}} -->
+                                <div class="slds-media__body">
+                                    <p class="slds-text-title--caps slds-line-height--reset">Case</p>
+                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="New Case" ng-if="!ctrl.isEditMode">New Case</h1>
+                                    <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="Edit Case" ng-if="ctrl.isEditMode">Edit Case</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                            <div class="slds-has-error required-err-msg" style="display: none;">
+                                <div class="slds-form-element__help" ng-show="caseForm.$error.required.length > 0">Missing required fields &nbsp;</div>
+                            </div>
+                            <div class="slds-button-group" role="group">
+                                <button class="slds-button slds-button--destructive" ng-click="ctrl.button_Back();">Cancel</button>
+                                <button class="slds-button slds-button--neutral" ng-click="ctrl.button_Save($event);">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap slds-grid--pull-padded ">
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded" ng-repeat="fieldSetName in ctrl.listFieldSetNameByOrder">
+                            <div class="slds-section-title--divider slds-size--1-of-1"> {{ctrl.caseFieldSetLabel[fieldSetName]}} </div>
+                            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-m-around--medium">
+                                <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2" ng-repeat="field in ctrl.FieldSetDescObj[fieldSetName]">
+                                        <div ng-if="ctrl.debugMode">
+                                            {{field.fieldLabel}} : {{field.fieldType}}
+                                        </div>
+                                        <!-- <div ng-if="ctrl.outputFields.indexOf(field.fieldAPI) !== -1">
+                                        <label class="slds-form-element__label" for="{{field.fieldAPI}}">{{field.fieldLabel}}</label>
+                                        <div class="slds-form-element__control">
+                                            {{ctrl.thisRecord[field.fieldAPI]}}
+                                        </div>
+                                    </div> -->
+                                        <!-- <div ng-if="ctrl.outputFields.indexOf(field.fieldAPI) !== -1">
+                                        OUTPUT FIELD
+                                        <label class="slds-form-element__label" for="{{field.fieldAPI}}">{{field.fieldLabel}}</label>
+                                        <div class="slds-form-element__control">
+                                            {{ctrl.thisRecord[field.fieldAPI]}}
+                                        </div>
+                                    </div> -->
+                                        <div ng-if="field.fieldType == 'DATE'">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="date">{{field.fieldLabel}}</label>
+                                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                                    <!-- <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                    </svg> -->
+                                                    <apex:image styleClass="slds-input__icon slds-icon-text-default" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/event_60.png')}" width="16px" />
+                                                    <input id="{{field.fieldAPI}}" class="slds-input" type="text" placeholder="Pick a Date" label="Date Picker Label" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}" ng-change="ctrl.onDatePickerChange(field)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType == 'OUTPUT_STRING'">
+                                            <label class="slds-form-element__label">{{field.fieldLabel}}</label>
+                                            <div ng-if="field.fieldAPI === 'OwnerId'" class="slds-form-element__control">
+                                                <span id="OwnerName">{{ctrl.thisRecord['OwnerName']}}</span>
+                                            </div>
+                                            <div ng-if="field.fieldAPI !== 'OwnerId'" class="slds-form-element__control">
+                                                <span id="{{field.fieldAPI}}">{{ctrl.convertIdToName(field.fieldAPI)}}</span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType == 'STRING'||field.fieldType == 'PHONE'||field.fieldType == 'EMAIL'">
+                                            <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                            <div class="slds-form-element__control slds-input-has-fixed-addon" ng-class="{ 'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:30px;width:10px;background-color: red;"></span>
+                                                <span ng-if="field.fieldAPI == 'SEQ_No_txt__c'" class="slds-form-element__addon">{{ctrl.aircraftAbbr}}</span>
+                                                <input type="text" id="{{field.fieldAPI}}" class="slds-input" placeholder="{{field.fieldLabel}}" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}" ng-class="{'seqNoInput':field.fieldAPI == 'SEQ_No_txt__c'}" />
+                                                <span style="min-width: 12%;" ng-if="field.fieldAPI == 'SEQ_No_txt__c'" class="slds-form-element__addon">{{ctrl.getLogTypeAbbr()}}{{ctrl.seqNoDateTime}}</span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType == 'TEXTAREA'">
+                                            <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                            <div class="slds-form-element__control" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:30px;width:10px;background-color: red;"></span>
+                                                <textarea id="{{field.fieldAPI}}" class="slds-textarea" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}" ng-class="{'descriptionTextArea':field.fieldAPI == 'Description_txt__c'}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType =='BOOLEAN'">
+                                            <!-- Actually this is unused type now -..- -->
+                                            <div class="slds-form-element__control">
+                                                <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:30px;width:10px;background-color: red;"></span>
+                                                <span class="slds-checkbox">
+                                                <input type="checkbox" id="{{field.fieldAPI}}" ng-model="ctrl.thisRecord[field.fieldAPI]" name="{{field.fieldAPI}}"/>
+                                                <label class="slds-checkbox__label" for="{{field.fieldAPI}}">
+                                                <span class="slds-checkbox--faux"></span>
+                                                <span class="slds-form-element__label"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</span>
+                                                </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType=='PICKLIST'">
+                                            <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                            <div class="slds-form-element__control" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                <div class="slds-select_container" ng-class="{'slds-input-has-fixed-addon':field.isRequire}">
+                                                    <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:30px;width:10px;background-color: red;"></span>
+                                                    <select id="{{field.fieldAPI}}" class="slds-select" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-init="ctrl.thisRecord[field.fieldAPI] = field.picklistOption[0]" ng-required="field.isRequire" name="{{field.fieldAPI}}">
+                                                        <option ng-repeat="option in field.picklistOption" value="{{option}}">{{option}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType=='REFERENCE'">
+                                            <div class="slds-lookup" data-select="single" data-scope="single">
+                                                <div class="slds-form-element" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                    <label class="slds-form-element__label" for="{{field.fieldAPI+'_search'}}">
+                                                        <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right" ng-class="{'slds-input-has-fixed-addon':field.isRequire}">
+                                                        <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:30px;width:10px;background-color: red;"></span>
+                                                        <!-- <svg aria-hidden="true" class="slds-input__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.SLDS214, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                                        </svg> -->
+                                                        <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/search_60.png')}" width="16px" />
+                                                        <input id="{{field.fieldAPI+'_search'}}" class="slds-lookup__search-input slds-input" type="text" placeholder="Click to View {{field.fieldLabel}}" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" name="{{field.fieldAPI}}" autocomplete="off" />
+                                                        <input type="text" style="display:none;" id="{{field.fieldAPI}}" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-required="field.isRequire" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="field.fieldType=='MULTIPICKLIST'" class="slds-scrollable--x" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                            <!-- Test ALJS -->
+                                            <!-- <div class="slds-form-element__help" ng-show="!ctrl.isFieldValid(caseForm[field.fieldAPI])">This field is required</div> -->
+                                            <div id="{{field.fieldAPI}}" class="slds-picklist--draggable slds-grid" data-aljs="multi-select">
+                                                <div class="slds-form-element" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                    <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:15px;width:10px;background-color: red;"></span>
+                                                    <span class="slds-form-element__label" aria-label="select-1"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> UnSelected {{field.fieldLabel}}</span>
+                                                    <div class="slds-picklist slds-picklist--multi" data-aljs-multi-select="unselected">
+                                                        <ul class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-grid--vertical">
+                                                    <button class="slds-button slds-button--icon-container" data-aljs-multi-select="unselect" ng-click="ctrl.setMultiPicklist(field.fieldAPI)">
+                                                        <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+                                                        </svg> -->
+                                                        <apex:image styleClass="slds-button__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/left_60.png')}" width="16px" />
+                                                        <span class="slds-assistive-text">Pick list</span>
+                                                    </button>
+                                                    <button class="slds-button slds-button--icon-container" data-aljs-multi-select="select" ng-click="ctrl.setMultiPicklist(field.fieldAPI)">
+                                                        <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+                                                        </svg> -->
+                                                        <apex:image styleClass="slds-button__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/right_60.png')}" width="16px" />
+                                                        <span class="slds-assistive-text">Pick list</span>
+                                                    </button>
+                                                </div>
+                                                <div class="slds-form-element" ng-class="{'slds-has-error':!ctrl.isFieldValid(caseForm[field.fieldAPI])}">
+                                                    <span ng-if="field.isRequire" class="slds-form-element__addon" style="height:15px;width:10px;background-color: red;"></span>
+                                                    <span class="slds-form-element__label" aria-label="select-2"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> Selected {{field.fieldLabel}}</span>
+                                                    <div class="slds-picklist slds-picklist--multi" data-aljs-multi-select="selected">
+                                                        <ul class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-grid--vertical">
+                                                    <button class="slds-button slds-button--icon-container" data-aljs-multi-select="move-up">
+                                                        <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#up')}"></use>
+                                                        </svg> -->
+                                                        <apex:image styleClass="slds-button__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/up_60.png')}" width="16px" />
+                                                        <span class="slds-assistive-text">Pick list</span>
+                                                    </button>
+                                                    <button class="slds-button slds-button--icon-container" data-aljs-multi-select="move-down">
+                                                        <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                        </svg> -->
+                                                        <apex:image styleClass="slds-button__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/down_60.png')}" width="16px" />
+                                                        <span class="slds-assistive-text">Pick list</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element__control">
+                                                <input type="text" id="{{field.fieldAPI}}_value" class="slds-input" placeholder="{{field.fieldLabel}}" ng-model="ctrl.thisRecord[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}" style="display: none;" />
+                                            </div>
+                                            <!-- Test ALJS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- {{ctrl.caseGroupMemberList}} -->
+                <div class="slds-grid slds-wrap slds-grid--pull-padded ">
+                    <div class="slds-p-horizontal--small slds-size--1-of-1">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                            <div class="slds-section-title--divider slds-size--1-of-2">Position
+                                <button class="slds-button slds-button--brand" ng-click="ctrl.addCaseGroupMember()">
+                                    <!-- <svg class="slds-button__icon--stateful slds-button__icon--left" aria-hidden="true">
+                                        <use xlink:href="{!URLFOR($Resource.SLDS214, '/assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                                    </svg> -->
+                                    <apex:image styleClass="slds-button__icon--stateful slds-button__icon--left" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/add_60.png')}" width="16px" /> Add
+                                </button>
+                            </div>
+                            <div class="slds-section-title--divider slds-size--1-of-2" style="text-align: right;">
+                                <button class="slds-button slds-button--brand block" ng-click="ctrl.massUpdateCGM('Block')">All Block</button>
+                                <button class="slds-button slds-button--brand malfunction" ng-click="ctrl.massUpdateCGM('Malfunction')">All Malfunction</button>
+                                <button class="slds-button slds-button--brand serviceable" ng-click="ctrl.massUpdateCGM('Serviceable')">All Serviceable</button>
+                            </div>
+                            <!-- {{ctrl.caseGroupMemberList}} -->
+                            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-m-around--medium">
+                                <article class="slds-card">
+                                    <div class="slds-card__body" ng-repeat="eachMem in ctrl.caseGroupMemberList | filter:{isDeleted:false}">
+                                        <!-- <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure">
+                                                    <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                                          <svg class="slds-icon slds-icon--small" aria-hidden="true">
+                                            <use xlink:href="{!URLFOR($Resource.SLDS214, '/assets/icons/standard-sprite/svg/symbols.svg#contact')}"></use>
+                                          </svg>
+                                        </span>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                <h2>
+                                                    <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+                                                        <span class="slds-text-heading--small">Case Group Member #{{$index + 1}}</span>
+                                                    </a>
+                                                    </h2>
+                                                </div>
+                                            </header>
+                                        </div> -->
+                                        <div class="slds-grid slds-wrap slds-grid--pull-padded" ng-repeat="fieldSetName in ctrl.caseGroupMemberFieldSetName">
+                                            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-4" ng-repeat="field in ctrl.caseGroupMemberFieldSetObj[fieldSetName]">
+                                                <div ng-if="ctrl.debugMode">
+                                                    {{field.fieldLabel}} : {{field.fieldType}}
+                                                </div>
+                                                <!-- <div ng-if="eachMem.Primary__c && ctrl.isEditMode && field.fieldType != 'REFERENCE' && field.fieldAPI != 'Impact__c'">
+                                                    <label class="slds-form-element__label">{{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <span>{{eachMem[field.fieldAPI]}}</span>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="eachMem.Primary__c && ctrl.isEditMode && field.fieldType == 'REFERENCE' && field.fieldAPI != 'Impact__c'">
+                                                    <label class="slds-form-element__label">{{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <span>{{ctrl.getNameOfReference(eachMem, field.fieldAPI)}}</span>
+                                                    </div>
+                                                </div> -->
+                                                <div ng-if="field.fieldType == 'STRING'||field.fieldType == 'PHONE'||field.fieldType == 'EMAIL'">
+                                                    <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                        <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <input type="text" id="{{field.fieldAPI}}" class="slds-input" placeholder="{{field.fieldLabel}}" ng-model="eachMem[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}" />
+                                                    </div>
+                                                </div>
+                                                <div ng-if="field.fieldType == 'TEXTAREA'">
+                                                    <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                        <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <textarea id="{{field.fieldAPI}}" class="slds-textarea" ng-model="eachMem[field.fieldAPI]" ng-required="field.isRequire" name="{{field.fieldAPI}}"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="field.fieldType =='BOOLEAN'">
+                                                    <!-- Actually this is unused type now -..- -->
+                                                    <div class="slds-form-element__control">
+                                                        <span class="slds-checkbox">
+                                                  <input type="checkbox" name="{{field.fieldAPI}}" id="{{field.fieldAPI}}" ng-model="eachMem[field.fieldAPI]" />
+                                                  <label class="slds-checkbox__label" for="{{field.fieldAPI}}">
+                                                  <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</span>
+                                                        </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="field.fieldType=='PICKLIST'">
+                                                    <label class="slds-form-element__label" for="{{field.fieldAPI}}">
+                                                        <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-select_container">
+                                                            <select id="CGM_{{field.fieldAPI}}" class="slds-select" ng-model="eachMem[field.fieldAPI]" ng-init="ctrl.thisRecord[field.fieldAPI] = null" ng-required="field.isRequire" name="{{field.fieldAPI}}">
+                                                                <option ng-repeat="option in field.picklistOption" value="{{option}}">{{option}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="field.fieldType=='REFERENCE'">
+                                                    <div class="slds-lookup" data-select="single" data-scope="single">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="{{field.fieldAPI+eachMem.index+'_search'}}">
+                                                                <abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> {{field.fieldLabel}}</label>
+                                                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                                                <!-- <svg aria-hidden="true" class="slds-input__icon">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS214, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                                                </svg> -->
+                                                                <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/search_60.png')}" width="16px" />
+                                                                <input id="{{field.fieldAPI+eachMem.index+'_search'}}" class="slds-input" type="text" placeholder="Click to View {{field.fieldLabel}}" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" name="{{field.fieldAPI}}" autocomplete="off" />
+                                                                <input type="text" style="display:none;" id="{{field.fieldAPI+eachMem.index}}" ng-model="eachMem[field.fieldAPI]" ng-required="field.isRequire" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="field.fieldType=='MULTIPICKLIST'" class="slds-scrollable--x">
+                                                    <div id="{{field.fieldAPI}}" class="slds-picklist--draggable slds-grid" data-aljs="multi-select">
+                                                        <div class="slds-form-element">
+                                                            <span class="slds-form-element__label" aria-label="select-1"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> UnSelected {{field.fieldLabel}}</span>
+                                                            <div class="slds-picklist slds-picklist--multi" data-aljs-multi-select="unselected">
+                                                                <ul class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-grid--vertical">
+                                                            <button class="slds-button slds-button--icon-container" data-aljs-multi-select="unselect">
+                                                                <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+                                                                </svg> -->
+                                                                <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/left_60.png')}" width="16px" />
+                                                                <span class="slds-assistive-text">Pick list</span>
+                                                            </button>
+                                                            <button class="slds-button slds-button--icon-container" data-aljs-multi-select="select">
+                                                                <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+                                                                </svg> -->
+                                                                <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/right_60.png')}" width="16px" />
+                                                                <span class="slds-assistive-text">Pick list</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="slds-form-element">
+                                                            <span class="slds-form-element__label" aria-label="select-2"><abbr class="slds-required" title="required" ng-if="field.isRequire">*</abbr> Selected {{field.fieldLabel}}</span>
+                                                            <div class="slds-picklist slds-picklist--multi" data-aljs-multi-select="selected">
+                                                                <ul class="slds-picklist__options slds-picklist__options--multi shown"></ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-grid--vertical">
+                                                            <button class="slds-button slds-button--icon-container" data-aljs-multi-select="move-up">
+                                                                <!-- <svg aria-hidden="true" class="slds-button__icon">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#up')}"></use>
+                                                                </svg> -->
+                                                                <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/up_60.png')}" width="16px" />
+                                                                <span class="slds-assistive-text">Pick list</span>
+                                                            </button>
+                                                            <button class="slds-button slds-button--icon-container" data-aljs-multi-select="move-down">
+                                                                <!--  <svg aria-hidden="true" class="slds-button__icon">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS214, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                                </svg> -->
+                                                                <apex:image styleClass="slds-input__icon" url="{!URLFOR($Resource.SLDS214, 'assets/icons/utility/down_60.png')}" width="16px" />
+                                                                <span class="slds-assistive-text">Pick list</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Test ALJS -->
+                                                </div>
+                                            </div>
+                                            <!-- END EACH 1 of 4 -->
+                                            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-4" style="padding-top: 20px;">
+                                                <button class="slds-button slds-button--destructive" ng-click="ctrl.removeCaseGroupMember(eachMem.index)">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                        </div>
+                    </div>
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                        <div class="slds-has-error required-err-msg" style="display: none;">
+                            <div class="slds-form-element__help" ng-show="caseForm.$error.required.length > 0">Missing required fields &nbsp;</div>
+                        </div>
+                        <div class="slds-button-group" role="group">
+                            <button class="slds-button slds-button--destructive" ng-click="ctrl.button_Back();">Cancel</button>
+                            <button class="slds-button slds-button--neutral" ng-click="ctrl.button_Save();">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-init="ctrl.init();"></div>
+        </form>
+    </body>
+    <script type="text/javascript">
+    var testMoment;
+
+    function valueOrEmptyString(value) {
+        if (value) {
+            return value;
+        } else {
+            return '';
+        }
+    }
+
+    angular.module('casePage', [])
+        .factory('SFDC', ['$q', function($q) {
+            return {
+                getDefaultValue: function(isEdit) {
+                    var deferred = $q.defer();
+                    Case_RemoteAction.getMapDefaultValue(isEdit,
+                        function(result, event) {
+                            console.log('DefaultObject Value', result);
+                            if (event.status) {
+                                deferred.resolve(result);
+                            } else {
+                                deferred.reject(result);
+                            }
+                        }, {
+                            buffer: true,
+                            escape: false,
+                            timeout: 30000
+                        }
+                    );
+                    return deferred.promise;
+                },
+                getSearchValue: function(objectAPI, criteria) {
+                    var deferred = $q.defer();
+                    if (criteria == undefined) {
+                        criteria = "";
+                    }
+                    Case_RemoteAction.getRecordFromSObject(
+                        objectAPI,
+                        criteria,
+                        function(result, event) {
+                            console.log('Search Value', result);
+                            if (event.status) {
+                                deferred.resolve(result);
+                            } else {
+                                deferred.reject(result);
+                            }
+                        }, {
+                            buffer: true,
+                            escape: false,
+                            timeout: 30000
+                        }
+                    );
+                    return deferred.promise; //getMapListDefaultSearchByObjectType
+                },
+                getDefaultSearchValue: function(setObjectType) {
+                    var deferred = $q.defer();
+                    Case_RemoteAction.getMapListDefaultSearchByObjectType(
+                        setObjectType,
+                        function(result, event) {
+                            console.log('All Object Value', result);
+                            if (event.status) {
+                                deferred.resolve(result);
+                            } else {
+                                deferred.reject(result);
+                            }
+                        }, {
+                            buffer: true,
+                            escape: false,
+                            timeout: 30000
+                        }
+                    );
+                    return deferred.promise;
+                },
+                getCaseToEdit: function(caseId) {
+                    var deferred = $q.defer();
+                    Case_RemoteAction.getCaseToEdit(
+                        caseId,
+                        function(result, event) {
+                            console.log('Edit case', result);
+                            if (event.status) {
+                                deferred.resolve(result);
+                            } else {
+                                deferred.reject(result);
+                            }
+                        }, {
+                            buffer: true,
+                            escape: false,
+                            timeout: 30000
+                        }
+                    );
+                    return deferred.promise;
+                }
+            }
+        }])
+        .controller('Controller', function($scope, $q, SFDC, $location, $timeout, $compile, $filter) {
+            var vm = this;
+
+            vm.debugMode = false;
+            vm.isSF1 = false;
+            vm.pageMsg = '';
+            vm.thisRecord = {};
+            vm.caseGroupMemberList = [];
+
+            vm.convertIdToName = function(fieldAPI) {
+                if (fieldAPI && fieldAPI.indexOf('__c')) {
+                    var relationshipFieldAPI = fieldAPI.replace(/__c$/i, '__r');
+                    // console.log('relationshipFieldAPI', relationshipFieldAPI);
+                    var refObj = vm.thisRecord[relationshipFieldAPI];
+                    // console.log('refObj', refObj);
+                    if (fieldAPI == 'SEQ_No_txt__c') {
+                        return vm.thisRecord['SEQ_No_Display__c'];
+                    }
+                    if (refObj) {
+                        return refObj.Name;
+                    } else {
+                        return vm.thisRecord[fieldAPI];
+                    }
+                }
+                return null;
+            };
+
+            vm.getNameOfReference = function(eachMem, fieldAPI) {
+                if (fieldAPI && fieldAPI.indexOf('__c')) {
+                    var relationshipFieldAPI = fieldAPI.replace(/__c$/i, '__r');
+                    // console.log('relationshipFieldAPI', relationshipFieldAPI);
+                    console.log('getNameOfReference eachMem :' + JSON.stringify(eachMem));
+                    if (fieldAPI == 'Equipment__c') {
+                        if (eachMem['Equipment__r'] != undefined) {
+                            if (eachMem['Equipment__r']['Name'] != undefined) {
+                                return eachMem['Equipment__r']['Name'];
+                            }
+                        }
+
+                    }
+                }
+                return eachMem[fieldAPI];
+            }
+
+            vm.massUpdateCGM = function(value) {
+                angular.forEach(vm.caseGroupMemberList, function(eachMem) {
+                    eachMem.Impact__c = value;
+                });
+            };
+
+            vm.isFieldValid = function(field) {
+                return !field || (field.$valid || field.$pristine);
+            };
+
+            vm.addCaseGroupMember = function() {
+                var lastIndex = vm.caseGroupMemberList.length;
+                console.log('addCaseGroupMember :' + lastIndex);
+                var newMem = {
+                    isDeleted: false,
+                    index: lastIndex
+                };
+                var hasPreviousMem = vm.caseGroupMemberList.length > 0;
+                vm.caseGroupMemberList.push(newMem);
+                $timeout(function() {
+                    var currentIndex = vm.caseGroupMemberList.length - 1;
+                    // console.log('currentIndex ' + currentIndex);
+                    for (var fieldName in vm.caseGroupMemberFieldSetObj) {
+                        var fieldList = vm.caseGroupMemberFieldSetObj[fieldName];
+                        for (var j = 0, len = fieldList.length; j < len; j++) {
+                            var field = fieldList[j];
+                            // console.log('fieldList', fieldList);
+                            if (field.fieldType == 'REFERENCE') {
+                                // console.log('REFERENCE ', field , currentIndex);
+                                vm.defaultLookUpField(field, currentIndex);
+                            }
+
+                            if (field.fieldAPI == 'Equipment__c' && hasPreviousMem) {
+                                var previousIndex = -1;
+                                for (var i = vm.caseGroupMemberList.length - 2; i >= 0; i--) {
+                                    if (!vm.caseGroupMemberList[i].isDeleted) {
+                                        previousIndex = i;
+                                        break;
+                                    }
+                                }
+                                // console.log('previousIndex :' + previousIndex);
+                                if (previousIndex >= 0) {
+                                    var selectStr = "[id=Equipment__c" + previousIndex + "_search]";
+                                    // console.log(j$(selectStr));
+                                    var previousEquipment = j$(selectStr).lookup('getSelection');
+
+                                    // console.log('previousEquipment', previousEquipment);
+                                    if (previousEquipment) {
+                                        // console.log('inside');
+                                        j$('[id=Equipment__c' + currentIndex + '_search]').lookup('setSelection', previousEquipment);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 20);
+                return newMem;
+            };
+
+            vm.getLogTypeAbbr = function() {
+                if (vm.thisRecord.Incident_Type__c) {
+                    return vm.thisRecord.Incident_Type__c.substring(0, 1);
+                }
+            };
+
+            vm.removeCaseGroupMember = function(index) {
+                console.log('removeCaseGroupMember ' + index);
+                // if(vm.caseGroupMemberList[index].Id == undefined) {
+                //     vm.caseGroupMemberList.splice(index, 1)
+                // } else {
+                vm.caseGroupMemberList[index].isDeleted = true;
+                // }
+                // $scope.$digest();
+            };
+
+            vm.initializeEditCase = function(caseId) {
+                if (!caseId) {
+                    caseId = null;
+                }
+                // if(caseId) {
+                SFDC.getCaseToEdit(caseId).then(function(result) {
+                    if (result) {
+                        for (var field in result) {
+                            var value = result[field];
+                            // console.log('field ' + field + ' ' + value);
+                            if (field == 'Flightid__c') {
+                                j$('#' + field + '_search').lookup('setSelection', {
+                                    id: value,
+                                    label: result.Flightid__r.Name
+                                });
+                                j$('#A_C_REG_ID__c_search').lookup('setSelection', {
+                                    id: result.Flightid__r.AircraftId__c,
+                                    label: result.Flightid__r.A_C_Reg__c
+                                });
+                                var aircraftLabel = result.Flightid__r.A_C_Reg__c
+                                if (aircraftLabel && aircraftLabel.length > 0) {
+                                    vm.aircraftAbbr = aircraftLabel.substring(aircraftLabel.length - 2);
+                                }
+
+                            } else if (field == 'SEQ_No_Date__c') {
+                                value = moment(value, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                            } else if (field == 'SEQ_No_txt__c') {
+                                if (value.length > 10) {
+                                    try {
+                                        var withOutAircraftAbbr = value.substring(2);
+                                        value = withOutAircraftAbbr;
+                                        var withOutDate = '';
+                                        if (withOutAircraftAbbr && withOutAircraftAbbr.length > 0) {
+                                            withOutDate = withOutAircraftAbbr.substring(0, withOutAircraftAbbr.length - 8);
+                                            value = withOutDate.replace('-', '');
+                                            vm.seqNoDateTime = withOutAircraftAbbr.substring(withOutAircraftAbbr.length - 8);
+                                        }
+                                    } catch (e) {}
+                                }
+                            } else if (field == 'A_C_REG_ID__c') {
+                                j$('#' + field + '_search').lookup('setSelection', {
+                                    id: value,
+                                    label: result.A_C_REG_ID__r.Name
+                                });
+                                var aircraftLabel = result.A_C_REG_ID__r.Name
+                                if (aircraftLabel && aircraftLabel.length > 0) {
+                                    vm.aircraftAbbr = aircraftLabel.substring(aircraftLabel.length - 2);
+                                }
+                            } else if (field == 'EquipmentId__c') {
+                                j$('#' + field + '_search').lookup('setSelection', {
+                                    id: value,
+                                    label: result.EquipmentId__r.Name
+                                });
+                            } else if (field == 'PartId__c') {
+                                j$('#' + field + '_search').lookup('setSelection', {
+                                    id: value,
+                                    label: result.PartId__r.Name
+                                });
+                            } else if (field == 'Position_No__c') {
+                                j$('#' + field + '_search').lookup('setSelection', {
+                                    id: value,
+                                    label: result.value
+                                });
+                            } else if (field == 'OwnerId') {
+                                // console.log('value :' + result['Owner']['Name']);
+                                // j$('#' + field).val(result['Owner']['Name']);
+                                // j$('#' + field + '_search').lookup('setSelection',{id: value, label: result.Owner.Name});
+                                // vm.thisRecord['OwnerId'] = result['Owner']['Name'];
+                            } else if (field == 'Condition_Multi__c') {
+                                if (value) {
+                                    var valueArray = value.split(';');
+                                    $timeout(function() {
+                                        console.log(j$('#Condition_Multi__c').multiSelect('setSelectedItems', valueArray));
+                                    }, 30);
+                                }
+
+                            }
+
+                            if (field == 'OwnerId') {
+                                vm.thisRecord['OwnerId'] = result['OwnerId'];
+                                vm.thisRecord['OwnerName'] = result['Owner']['Name'];
+                            } else {
+                                vm.thisRecord[field] = value;
+                                // j$('#' + field).val(value);
+                            }
+                        }
+                        // console.log('result.Case_Group_Members__r :', result.Case_Group_Members__r);
+                        if (result.Case_Group_Members__r && result.Case_Group_Members__r.records) {
+                            var caseGroupMemberList = result.Case_Group_Members__r.records;
+                            for (var i = 0, len = caseGroupMemberList.length; i < len; i++) {
+                                var newMem = vm.addCaseGroupMember();
+                                var eachMem = caseGroupMemberList[i];
+                                // console.log('eachMem :' + eachMem);
+                                for (var field in eachMem) {
+                                    var value = eachMem[field];
+                                    newMem[field] = value;
+                                }
+                            }
+                        }
+                        $timeout(function() {
+                            vm.initializeEditCaseGroupMember();
+                        }, 50);
+
+                    }
+                });
+                // }
+            };
+
+            vm.initializeEditCaseGroupMember = function() {
+                // console.log('vm.caseGroupMemberList', vm.caseGroupMemberList);
+                console.log(vm.caseGroupMemberList.length);
+                for (var i = 0, len = vm.caseGroupMemberList.length; i < len; i++) {
+                    var eachMem = vm.caseGroupMemberList[i];
+                    // console.log('eachMem', eachMem);
+                    for (var field in eachMem) {
+                        var value = eachMem[field];
+                        // console.log('field', field, value);
+                        try {
+                            // var selectedElems = j$('[id=' + field + '_search]').eq(i);
+                            var selectedStr = '[id=' + field + eachMem.index + '_search]';
+                            var selectedElems = j$(selectedStr);
+                            // console.log('selectedElems', selectedElems);
+                            if (selectedElems && selectedElems.length > 0) {
+                                if (field == 'Equipment__c') {
+                                    selectedElems.lookup('setSelection', {
+                                        id: value,
+                                        label: eachMem.Equipment__r.Name
+                                    });
+                                } else if (field == 'Position__c') {
+                                    selectedElems.lookup('setSelection', {
+                                        id: value,
+                                        label: value
+                                    });
+                                }
+                            }
+                        } catch (e) {
+                            console.log('error', e);
+                        }
+                    }
+                }
+            };
+
+            vm.changeFieldType = function(fieldSetObj, outputFields) {
+                if (fieldSetObj) {
+                    for (var fieldSetName in fieldSetObj) {
+                        var fieldSet = fieldSetObj[fieldSetName];
+                        for (var i = 0, len = fieldSet.length; i < len; i++) {
+                            var field = fieldSet[i];
+                            if (field.fieldAPI == 'Position_No__c' || field.fieldAPI == 'Position__c') {
+                                field.fieldType = 'REFERENCE';
+                            }
+
+                            if (outputFields.indexOf(field.fieldAPI) !== -1) {
+                                field.fieldType = 'OUTPUT_STRING';
+                            }
+                        }
+                    }
+                }
+            };
+
+            vm.initializeFormValueFromURL = function() {
+                var flightId = vm.QueryString.flightId;
+                var flightName = vm.QueryString.flightName;
+                var aircraftId = vm.QueryString.aircraftId;
+                var aircraftName = vm.QueryString.aircraftName;
+                var depStation = vm.QueryString.depStation;
+
+                if (flightId && flightName) {
+                    j$('#Flightid__c_search').lookup('setSelection', {
+                        id: flightId,
+                        label: flightName.replace(/\+/g, ' ')
+                    });
+                }
+
+                if (aircraftId && aircraftName) {
+                    j$('#A_C_REG_ID__c_search').lookup('setSelection', {
+                        id: aircraftId,
+                        label: aircraftName
+                    });
+                    vm.aircraftAbbr = aircraftName.substring(aircraftName.length - 2);
+                }
+
+                // console.log('depStation', depStation);
+                if (depStation) {
+                    vm.thisRecord.DEP_STN__c = depStation;
+                }
+            };
+
+            vm.init = function() {
+                    j$('#errorModal').modal();
+                    vm.errorMessage = 'TEST';
+                    vm.showSpin();
+                    vm.record = '{!myCase}';
+                    vm.isEditMode = vm.QueryString.id != null;
+                    SFDC.getDefaultValue(vm.isEditMode).then(function(result) {
+                            vm.listFieldSetNameByOrder = result['fieldSetName'];
+                            vm.FieldSetDescObj = result['fieldSetObj'];
+                            vm.caseGroupMemberFieldSetName = result['caseGroupMemberFieldSetName'];
+                            vm.caseGroupMemberFieldSetObj = result['caseGroupMemberFieldSetObj'];
+                            vm.outputFields = result['outputFields'];
+                            vm.caseFieldSetLabel = result['caseFieldSetLabel'];
+                            vm.changeFieldType(vm.FieldSetDescObj, vm.outputFields);
+                            vm.changeFieldType(vm.caseGroupMemberFieldSetObj, vm.outputFields);
+                            vm.setUpMultiPicklistValue();
+                            vm.setUpListLookUpField();
+                            vm.initializeEditCase(vm.QueryString.id);
+
+                            vm.isSF1 = sforce.one != undefined;
+                            vm.retURL = vm.QueryString['retURL'];
+                            $timeout(function() {
+                                if (vm.listMultiPicklistField != undefined && vm.listMultiPicklistField.length > 0) {
+                                    for (var i = 0; i < vm.listMultiPicklistField.length; i++) {
+                                        vm.defaultMultipicklistValue(vm.listMultiPicklistField[i]);
+                                    }
+                                }
+                            }, 10);
+                            $timeout(function() {
+                                if (vm.listLookUpField != undefined && vm.listLookUpField.length > 0) {
+                                    var setAllObj = [];
+                                    for (var i = 0; i < vm.listLookUpField.length; i++) {
+                                        setAllObj.push(vm.listLookUpField[i].relatedToObject);
+                                    }
+                                    SFDC.getDefaultSearchValue(setAllObj).then(function(result) {
+                                        for (var i = 0; i < vm.listLookUpField.length; i++) {
+                                            // if (result[vm.listLookUpField[i].relatedToObject] != undefined) {
+                                            //     vm.listLookUpField[i].optionRecords = result[vm.listLookUpField[i].relatedToObject];
+                                            //     vm.defaultLookUpField(vm.listLookUpField[i]);
+                                            // }
+                                            vm.defaultLookUpField(vm.listLookUpField[i]);
+                                        }
+                                        vm.initializeFormValueFromURL();
+                                    });
+                                }
+                            }, 20);
+
+                            $timeout(function() {
+                                vm.setUpDatePickerField();
+                            }, 20);
+
+                            vm.hideSpin();
+                        })
+                        // console.log(vm.record);
+                }
+                // for Look up field
+                // 
+            vm.defaultLookUpField = function(field, index) {
+                var retrieveCallback = function(err, records, callback, searchTerm) {
+                    var optVal = [];
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        for (var i = 0, len = records.length; i < len; i++) {
+                            var record = records[i];
+                            var label = record.get('Name');
+                            if (field.relatedToObject == 'Master_Map__c') {
+                                label = record.get('Name') + ' ' + valueOrEmptyString(record.get('Location__c'));
+                            }
+                            if (field.relatedToObject == 'Flight__c') {
+                                var flightDateUTC = record.get('Flight_Date_UTC__c');
+                                var flightNameSplit = record.get('Name').split(' ');
+                                if (flightDateUTC && flightNameSplit && flightNameSplit.length > 0) {
+                                    var flightDateUTCLabel = moment(flightDateUTC).format('DDMMMYY').toUpperCase();
+                                    label = flightNameSplit[0] + ' / ' + flightDateUTCLabel + ' (' + record.get('A_C_Reg__c') + ')';
+                                }
+                            }
+                            optVal.push({
+                                'label': label,
+                                'id': record.get('Id'),
+                                'obj': record
+                            });
+                        }
+                        // console.log(optVal);
+                        if (searchTerm) {
+                            callback(optVal.filter(function(result) {
+                                return result.label.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1;
+                            }));
+                        } else {
+                            callback(optVal);
+                        }
+                    }
+                };
+                var sObject = null;
+                var condition = function(arg) {
+                    var searchTerm = arg.searchTerm;
+                    if (searchTerm) {
+                        return {
+                            where: {
+                                Name: {
+                                    like: '%' + searchTerm + '%'
+                                }
+                            },
+                            limit: 100
+                        };
+                    } else {
+                        return {
+                            limit: 100
+                        };
+                    }
+                };
+                if (field.relatedToObject == 'Flight__c') {
+                    sObject = new SObjectModel.Flight();
+                } else if (field.relatedToObject == 'User') {
+                    sObject = new SObjectModel.User();
+                    condition = function(arg) {
+                        var searchTerm = arg.searchTerm;
+                        if (searchTerm) {
+                            return {
+                                where: {
+                                    Name: {
+                                        like: '%' + searchTerm + '%'
+                                    },
+                                    isActive: {
+                                        eq: true
+                                    }
+                                },
+                                limit: 100
+                            };
+                        } else {
+                            return {
+                                where: {
+                                    isActive: {
+                                        eq: true
+                                    }
+                                },
+                                limit: 100
+                            };
+                        }
+
+                    };
+                } else if (field.relatedToObject == 'Aircraft__c') {
+                    sObject = new SObjectModel.Aircraft();
+                } else if (field.fieldAPI == 'EquipmentId__c' || field.fieldAPI == 'Equipment__c') {
+                    sObject = new SObjectModel.MasterMap();
+                    if (field.objectAPI == 'Case_Group_Member__c') {
+                        condition = function(arg) {
+                            return {
+                                where: {
+                                    Name: { in : ['PASSENGER SEAT', 'GALLEY AREA', 'LAVATORY (TOILET)']
+                                    }
+                                },
+                                limit: 100
+                            };
+                        };
+                    } else {
+                        condition = function(arg) {
+                            var searchTerm = arg.searchTerm;
+                            if (searchTerm) {
+                                return {
+                                    where: {
+                                        Field_Name__c: { in : ['SERVICE EQUIPMENT', 'SAFETY EQUIPMENT']
+                                        },
+                                        Name: {
+                                            like: '%' + searchTerm + '%'
+                                        },
+                                    },
+                                    limit: 100
+                                };
+                            } else {
+                                return {
+                                    where: {
+                                        Field_Name__c: { in : ['SERVICE EQUIPMENT', 'SAFETY EQUIPMENT']
+                                        }
+                                    },
+                                    limit: 100
+                                };
+                            }
+
+                        };
+                    }
+                } else if (field.fieldAPI == 'PartId__c') {
+                    sObject = new SObjectModel.MasterMap();
+                    condition = function(arg) {
+                        var searchTerm = arg.searchTerm;
+                        var dependOn = arg.dependOn;
+                        if (searchTerm && dependOn) {
+                            return {
+                                where: {
+                                    Depend_On_Object__c: {
+                                        eq: dependOn
+                                    },
+                                    Field_Name__c: {
+                                        eq: 'PART'
+                                    },
+                                    Name: {
+                                        like: '%' + searchTerm + '%'
+                                    },
+                                },
+                                limit: 100
+                            };
+                        } else if (dependOn) {
+                            return {
+                                where: {
+                                    Depend_On_Object__c: {
+                                        eq: dependOn
+                                    },
+                                    Field_Name__c: {
+                                        eq: 'PART'
+                                    }
+                                },
+                                limit: 100
+                            };
+                        } else {
+                            return null;
+                        }
+                    };
+                }
+
+
+                var selectSearch = '[id=' + field.fieldAPI + (index != undefined ? index : "") + "_search]";
+                // console.log('field.fieldAPI: ' + field.fieldAPI);
+                if (field.fieldAPI != 'Position_No__c' && field.fieldAPI != 'Position__c') {
+                    // console.log('setup :' + field.fieldAPI + ' ' + index);
+                    // console.log('selectSearch :' + selectSearch);
+                    j$(selectSearch).lookup({
+                        items: [],
+                        objectIconUrl: '{!URLFOR($Resource.SLDS214, "/assets/icons/utility-sprite/svg/symbols.svg#account")}',
+                        showSearch: true,
+                        emptySearchTermQuery: function(callback) {
+                            var emptyArg = {
+                                searchTerm: null,
+                                dependOn: vm.thisRecord['EquipmentId__c']
+                            }
+                            if (field.fieldAPI == 'PartId__c' && !emptyArg.dependOn) {
+                                return;
+                            }
+                            sObject.retrieve(condition(emptyArg), function(err, records) {
+                                retrieveCallback(err, records, callback, null);
+                            });
+                        },
+                        filledSearchTermQuery: function(searchTerm, callback) {
+                            var arg = {
+                                searchTerm: searchTerm,
+                                dependOn: vm.thisRecord['EquipmentId__c']
+                            };
+                            // console.log('arg', arg);
+                            // console.log('condition(arg)', condition(arg));
+                            var usingCondition = condition(arg);
+
+                            if (field.fieldAPI == 'PartId__c' && !arg.dependOn) {
+                                return;
+                            }
+
+                            sObject.retrieve(usingCondition, function(err, records) {
+                                retrieveCallback(err, records, callback, searchTerm);
+                            });
+                        },
+                        onChange: function(rec) {
+                            // console.log('onChange :' + field.fieldAPI + ' ' + index);
+                            if (rec) {
+                                // console.log(JSON.stringify('rec :' + rec));
+                                if (rec.obj) {
+                                    if (field.relatedToObject == 'Flight__c') {
+                                        j$('#A_C_REG_ID__c_search').lookup('setSelection', {
+                                            id: rec.obj.get('AircraftId__c'),
+                                            label: rec.obj.get('A_C_Reg__c')
+                                        });
+                                        var aircraftLabel = rec.obj.get('A_C_Reg__c');
+                                        vm.aircraftAbbr = aircraftLabel.substring(aircraftLabel.length - 2);
+                                        var selectPos = '#Position_No__c' + (index != undefined ? index : '') + '_search';
+                                        j$(selectPos).lookup('setSelection', {});
+                                        // console.log('Departure_STN__c : ' + rec.obj.get('Departure_STN__c'));
+                                        vm.thisRecord.DEP_STN__c = rec.obj.get('Departure_STN__c');
+                                    } else if (field.fieldAPI == 'PartId__c') {
+                                        // console.log('rec.obj', rec.obj);
+                                        // j$('#EquipmentId__c_search').lookup('setSelection', {
+                                        //     id: rec.obj.get('Depend_On_Object__c'),
+                                        //     label: rec.obj.get('Depend_On_Object_Name__c')
+                                        // });
+                                    } else if (field.relatedToObject == 'Aircraft__c') {
+                                        var label = rec.obj.get('Name');
+                                        vm.aircraftAbbr = label.substring(label.length - 2);
+                                    }
+                                    // console.log('1 ' + field.fieldAPI + ' ' + vm.thisRecord[field.fieldAPI]);
+                                    // console.log('2 ' + vm.thisRecord['PartId__c']);
+                                }
+                                if (index == undefined) {
+                                    vm.thisRecord[field.fieldAPI] = rec.id;
+                                } else {
+                                    vm.caseGroupMemberList[index][field.fieldAPI] = rec.id;
+                                }
+                                // j$('#' + field.fieldAPI).trigger('input');
+                            } else {
+                                if (field.relatedToObject == 'Flight__c') {
+                                    j$('#Position_No__c_search').lookup('setSelection', {});
+                                } else if (field.relatedToObject == 'Aircraft__c') {
+                                    j$('#Flightid__c_search').lookup('setSelection', {});
+                                } else if (field.fieldAPI == 'EquipmentId__c') {
+                                    j$('#PartId__c_search').lookup('setSelection', {});
+                                }
+
+                                if (index == undefined) {
+                                    vm.thisRecord[field.fieldAPI] = null;
+                                } else {
+                                    vm.caseGroupMemberList[index][field.fieldAPI] = null;
+                                }
+                                // j$('#' + field.fieldAPI).trigger('input');
+                            }
+                            // j$('#' + field.fieldAPI).trigger('input');
+                            try {
+                                $scope.$digest();
+                            } catch (e) {}
+                            // console.log('3 ' + field.fieldAPI + ' ' + vm.thisRecord[field.fieldAPI]);
+                            // console.log('4 ' + vm.thisRecord['PartId__c']);
+                            // $route.reload();
+                        }
+                    });
+                } else {
+                    // console.log('setup retrievePosition :' + index + ' ' + selectSearch);
+                    var retrievePosition = function(searchTerm, callback, index) {
+                        console.log('retrievePosition :' + index);
+
+                        var equipmentSelect;
+                        if (index == undefined) {
+                            equipmentSelect = '[id=EquipmentId__c_search]';
+                        } else {
+                            equipmentSelect = '[id=Equipment__c' + (index != undefined ? index : "") + '_search]';
+                        }
+                        // console.log('equipmentSelect :' + equipmentSelect);
+
+                        var selectedEquipmentObj = j$(equipmentSelect).lookup('getSelection');
+                        if (field.fieldAPI == 'Position_No__c') {
+                            selectedEquipmentObj = j$(equipmentSelect).lookup('getSelection');
+                        }
+                        console.log('selectedEquipmentObj', selectedEquipmentObj);
+                        var optVal = [];
+                        var aircraftId = j$('#A_C_REG_ID__c').val() || vm.thisRecord['A_C_REG_ID__c'];
+                        console.log('aircraftId', aircraftId);
+                        if (aircraftId) {
+                            Case_RemoteAction.getAllLOPAPositions(aircraftId,
+                                function(result, event) {
+                                    // console.log('getAllLOPAPositionsOfFlight result', result);
+                                    if (event.status) {
+                                        for (var i = 0, len = result.length; i < len; i++) {
+                                            var position = result[i].position;
+                                            var type = result[i].type;
+                                            var matchCriteria = false;
+                                            if (selectedEquipmentObj) {
+                                                var selectedEquipmentType = selectedEquipmentObj.label;
+                                                var typeCriteria = null;
+                                                console.log('selectedEquipmentType :' + selectedEquipmentType);
+                                                if (selectedEquipmentType.indexOf('PASSENGER SEAT') != -1) {
+                                                    typeCriteria = 'seat';
+                                                } else if (selectedEquipmentType.indexOf('GALLEY AREA') != -1) {
+                                                    typeCriteria = 'G';
+                                                } else if (selectedEquipmentType.indexOf('LAVATORY (TOILET)') != -1) {
+                                                    typeCriteria = 'L';
+                                                }
+
+                                                if (typeCriteria) {
+                                                    matchCriteria = type.indexOf(typeCriteria) != -1;
+                                                } else {
+                                                    matchCriteria = true;
+                                                }
+                                            }
+
+                                            if (matchCriteria) {
+                                                optVal.push({
+                                                    'label': position,
+                                                    'id': position,
+                                                });
+                                            }
+                                        }
+                                        // console.log('optVal', optVal);
+                                        if (searchTerm) {
+                                            callback(optVal.filter(function(result) {
+                                                return result.label.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1;
+                                            }));
+                                        } else {
+                                            callback(optVal);
+                                        }
+                                    } else {
+                                        console.log(event);
+                                        callback([]);
+                                    }
+                                }, {
+                                    buffer: true,
+                                    escape: false,
+                                    timeout: 30000
+                                }
+                            );
+                        } else {
+                            callback([]);
+                        }
+                    };
+                    var elem = j$(selectSearch);
+                    // console.log('SJ EDIT '+ selectSearch + ' elem : ' + elem);
+                    // if (index) {
+                    //     elem = j$('[id=' + field.fieldAPI + '_search]').eq(index)
+                    // }
+                    elem.lookup({
+                        index: index,
+                        items: [],
+                        objectIconUrl: '{!URLFOR($Resource.SLDS214, "/assets/icons/utility-sprite/svg/symbols.svg#account")}',
+                        showSearch: true,
+                        filledSearchTermQuery: function(searchTerm, callback){
+                            retrievePosition(searchTerm, callback, index);
+                        },
+                        emptySearchTermQuery: function(callback) {
+                            // console.log('emptySearchTermQuery :');
+                            retrievePosition(null, callback, index);
+                        },
+                        onChange: function(rec) {
+                            // if(field.fieldAPI == 'Position_No__c') {
+                            //     if(rec) {
+                            //         vm.thisRecord[field.fieldAPI] = rec.id; 
+                            //     } else {
+                            //         vm.thisRecord[field.fieldAPI] = null; 
+                            //     }
+                            // }
+
+                            if (index == undefined) {
+                                if (rec) {
+                                    vm.thisRecord[field.fieldAPI] = rec.id;
+                                } else {
+                                    vm.thisRecord[field.fieldAPI] = null;
+                                }
+                            } else {
+                                if (rec) {
+                                    vm.caseGroupMemberList[index][field.fieldAPI] = rec.id;
+                                } else {
+                                    vm.caseGroupMemberList[index][field.fieldAPI] = null;
+                                }
+
+                            }
+                        }
+                    });
+                }
+
+            }
+
+            vm.setUpDatePickerField = function() {
+                vm.listDatePickerField = [];
+                for (var i = 0; i < vm.listFieldSetNameByOrder.length; i++) {
+                    for (var j = 0; j < vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]].length; j++) {
+                        if (vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j].fieldType == 'DATE') {
+                            var field = vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j];
+                            j$('[id=' + field.fieldAPI + ']').datepicker({
+                                initDate: moment(),
+                                format: 'DD/MM/YYYY',
+                                onChange: function(datepicker) {
+                                    if (field.fieldAPI == 'SEQ_No_Date__c') {
+                                        $scope.$apply(function() {
+                                            vm.seqNoDateTime = datepicker.selectedFullDate.format('DDMMYY');
+                                        });
+                                    }
+                                    $timeout(function() {
+                                        j$('[id=' + field.fieldAPI + ']').trigger('change');
+                                    }, 20);
+                                }
+                            });
+                            vm.seqNoDateTime = moment().format('DDMMYY');
+                        }
+                    }
+                }
+            };
+
+            vm.setUpListLookUpField = function() {
+                vm.listLookUpField = [];
+                for (var i = 0; i < vm.listFieldSetNameByOrder.length; i++) {
+                    for (var j = 0; j < vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]].length; j++) {
+                        if (vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j].fieldType == 'REFERENCE') {
+                            vm.listLookUpField.push(vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j]);
+                        }
+                    }
+                }
+                // console.log(vm.listLookUpField);
+            }
+
+
+            // for Multi Picklist UI
+            vm.setUpMultiPicklistValue = function() {
+                vm.listMultiPicklistField = [];
+                for (var i = 0; i < vm.listFieldSetNameByOrder.length; i++) {
+                    for (var j = 0; j < vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]].length; j++) {
+                        if (vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j].fieldType == 'MULTIPICKLIST') {
+                            vm.listMultiPicklistField.push(vm.FieldSetDescObj[vm.listFieldSetNameByOrder[i]][j]);
+                        }
+                    }
+                }
+                // console.log(vm.listMultiPicklistField);
+            }
+
+            vm.defaultMultipicklistValue = function(fieldObj) {
+                var optObj = [];
+                // console.log(fieldObj);
+                for (var i = 0; i < fieldObj.picklistOption.length; i++) {
+                    var trimValue = vm.trimAllChar(fieldObj.picklistOption[i]);
+                    optObj.push({
+                        'label': fieldObj.picklistOption[i],
+                        'id': trimValue
+                    });
+                }
+                j$('#' + fieldObj.fieldAPI).multiSelect({
+                    unselectedItems: optObj
+                });
+            }
+            vm.trimAllChar = function(optVal) {
+                    for (; optVal.indexOf(' ') != -1;) {
+                        optVal = optVal.replace(' ', '');
+                    }
+                    for (; optVal.indexOf('/') != -1;) {
+                        optVal = optVal.replace('/', '_');
+                    }
+                    for (; optVal.indexOf('(') != -1;) {
+                        optVal = optVal.replace('(', '_');
+                    }
+                    for (; optVal.indexOf(')') != -1;) {
+                        optVal = optVal.replace(')', '_');
+                    }
+                    return optVal;
+                }
+                // finish for Multi Picklist UI
+                // 
+                // Button Section 
+            vm.button_Save = function($event) {
+                // vm.showSpin();
+                angular.forEach($scope.caseForm.$error.required, function(field) {
+                    field.$setDirty();
+                });
+
+                if ($scope.caseForm.$error.required != undefined && $scope.caseForm.$error.required.length > 0) {
+                    j$(".required-err-msg").show();
+                } else {
+                    j$(".required-err-msg").hide();
+                }
+
+                if ($scope.caseForm.$invalid && !$event.altKey) {
+                    // if ($scope.caseForm.$invalid) {
+                    return;
+                }
+                showLoading();
+                // console.log('vm.thisRecord', JSON.stringify(vm.thisRecord));
+                // console.log('caseObj' + JSON.stringify(caseObj));
+                var caseObj = {
+                    Id: vm.QueryString.id
+                };
+                for (var i = 0; i < vm.listFieldSetNameByOrder.length; i++) {
+                    var fieldSetName = vm.listFieldSetNameByOrder[i];
+                    for (var j = 0; j < vm.FieldSetDescObj[fieldSetName].length; j++) {
+                        var field = vm.FieldSetDescObj[fieldSetName][j];
+                        if (field.fieldType == 'MULTIPICKLIST') {
+                            var list = j$('#' + field.fieldAPI).multiSelect('getSelectedItems');
+                            var allValue = '';
+                            for (var k = 0, kLen = list.length; k < kLen; k++) {
+                                var value = list[k].label;
+                                allValue += value + ';';
+                            }
+                            caseObj[field.fieldAPI] = allValue;
+                            // } else if (field.fieldAPI == 'SEQ_No_txt__c') {
+                            //caseObj[field.fieldAPI] = vm.aircraftAbbr + vm.thisRecord[field.fieldAPI] + '-' + vm.seqNoDateTime;
+                        } else if (field.fieldType == 'DATE') {
+                            if (field.fieldAPI == 'SEQ_No_Date__c') {
+                                var dateValue = moment.utc(j$('#SEQ_No_Date__c').val(), 'DD/MM/YYYY');
+                                if (dateValue) {
+                                    caseObj[field.fieldAPI] = dateValue.valueOf();
+                                }
+                            }
+                        } else if (field.fieldType != 'OUTPUT_STRING') {
+                            // caseObj[field.fieldAPI] = j$('#' + field.fieldAPI).val();
+                            caseObj[field.fieldAPI] = vm.thisRecord[field.fieldAPI];
+                        }
+                    }
+                }
+
+                // var deletedIndex = [];
+                var deleteCaseGroupMemberList = [];
+                var caseGroupMemberListForSFDC = [];
+                for (var i = 0, len = vm.caseGroupMemberList.length; i < len; i++) {
+                    var eachMem = vm.caseGroupMemberList[i];
+                    var eachCaseGroupMember = {
+                        Id: eachMem['Id']
+                    };
+
+                    for (var fieldName in vm.caseGroupMemberFieldSetObj) {
+                        var fieldList = vm.caseGroupMemberFieldSetObj[fieldName];
+                        for (var j = 0, lenFieldList = fieldList.length; j < lenFieldList; j++) {
+                            var field = fieldList[j];
+                            eachCaseGroupMember[field.fieldAPI] = eachMem[field.fieldAPI];
+                            // if (field.fieldAPI == 'Equipment__c' || field.fieldAPI == 'Position__c') {
+                            //     var selection = j$('[id=' + field.fieldAPI + '_search]').eq(i).lookup('getSelection');
+                            //     console.log(field.fieldAPI + ' selection index: ' + i, selection);
+                            //     if (selection) {
+                            //         eachCaseGroupMember[field.fieldAPI] = selection.id;
+                            //     }
+                            // }
+                        }
+                    }
+
+                    if (eachMem.isDeleted && eachMem.Id) {
+                        // deletedIndex.push(i);
+                        deleteCaseGroupMemberList.push(eachCaseGroupMember);
+                    } else if (!eachMem.isDeleted) {
+                        caseGroupMemberListForSFDC[i] = eachCaseGroupMember;
+                    }
+                    // delete eachCaseGroupMember.isDeleted;
+                }
+
+                // console.log('caseObj', caseObj);
+                console.log('caseObj' + JSON.stringify(caseObj));
+                console.log('caseGroupMemberList', JSON.stringify(caseGroupMemberListForSFDC));
+                console.log('deleteCaseGroupMemberList', JSON.stringify(deleteCaseGroupMemberList));
+                try {
+                    Case_RemoteAction.saveCase(caseObj, caseGroupMemberListForSFDC, deleteCaseGroupMemberList,
+                        function(result, event) {
+                            // vm.hideSpin();
+                            hideLoading();
+                            console.log(result, event);
+                            if (event.status && result.status == '200') {
+                                if (vm.isSF1) {
+                                    // should change id na ja
+                                    vm.pageMsg = 'Trying to redirect to : ' + result.caseId;
+                                    sforce.one.navigateToSObject(result.caseId, 'Detail');
+                                    vm.pageMsg += ': Fail if you see this';
+                                } else {
+                                    window.location.href = '/' + result.caseId;
+                                }
+                            } else {
+                                console.log('event', event);
+                                var rawErrorMessage;
+                                if (result) {
+                                    rawErrorMessage = result.error;
+                                } else {
+                                    rawErrorMessage = event.message;
+                                }
+                                // alert(rawErrorMessage);
+                                var delimiter = '_EXCEPTION,';
+                                var duplicateValueDelimiter = 'DUPLICATE_VALUE';
+                                var indexOfDuplicateValueDelimiter = rawErrorMessage.indexOf(duplicateValueDelimiter);
+                                var indexOfDelimiter = rawErrorMessage.indexOf(delimiter);
+                                if (indexOfDuplicateValueDelimiter != -1) {
+                                    if (rawErrorMessage.indexOf('SEQ_No_Display__c') != -1) {
+                                        vm.errorMessage = 'SEQ No. already exists in the system. Please use another number.';
+                                    } else {
+                                        vm.errorMessage = rawErrorMessage;
+                                    }
+                                } else if (indexOfDelimiter != -1) {
+                                    vm.errorMessage = rawErrorMessage.substring(indexOfDelimiter + delimiter.length);
+                                } else {
+                                    vm.errorMessage = rawErrorMessage;
+                                }
+                                console.log('vm.errorMessage', vm.errorMessage);
+                                j$('#errorModal').modal('show');
+                                $scope.$apply();
+                            }
+                        }, {
+                            buffer: true,
+                            escape: false,
+                            timeout: 30000
+                        }
+                    );
+                } catch (err) {
+                    hideLoading();
+                    vm.errorMessage = err.message;
+                    j$('#errorModal').modal('show');
+                    $scope.$apply();
+                }
+            }
+            vm.button_Back = function() {
+                console.log('vm.retURL :' + vm.retURL);
+                if (vm.retURL == undefined || vm.retURL == '') {
+                    if (sforce && sforce.console) {
+                        showLoading();
+                        // console.log('console');
+                        var closeSubtab = function closeSubtab(result) {
+                            hideLoading();
+                            // console.log('closeSubtab :' + result);
+                            var tabId = result.id;
+                            sforce.console.closeTab(tabId);
+                        };
+                        sforce.console.getEnclosingTabId(closeSubtab);
+                    } else {
+
+                    }
+                } else {
+                    if (sforce && sforce.one) {
+                        // console.log('sforce.one');
+                        sforce.one.navigateToURL(retURL, true);
+                    } else {
+                        // console.log('window.location.href :'+vm.retURL);
+                        window.location.href = vm.retURL;
+                    }
+                }
+            }
+            vm.toggleCheckButtion = function(fieldAPI) {
+                vm.thisRecord[fieldAPI] = !vm.thisRecord[fieldAPI];
+            }
+            vm.showSpin = function() {
+                j$('#spin').show();
+            }
+            vm.hideSpin = function() {
+                j$('#spin').hide();
+            }
+            vm.QueryString = function() {
+                // This function is anonymous, is executed immediately and 
+                // the return value is assigned to QueryString!
+                var query_string = {};
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    // If first entry with this name
+                    if (typeof query_string[pair[0]] === "undefined") {
+                        query_string[pair[0]] = decodeURIComponent(pair[1]);
+                        // If second entry with this name
+                    } else if (typeof query_string[pair[0]] === "string") {
+                        var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+                        query_string[pair[0]] = arr;
+                        // If third or later entry with this name
+                    } else {
+                        query_string[pair[0]].push(decodeURIComponent(pair[1]));
+                    }
+                }
+                return query_string;
+            }();
+            vm.setMultiPicklist = function(fieldAPI) {
+                $timeout(function() {
+                    var list = j$('#' + fieldAPI).multiSelect('getSelectedItems');
+                    // console.log(list, list.length);
+                    if (list) {
+                        var allValue = '';
+                        for (var k = 0, kLen = list.length; k < kLen; k++) {
+                            var value = list[k].label;
+                            allValue += value + ';';
+                        }
+                        vm.thisRecord[fieldAPI] = allValue;
+                        j$('[id=' + fieldAPI + '_value]').val(allValue).trigger('change');
+                        $scope.caseForm[fieldAPI].$dirty = true;
+                        // console.log('vm.thisRecord', vm.thisRecord);
+                    }
+                }, 20);
+            };
+        })
+    </script>
+
+    </html>
+</apex:page>

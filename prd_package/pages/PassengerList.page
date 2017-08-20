@@ -1,0 +1,463 @@
+<apex:page showHeader="false" sidebar="false" extensions="PassengerListController" standardStylesheets="false" standardController="Flight__c">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <apex:stylesheet value="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'css/bootstrap.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.spinkit, '')}" />
+    <apex:includeScript value="{!URLFOR($Resource.jquery, '')}" />
+    <apex:includeScript value="/xdomain/xdomain.js" />
+    <apex:includeScript value="/soap/ajax/26.0/connection.js" />
+    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="{!$Resource.serviceConsoleUtils}" />
+    <!-- <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" /> -->
+    <apex:includeScript value="{!URLFOR($Resource.underscorejs, '')}" />
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'js/bootstrap.min.js')}" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.13/r-2.1.0/datatables.min.css" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.pl_datatable, 'datatables.min.css')}" />
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.13/r-2.1.0/datatables.min.js"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.pl_datatable, 'datatables.min.js')}" />
+    <style>
+    div.tooltip-inner {
+        max-width: 350px;
+    }
+    
+    .panel {
+        min-height: 110px;
+    }
+    </style>
+    <script>
+    $.fn.dataTable.ext.errMode = 'none';
+    var vipImage = "<img src='{!URLFOR($Resource.icons,'vip.png')}' data-toggle='tooltip' title='VIP/VVIP' width='40' height='40'/>";
+    var cipImage = "<img src='{!URLFOR($Resource.icons,'cip.png')}' data-toggle='tooltip' title='CIP' width='40' height='40'/>";
+    var checkImage = '<span class="glyphicon glyphicon-ok"></span><span style="display:none;">true</span>';
+    var SPMLImage = function(specialMeal) {
+        return '<span class="glyphicon glyphicon-cutlery" data-toggle="tooltip" title="' + specialMeal + '"></span>';
+    };
+    var WHCRImage = function(title) {
+        return "<img src='{!URLFOR($Resource.icons,'whcr.png')}' data-toggle='tooltip' title='" + title + "' width='30' height='30'/>";
+    };
+    var MEDAImage = "<img src='{!URLFOR($Resource.icons,'meda.png')}' data-toggle='tooltip' title='MEDA' width='30' height='30'/>";
+    var INFTImage = "<img src='{!URLFOR($Resource.icons,'inft.png')}' data-toggle='tooltip' title='INFT' width='30' height='30'/>";
+    var UMNRImage = "<img src='{!URLFOR($Resource.icons,'umnr.png')}' data-toggle='tooltip' title='UMNR' width='30' height='30'/>";
+    var table;
+    var searchCache = {};
+
+    function getPassengerList() {
+        // var spinner = $('.loading').show();
+        PassengerListController.getPassengerList('{!flightId}', function(result, event) {
+            if (event.status) {
+                var passengerList = result;
+                console.log('passengerList', passengerList);
+                $('#passengerTable').DataTable().clear().rows.add(passengerList).draw();
+                countEachFilteredAttribute(passengerList);
+                // spinner.hide();
+            }
+        });
+    }
+
+    function filterColumn(columnName, input, state) {
+        // Convert to string first
+        if (input) {
+            input += '';
+        }
+
+        if (!searchCache[columnName]) {
+            searchCache[columnName] = [];
+        }
+
+        if (input && state) {
+            searchCache[columnName].push(input);
+            var keyword = getKeywordRegex(searchCache[columnName]);
+            console.log('keyword', keyword);
+            table.column(columnName + ':name').search(keyword, true, false).draw();
+        } else {
+            removeFromArray(input, searchCache[columnName]);
+            var keyword = getKeywordRegex(searchCache[columnName]);
+            console.log('keyword', keyword);
+            table.column(columnName + ':name').search(keyword).draw();
+        }
+    }
+
+    function filterWithSeat(state) {
+        var columnName = 'seatNumber:name';
+        if (state) {
+            table.column(columnName).search('^[a-zA-Z0-9]+$', true, false).draw();
+        } else {
+            table.column(columnName).search('').draw();
+        }
+    }
+
+    function countEachFilteredAttribute(passengerList) {
+        var vipCount = _.filter(passengerList, function(each) {
+            return each.isVIP;
+        }).length;
+        $('#vipCount').html(parenthesis(vipCount));
+
+        var cipCount = _.filter(passengerList, function(each) {
+            return each.isCIP;
+        }).length;
+        $('#cipCount').html(parenthesis(cipCount));
+
+        var birthdayCount = _.filter(passengerList, function(each) {
+            return each.isBirthdayToday;
+        }).length;
+        $('#birthdayCount').html(parenthesis(birthdayCount));
+
+        var premiumEconomyCount = _.filter(passengerList, function(each) {
+            return each.travelClass == 'Premium Economy';
+        }).length;
+        $('#premiumEconomyCount').html(parenthesis(premiumEconomyCount));
+
+        var economyCount = _.filter(passengerList, function(each) {
+            return each.travelClass == 'Economy';
+        }).length;
+        $('#economyCount').html(parenthesis(economyCount));
+
+        var businessCount = _.filter(passengerList, function(each) {
+            return each.travelClass == 'Business';
+        }).length;
+        $('#businessCount').html(parenthesis(businessCount));
+
+        var firstCount = _.filter(passengerList, function(each) {
+            return each.travelClass == 'First';
+        }).length;
+        $('#firstCount').html(parenthesis(firstCount));
+
+        var baseCount = _.filter(passengerList, function(each) {
+            return each.ffpTier == 'BASE';
+        }).length;
+        $('#baseCount').html(parenthesis(baseCount));
+
+        var silvCount = _.filter(passengerList, function(each) {
+            return each.ffpTier == 'SILV';
+        }).length;
+        $('#silvCount').html(parenthesis(silvCount));
+
+        var goldCount = _.filter(passengerList, function(each) {
+            return each.ffpTier == 'GOLD';
+        }).length;
+        $('#goldCount').html(parenthesis(goldCount));
+
+        var platCount = _.filter(passengerList, function(each) {
+            return each.ffpTier == 'PLAT';
+        }).length;
+        $('#platCount').html(parenthesis(platCount));
+
+        var withSeatCount = _.filter(passengerList, function(each) {
+            return each.seatNumber != null && each.seatNumber.length > 0;
+        }).length;
+        $('#withSeatCount').html(parenthesis(withSeatCount));
+
+        var noShowCount = _.filter(passengerList, function(each) {
+            return each.noShow;
+        }).length;
+        $('#noShowCount').html(parenthesis(noShowCount));
+
+        var mealCount = _.filter(passengerList, function(each) {
+            return each.specialMeal != null;
+        }).length;
+        $('#mealCount').html(parenthesis(mealCount));
+
+        var wchCount = _.filter(passengerList, function(each) {
+            return each.ssr != null && each.ssr.indexOf('WCH') != -1;
+        }).length;
+        $('#wchCount').html(parenthesis(wchCount));
+
+        var medaCount = _.filter(passengerList, function(each) {
+            return each.ssr != null && each.ssr.indexOf('MEDA') != -1;
+        }).length;
+        $('#medaCount').html(parenthesis(medaCount));
+
+        var inftCount = _.filter(passengerList, function(each) {
+            return each.ssr != null && each.ssr.indexOf('INFT') != -1;
+        }).length;
+        $('#inftCount').html(parenthesis(inftCount));
+
+        var umnrCount = _.filter(passengerList, function(each) {
+            return each.ssr != null && each.ssr.indexOf('UMNR') != -1;
+        }).length;
+        $('#umnrCount').html(parenthesis(umnrCount));
+    }
+
+    function parenthesis(value) {
+        return '(' + value + ')';
+    }
+
+    function getKeywordRegex(keywordArray) {
+        return keywordArray.join().replace(/,/g, '|');
+    }
+
+    function removeFromArray(value, array) {
+        var indexOf = array.indexOf(value);
+        console.log(value, indexOf, array);
+        if (indexOf != -1) {
+            array.splice(indexOf, 1);
+        }
+    }
+
+    $(document).ready(function() {
+        table = $('#passengerTable').DataTable({
+            responsive: true,
+            "drawCallback": function(settings) {
+                $('[data-toggle="tooltip"]').tooltip({
+                    placement: function(context, element) {
+                        var position = $(element).position();
+                        if (position.top - $(window).scrollTop() < 30) {
+                            return "bottom";
+                        }
+                        return "top";
+                    }
+                });
+            },
+            "dom": '<"top"fi>rt<"bottom"lp><"clear">',
+            columns: [{
+                data: "name",
+                name: "name",
+                render: function(data, type, row, meta) {
+                    if(!sforce.one){
+                        data = '<a href="#/" onclick="openNewTab(\'' + row.id + '\')">' + data + '</a>';
+                    } else {
+                        data = '<a href="javascript:sforce.one.navigateToSObject(\'' + row.id + '\')"">' + data + '</a>';    
+                    }
+                    
+                    if (row.isVIP) {
+                        data += '&nbsp;' + vipImage;
+                    }
+
+                    if (row.isCIP) {
+                        data += '&nbsp;' + cipImage;
+                    }
+
+                    if (row.isBirthdayToday) {
+                        data += '&nbsp;<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#000000" d="M12,6C13.11,6 14,5.1 14,4C14,3.62 13.9,3.27 13.71,2.97L12,0L10.29,2.97C10.1,3.27 10,3.62 10,4A2,2 0 0,0 12,6M16.6,16L15.53,14.92L14.45,16C13.15,17.29 10.87,17.3 9.56,16L8.5,14.92L7.4,16C6.75,16.64 5.88,17 4.96,17C4.23,17 3.56,16.77 3,16.39V21A1,1 0 0,0 4,22H20A1,1 0 0,0 21,21V16.39C20.44,16.77 19.77,17 19.04,17C18.12,17 17.25,16.64 16.6,16M18,9H13V7H11V9H6A3,3 0 0,0 3,12V13.54C3,14.62 3.88,15.5 4.96,15.5C5.5,15.5 6,15.3 6.34,14.93L8.5,12.8L10.61,14.93C11.35,15.67 12.64,15.67 13.38,14.93L15.5,12.8L17.65,14.93C18,15.3 18.5,15.5 19.03,15.5C20.11,15.5 21,14.62 21,13.54V12A3,3 0 0,0 18,9Z"><title>Wish you a happy Birthday!</title></path></svg>';
+                    }
+
+                    return data;
+                }
+            }, {
+                data: "ssr",
+                name: "ssr",
+                render: function(data, type, row, meta) {
+                    var specialMeal = 'SPML';
+                    var wheelchair = 'WCH';
+                    var medicalAssistance = 'MEDA';
+                    var infant = 'INFT';
+                    var unaccompaniedMinor = 'UMNR';
+                    var space = '&nbsp;';
+
+                    var result = '';
+                    var currentSSR = '';
+                    if (data != null) {
+                        if (row.specialMeal != null) {
+                            result += space + SPMLImage(row.specialMeal);
+                            currentSSR += specialMeal;
+                        }
+                        if (data.indexOf(wheelchair) != -1) {
+                            var title = data.substring(data.indexOf(wheelchair), data.indexOf(wheelchair) + 4);
+                            result += space + WHCRImage(title);
+                            currentSSR += wheelchair;
+                        }
+                        if (data.indexOf(medicalAssistance) != -1) {
+                            result += space + MEDAImage;
+                            currentSSR += medicalAssistance;
+                        }
+                        if (row.hasInfant) {
+                            result += space + INFTImage;
+                            currentSSR += infant;
+                        }
+                        if (data.indexOf(unaccompaniedMinor) != -1) {
+                            result += space + UMNRImage;
+                            currentSSR += unaccompaniedMinor;
+                        }
+                        if (data != null && data.length > 0) {
+                            result += space + '<span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="' + data + '"></span>'
+                        }
+
+                        result = '<span style="display:none;">' + data + '</span>' + result;
+                    }
+                    return result;
+                }
+            }, {
+                data: "pnr"
+            }, {
+                data: "sector"
+            }, {
+                data: "ffpNumber"
+            }, {
+                data: "ffpTier",
+                name: "ffpTier"
+            }, {
+                data: "isVIP",
+                name: "isVIP",
+                render: function(data, type, row, meta) {
+                    if (row.isVIP) {
+                        return checkImage;
+                    } else {
+                        return null;
+                    }
+                }
+            }, {
+                data: "seatNumber",
+                name: "seatNumber"
+            }, {
+                data: "travelClass",
+                name: "travelClass"
+            }, {
+                data: "isBirthdayToday",
+                name: "isBirthdayToday",
+                visible: false
+            }, {
+                data: "passengerStatus",
+                name: "passengerStatus",
+                visible: false
+            }, {
+                data: "noShow",
+                name: "noShow",
+                visible: false
+            }],
+            createdRow: function(row, data, dataIndex) {
+                if (data.isCIP) {
+                    $(row).addClass('warning');
+                }
+                if (data.isVIP) {
+                    $(row).addClass('success');
+                }
+            }
+        });
+        getPassengerList();
+    });
+    </script>
+    <div class="container" style="padding-top: 20px;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Passenger Status</div>
+                    <div class="panel-body">
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="" onclick="filterColumn('passengerStatus', 'VIP', this.checked)" />VIP/VVIP <span id="vipCount"></span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="" onclick="filterColumn('passengerStatus', 'CIP', this.checked)" />CIP <span id="cipCount"></span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="" onclick="filterColumn('isBirthdayToday', 'true', this.checked)" />Birthdays Today <span id="birthdayCount"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Travel Class</div>
+                    <div class="panel-body">
+                        <div class="col-md-2 col-md-offset-1">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('travelClass', 'First', this.checked)" />First <span id="firstCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('travelClass', 'Business', this.checked)" />Business <span id="businessCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('travelClass', 'Premium Economy', this.checked)" />Premium Economy <span id="premiumEconomyCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('travelClass', 'Economy', this.checked)" />Economy <span id="economyCount"></span></label>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterWithSeat(this.checked)" />With Seat <span id="withSeatCount"></span></label>
+                        </div> -->
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('noShow', 'true', this.checked)" />No Show <span id="noShowCount"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">FFP Tier</div>
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ffpTier', 'PLAT', this.checked)" />PLAT <span id="platCount"></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ffpTier', 'GOLD', this.checked)" />GOLD <span id="goldCount"></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ffpTier', 'SILV', this.checked)" />SILV <span id="silvCount"></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ffpTier', 'BASE', this.checked)" />BASE <span id="baseCount"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">SSR</div>
+                    <div class="panel-body">
+                        <div class="col-md-2 col-md-offset-1">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ssr', 'MEAL', this.checked)" />MEAL <span id="mealCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ssr', 'WCH*', this.checked)" />WCH* <span id="wchCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ssr', 'MEDA', this.checked)" />MEDA <span id="medaCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ssr', 'INFT', this.checked)" />INFT <span id="inftCount"></span></label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('ssr', 'UMNR', this.checked)" />UMNR <span id="umnrCount"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 0px;">
+                <!-- <div class="table-responsive"> -->
+                <table id="passengerTable" class="table table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="info">
+                            <th style="width:40%;">Name</th>
+                            <!-- <th>Last Name</th> -->
+                            <!-- <th>First Name</th> -->
+                            <th style="width:10%;">SSR</th>
+                            <th>PNR</th>
+                            <th>Sector</th>
+                            <th style="width:15%;">FFP</th>
+                            <th>FFP Tier</th>
+                            <th>VIP/VVIP</th>
+                            <th>Seat No.</th>
+                            <th>Travel Class</th>
+                            <!-- <th>BD</th> -->
+                        </tr>
+                    </thead>
+                </table>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <div style="font-size:10px; text-align: right;">
+        <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    </div>
+</apex:page>

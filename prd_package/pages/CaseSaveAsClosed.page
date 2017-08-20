@@ -1,0 +1,23 @@
+<apex:page standardController="Case" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" showQuickActionVfHeader="false">
+<apex:includeScript value="/soap/ajax/29.0/connection.js"/>
+
+<script type="text/javascript">
+        sforce.connection.sessionId = '{!GETSESSIONID()}';
+        </script>
+<script>
+var ucase = new sforce.SObject('Case'); 
+
+ucase.id = "{!Case.Id}"; 
+ucase.Ground_Customer_Service__c = "1"; 
+ucase.Status = "Closed"; 
+
+var r = confirm("This action will close the Case. Are you sure you want to save as Closed?"); 
+if (r == true) { 
+result = sforce.connection.update([ucase]); 
+}
+window.parent.close();
+sforce.one.navigateToURL('/{!Case.Id}?retUrl=/500');
+    
+</script>
+
+</apex:page>

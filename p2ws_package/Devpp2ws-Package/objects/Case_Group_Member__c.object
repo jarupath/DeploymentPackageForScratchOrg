@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>NewEdit_Maintenance</fullName>
+        <description>CaseNewEditSLDS_Page</description>
+        <displayedFields>
+            <field>Equipment__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Position__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Impact__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>NewEdit_Maintenance</label>
+    </fieldSets>
+    <fields>
+        <fullName>ATA_Chapter_F__c</fullName>
+        <description>Display the 2 digits in front of ATA chapter</description>
+        <externalId>false</externalId>
+        <formula>LEFT(  ATA_Chapter__c  , 2)</formula>
+        <label>ATA Chapter</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ATA_Chapter__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ATA Chapter</label>
+        <lookupFilter>
+            <active>false</active>
+            <filterItems>
+                <field>Master_Map__c.Depend_On_Object__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Equipment__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Master_Map__c</referenceTo>
+        <relationshipLabel>Case Group Members (ATA Chapter)</relationshipLabel>
+        <relationshipName>Case_Group_Members2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>A_C_Zone__c</fullName>
+        <externalId>false</externalId>
+        <label>A/C Zone</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accepted_Class__c</fullName>
+        <description>Displays the accepted class of the case group member</description>
+        <externalId>false</externalId>
+        <formula>Passengerid__r.Class__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accepted Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accepted_Seat_Number__c</fullName>
+        <description>Displays the accepted seat of the case group member</description>
+        <externalId>false</externalId>
+        <formula>Passengerid__r.Checkin_Seat__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accepted Seat Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Displays the account related to the case group member</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Action_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Caseid__r.Action__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Action Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Aircraft__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Displays the aircraft the position is related to</description>
+        <externalId>false</externalId>
+        <label>A/C REG</label>
+        <referenceTo>Aircraft__c</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Authorize_Number__c</fullName>
+        <description>Displays the authorization number of the personnel who logged the case</description>
+        <externalId>false</externalId>
+        <formula>Caseid__r.Authorize_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AUTH NO.</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Block_Name__c</fullName>
+        <description>Displays the block name of the personnel who logged the case</description>
+        <externalId>false</externalId>
+        <formula>Caseid__r.Block_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Block Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Created_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Caseid__r.CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Date/Time Opened</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Case_Number_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( $User.UIThemeDisplayed == &apos;Theme4t&apos;, HYPERLINK(&quot;/&quot; &amp; Caseid__r.Id, CreatedBy.Station__c &amp; CreatedBy.Department &amp;    Caseid__r.CaseNumber ), HYPERLINK(&quot;javascript:srcUp(&apos;/&quot; &amp;  Caseid__r.Id  &amp; &quot;&apos;)&quot;, CreatedBy.Station__c &amp; CreatedBy.Department &amp;    Caseid__r.CaseNumber   ))</formula>
+        <label>Case Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Origin__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Caseid__r.Origin )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Channel</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Priority__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(  Caseid__r.Priority )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Priority</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(  Caseid__r.Case_Type__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Caseid__c</fullName>
+        <description>Displays the case that the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Case Number</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Change_Cabin_Class_Full_Name__c</fullName>
+        <description>Displays the full name of changed cabin class of case group member</description>
+        <externalId>false</externalId>
+        <formula>CASE( Change_Cabin_Class__c , &quot;F&quot;, &quot;First&quot;, &quot;C&quot;, &quot;Business&quot;, &quot;Y&quot;, &quot;Economy&quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change Cabin Class Full Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Cabin_Class__c</fullName>
+        <description>Displays the changed cabin class of case group member</description>
+        <externalId>false</externalId>
+        <label>Change Cabin Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Change_Seat__c</fullName>
+        <description>Displays the new seat for the case group member</description>
+        <externalId>false</externalId>
+        <label>Change Seat</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complain_TXT__c</fullName>
+        <description>Displays the part, equipment and defect condition for the case that the case group member is related to</description>
+        <externalId>false</externalId>
+        <formula>Caseid__r.Complaint_TXT_40__c</formula>
+        <label>Complain TXT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_At_Mobile__c</fullName>
+        <externalId>false</externalId>
+        <label>Created At (Mobile)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>CrewId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Crew</label>
+        <referenceTo>Crew__c</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Defect_Type__c</fullName>
+        <description>Displays the defect type from the case that the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Defect Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Detail</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Document_Version__c</fullName>
+        <externalId>false</externalId>
+        <label>Document_Version</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equipment_From_Case__c</fullName>
+        <description>Displays the equipment from the case that the case group member is related to</description>
+        <externalId>false</externalId>
+        <formula>Caseid__r.EquipmentId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Equipment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equipment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Displays the value of the equipment the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Equipment</label>
+        <referenceTo>Master_Map__c</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FFP_Number_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>Passengerid__r.FFP_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FFP Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>FFP Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Tier_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>Passengerid__r.FFP_Tier__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FFP Tier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FFP_Tier__c</fullName>
+        <externalId>false</externalId>
+        <label>FFP Tier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FlightId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Flight Number</label>
+        <referenceTo>Flight__c</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Number_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;javascript:srcUp(&apos;/&quot; &amp;   Caseid__r.Flightid__c   &amp; &quot;&apos;)&quot;,   Caseid__r.Flightid__r.Name  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flight Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Impact_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Impact__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Impact</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Impact_Status_Color__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  ISPICKVAL( Caseid__r.Action__c, &quot;&quot; ) &amp;&amp;   ISPICKVAL(  Impact__c, &quot;&quot; )  , IMAGE(&quot;/resource/YellowCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,
+        
+      IF(  ISPICKVAL( Caseid__r.Action__c , &quot;Remain&quot;) &amp;&amp; ISPICKVAL (  Impact__c , &quot;Block&quot;)  , IMAGE(&quot;/resource/RedCase&quot;,&quot;&quot;,20,20) + &apos; &apos;, 
+
+                   IF( ISPICKVAL( Caseid__r.Action__c , &quot;Remain&quot;) &amp;&amp; ISPICKVAL (  Impact__c , &quot;Malfunction&quot;) , IMAGE(&quot;/resource/OrangeCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,
+
+                                IF( ISPICKVAL( Caseid__r.Action__c , &quot;Remain&quot;) &amp;&amp; ISPICKVAL (  Impact__c , &quot;Serviceable&quot;), IMAGE(&quot;/resource/BlueCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,
+
+                                      IF ( ISPICKVAL (  Impact__c , &quot;Complete&quot;) , IMAGE(&quot;/resource/GreenCase&quot;,&quot;&quot;,20,20) + &apos; &apos;,&quot;&quot;)
+)
+)
+)
+)</formula>
+        <label>Impact Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Impact__c</fullName>
+        <externalId>false</externalId>
+        <label>Impact</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Serviceable</fullName>
+                    <default>false</default>
+                    <label>Serviceable</label>
+                </value>
+                <value>
+                    <fullName>Malfunction</fullName>
+                    <default>false</default>
+                    <label>Malfunction</label>
+                </value>
+                <value>
+                    <fullName>Block</fullName>
+                    <default>false</default>
+                    <label>Block</label>
+                </value>
+                <value>
+                    <fullName>Complete</fullName>
+                    <default>false</default>
+                    <label>Complete</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Master_Case_Recode_Type_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Caseid__r.RecordTypeId</formula>
+        <label>Master Case Recode Type Id (Clarify)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Travel_Class__c</fullName>
+        <description>New travel class of a passenger when an incident occurs during a flight</description>
+        <externalId>false</externalId>
+        <label>New Travel Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PNR__c</fullName>
+        <externalId>false</externalId>
+        <label>PNR</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Part_From_Case__c</fullName>
+        <externalId>false</externalId>
+        <formula>Caseid__r.PartId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Part</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Part__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Displays the part the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Part</label>
+        <referenceTo>Master_Map__c</referenceTo>
+        <relationshipLabel>Case Group Members (Part)</relationshipLabel>
+        <relationshipName>Case_Group_Members1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Passenger_Class_Search__c</fullName>
+        <description>Displays the passenger class as a text to enable global search indexing</description>
+        <externalId>false</externalId>
+        <label>Passenger Class Search</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Name_Search__c</fullName>
+        <description>Displays the passenger name as a text to enable global search indexing</description>
+        <externalId>false</externalId>
+        <label>Passenger Name Search</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passenger_Seat_Search__c</fullName>
+        <description>Displays the passenger seat as a text to enable global search indexing</description>
+        <externalId>false</externalId>
+        <label>Passenger Seat Search</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Passengerid__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Displays the passenger the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Passenger</label>
+        <referenceTo>Passenger__c</referenceTo>
+        <relationshipLabel>Case Group Members</relationshipLabel>
+        <relationshipName>Case_Group_Members</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Position_Alphabet_Only__c</fullName>
+        <externalId>false</externalId>
+        <formula>RIGHT(Position__c, 1)</formula>
+        <label>Position Alphabet Only</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Position_Number_Only__c</fullName>
+        <externalId>false</externalId>
+        <formula>VALUE(LEFT( Position__c, LEN(Position__c) - 1 ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Position Number Only</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Position__c</fullName>
+        <externalId>false</externalId>
+        <label>Position</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Position_with_condition_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>Seat_Number__c + &apos;-&apos; + Caseid__r.PartId__r.Name  + &apos;-&apos; +  Defect_Type__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Seat Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Primary__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Primary</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ROP_Tier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Passengerid__r.AccountId__r.ROP_Tier__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ROP Tier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Requires_Fix__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox = true means that the equipment requires fixing. Checkbox = false means that the equipment does not have a defect but is affected by another equipment.</description>
+        <externalId>false</externalId>
+        <label>Requires Fix</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SEQ_No_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;javascript:srcUp(&apos;/&quot; &amp; Caseid__c &amp; &quot;&apos;)&quot;,  Caseid__r.SEQ_No_Display__c  , &quot;_self&quot; )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SEQ No.</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Seat_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Position__c</formula>
+        <label>Seat Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Staff_Name__c</fullName>
+        <description>Displays the sequence number from the case the case group member is related to</description>
+        <externalId>false</externalId>
+        <label>Staff Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Staff_Personal_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Staff Personal Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Caseid__r.Status )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <formula>Caseid__r.Subject</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subject</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Travel_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>Travel Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VIP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>VIP</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Case Group Member</label>
+    <nameField>
+        <displayFormat>CGM-{0000000000}</displayFormat>
+        <label>Case Group Member Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Group Members</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Ground_Service_CGM</fullName>
+        <active>true</active>
+        <label>Ground Service CGM</label>
+        <picklistValues>
+            <picklist>Impact__c</picklist>
+            <values>
+                <fullName>Block</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serviceable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Maintenance_Page_Layout</fullName>
+        <active>true</active>
+        <label>Maintenance Page Layout</label>
+        <picklistValues>
+            <picklist>Impact__c</picklist>
+            <values>
+                <fullName>Block</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malfunction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serviceable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Passengerid__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PNR__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Accepted_Seat_Number__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Accepted_Class__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>Passengerid__c</searchFilterFields>
+        <searchFilterFields>Accepted_Seat_Number__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Add_Passenger_List</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Add Passenger List</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/connection.js&quot;)}
+
+function insertScript(){
+var caseId = &apos;{!Case.Id}&apos;;
+var currentLocation = window.location;
+var topURL = window.top.location.href;
+var box = new SimpleDialog(&quot;hersh&quot;+Math.random(), true); 
+parent.box = box; 
+box.setTitle(&quot;Add Passenger List&quot;);
+box.createDialog();  
+box.setWidth(1000);
+box.setContentInnerHTML(&quot;&lt;iframe id=&apos;iframeContentId&apos; src=&apos;/apex/AddCasePassengerListPage?id=&quot; + caseId  +&quot;&amp;ret=&quot;+currentLocation+&quot;&amp;top=&quot;+ topURL+&quot;&apos; frameborder=&apos;0&apos; height=&apos;400px&apos; width=&apos;100%&apos; marginheight=&apos;0&apos; marginwidth=&apos;0&apos; scrolling=&apos;yes&apos; /&gt;&quot;);
+box.setupDefaultButtons(); 
+box.show();  
+} 
+
+insertScript();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Case</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Case</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>srcUp(&quot;https://cs6.salesforce.com/500/e?{!$Setup.System_Configuration__c.Case_Flight_Name_SFDC_ID__c}={!Passenger__c.Flight_Name__c}&amp;{!$Setup.System_Configuration__c.Case_Flight_Id_SFDC_ID__c}={!Passenger__c.FlightIdId__c}&amp;{!$Setup.System_Configuration__c.Case_Passenger_Name_SFDC_ID__c}={!Passenger__c.Name}&amp;{!$Setup.System_Configuration__c.Case_Passenger_Id_SFDC_ID__c}={!Passenger__c.Id}&amp;RecordType={!$Setup.System_Configuration__c.Case_Record_Type_ID_Ground_Service__c}&amp;ekp=500&amp;ent=Case&quot;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Case_CFMS</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Case CFMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>srcUp(&quot;/500/e?def_account_id={!Account.Id}&amp;RecordType={!$Setup.System_Configuration__c.Customer_Feedback_Create__c}&amp;ekp=500&amp;ent=Case&quot;);</url>
+    </webLinks>
+</CustomObject>

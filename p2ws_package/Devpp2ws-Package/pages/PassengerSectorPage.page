@@ -1,0 +1,63 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" standardController="Flight__c" extensions="PassengerSectorPage">
+    <apex:stylesheet value="{!URLFOR($Resource.sfdc_bs3, 'dist/css/bootstrap-bs3.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'css/bootstrap.min.css')}" />
+    <style>
+        .progress-bar {
+            font-size: 14px !important;
+        }
+    </style>
+    <body class="bs3">
+        <div class="container">
+            <div class="row">
+                <apex:repeat value="{!sectorList}" var="sector">
+                    <div class="col-md-{!columnWidth}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>{!sector}</h2>
+                            </div>
+                        </div>
+                        <apex:repeat value="{!classList}" var="classCode">
+                            <div class="row">
+                                <div class="col-md-1">{!classCode}</div>
+                                <div class="col-md-11">
+                                    <div class="progress">
+                                        <apex:variable value="{!sectorViewMap[sector].classMap[classCode]}" var="classView" />
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{!classView.bookingPercentage}%">
+                                            Booking: {!classView.totalBooking}
+                                        </div>
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:{!classView.acceptedPercentage}%">
+                                            Accepted: {!classView.totalAccepted}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-1" style="color:red;">({!capacity})</div> -->
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </apex:repeat>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Total from {!flight.Origin__c}</h2>
+                </div>
+            </div>
+            <apex:repeat value="{!totalClassList}" var="classCode">
+                <div class="row">
+                    <apex:variable value="{!totalClassMap[classCode]}" var="classView" />
+                    <div class="col-md-1">{!classCode} ({!classView.capacity})</div>
+                    <div class="col-md-11">
+                        <div class="progress">
+                            
+                            <div class="progress-bar progress-bar-success {!IF(classCode == 'ALL', 'progress-bar-striped', '')}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{!classView.bookingPercentage}%">
+                                Booking: {!classView.totalBooking} ({!ROUND(classView.totalBooking / classView.capacity * 100,2)}%)
+                            </div>
+                            <div class="progress-bar progress-bar-info {!IF(classCode == 'ALL', 'progress-bar-striped', '')}" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:{!classView.acceptedPercentage}%">
+                                Accepted: {!classView.totalAccepted} ({!ROUND(classView.totalAccepted / classView.capacity * 100,2)}%)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:repeat>
+        </div>
+    </body>
+</apex:page>

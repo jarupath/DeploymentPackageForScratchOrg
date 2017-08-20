@@ -1,0 +1,609 @@
+<apex:page showHeader="false" sidebar="false" extensions="FlightScheduleController" standardStylesheets="false" standardController="Flight__c">
+    <apex:remoteObjects jsNamespace="RemoteObjectModel">
+        <apex:remoteObjectModel name="User" fields="Id,FirstName,LastName,Phone">
+        </apex:remoteObjectModel>
+    </apex:remoteObjects>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <apex:stylesheet value="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'css/bootstrap.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.jquery, '')}" />
+    <apex:includeScript value="/xdomain/xdomain.js" />
+    <apex:includeScript value="/soap/ajax/26.0/connection.js" />
+    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="{!$Resource.serviceConsoleUtils}" />
+    <apex:includeScript value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.loading_icon, 'loading_icon/loading_icon.css')}" />
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.select2css, '')}" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.select2js, '')}" />
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'js/bootstrap.min.js')}" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.13/fh-3.1.2/r-2.1.1/datatables.min.css" /> -->
+    <apex:stylesheet value="{!URLFOR($Resource.datatablecss, '')}" />
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.13/fh-3.1.2/r-2.1.1/datatables.min.js"></script> -->
+    <apex:includeScript value="{!URLFOR($Resource.datatablejs, '')}" />
+    <style>
+    .select2-container {
+        width: 100% !important;
+    }
+    .transparent {
+        background-color: white !important;
+        color: white !important;
+    }
+    
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 26px;
+        color: #fff;
+        line-height: 30px;
+        text-align: center;
+        background: #000;
+        display: inline-block;
+        border: 1px grey solid;
+    }
+    
+    .serviceable {
+        background: #24C7CE;
+        color: black;
+    }
+    
+    .block {
+        background: #F54544;
+        color: black;
+    }
+    
+    .malfunction {
+        background: #FDA62D;
+        color: black;
+    }
+    
+    .complete {
+        background: #FFFFFF;
+        color: black;
+    }
+    
+    .noAction {
+        background: #F7F556;
+        color: black;
+    }
+    
+    tfoot input {
+        width: 100% !important;
+        padding: 3px !important;
+        box-sizing: border-box;
+    }
+    
+    .sk-folding-cube .sk-cube:before {
+        background-color: #370E62;
+    }
+    /*.sk-cube {
+        background-color: #370E62;
+    }
+*/
+    
+    .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: show;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    
+    .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    </style>
+    <script>
+    var $ = jQuery.noConflict();
+    var searchCache = {};
+    var table;
+    var userId = '{!$User.Id}';
+
+    function convertToNumber(input) {
+        if (input) {
+            return parseInt(input);
+        } else {
+            return null;
+        }
+    }
+
+    function updateUserPrefs(station, refreshInterval, previousHour, nextHour, acType, acReg) {
+        // console.log(userId);
+        showLoading();
+        var record = new RemoteObjectModel.User({
+            Id: userId,
+            Station__c: station,
+            Refresh_Interval__c: refreshInterval,
+            Flight_Schedule_Previous_Hour__c: previousHour,
+            Flight_Schedule_Next_Hour__c: nextHour,
+            A_C_Type__c: acType || '',
+            A_C_REG__c: acReg || ''
+        });
+        record.update(function(err, ids) {
+            if (err) {
+                alert(err);
+                console.log(err);
+            }
+            hideLoading();
+        });
+    }
+
+    function getKeywordRegex(keywordArray) {
+        return keywordArray.join().replace(/,/g, '|');
+    }
+
+    function removeFromArray(value, array) {
+        var indexOf = array.indexOf(value);
+        // console.log(value, indexOf, array);
+        if (indexOf != -1) {
+            array.splice(indexOf, 1);
+        }
+    }
+
+    function filterColumn(columnName, input, state) {
+        // Convert to string first
+        if (input) {
+            input += '';
+        }
+
+        if (!searchCache[columnName]) {
+            searchCache[columnName] = [];
+        }
+
+        if (input && state) {
+            searchCache[columnName].push(input);
+            var keyword = getKeywordRegex(searchCache[columnName]);
+            // console.log('keyword', keyword);
+            table.column(columnName + ':name').search(keyword, true, false).draw();
+        } else {
+            removeFromArray(input, searchCache[columnName]);
+            var keyword = getKeywordRegex(searchCache[columnName]);
+            // console.log('keyword', keyword);
+            table.column(columnName + ':name').search(keyword).draw();
+        }
+    }
+
+    function openTab(obj) {
+        sforce.console.openPrimaryTab(null, '/' + obj.Id, true, obj.Name, null, obj.Id);
+    }
+
+    function getFlightList(startTimeOff, endTimeOffset, station) {
+        // var spinner = $('.loading').show();
+        showLoading();
+        FlightScheduleController.getSchedule(startTimeOff, endTimeOffset, new Date().toUTCString(), station, function(result, event) {
+            if (event.status) {
+                var flightList = result;
+                console.log('flightList', flightList);
+                $('#flightTable').DataTable().clear().rows.add(flightList).draw();
+
+                var acTypeFilter = $('#acType').val();
+                if (acTypeFilter) {
+                    table.column('acType:name').search(getKeywordRegex(acTypeFilter), true, false).draw();
+                } else {
+                    table.column('acType:name').search('').draw();
+                }
+
+                var acRegFilter = $('#acReg').val();
+                if (acRegFilter) {
+                    table.column('acReg:name').search(getKeywordRegex(acRegFilter), true, false).draw();
+                } else {
+                    table.column('acReg:name').search('').draw();
+                }
+
+                var firstElemToFocus = $('tbody .hasFocus:first');
+                if (firstElemToFocus) {
+                    var heightOfFirstFocus = firstElemToFocus.height();
+                    var positionOfFirstFocus = firstElemToFocus.offset();
+                    // console.log('positionOfFirstFocus', positionOfFirstFocus);
+                    if (positionOfFirstFocus) {
+                        $(window).scrollTop(positionOfFirstFocus.top - heightOfFirstFocus);
+                    }
+                }
+                hideLoading();
+            } else {
+                console.log('event', event);
+            }
+        });
+        autoRefresh($('#autoRefreshInterval').val());
+    }
+
+    function convertMinuteToMillisecond(input) {
+        return input * 60 * 1000;
+    }
+
+    function autoRefresh(interval) {
+        console.log('autoRefresh', interval);
+        setTimeout(function() {
+            getFlightList($('#startTimeOffset').val(), $('#endTimeOffset').val(), $('#station').val());
+        }, convertMinuteToMillisecond(interval));
+    }
+
+    function getCaseNumberIndicatorElem(text, number, className) {
+        var data = '';
+        var hiddenTextPart = '<span style="display:none;">' + text + '</span>';
+        if (number == 0 || !number) {
+            className += ' transparent';
+            number = '.';
+            hiddenTextPart = '';
+        }
+        data += '<span class="circle ' + className + '" data-toggle="tooltip" title="' + text + '">' + number + '</span>';
+        data += hiddenTextPart;
+        return data;
+    }
+
+    $(document).ready(function() {
+        $.fn.dataTable.ext.errMode = 'none';
+        var stationPickList = {!stationPickList
+        };
+        var stationElem = $("#station");
+        $.each(stationPickList, function(index, each) {
+            stationElem.append($('<option />').val(each.Code__c).html(each.Code__c + ' (' + each.Full_Name__c + ')'));
+        });
+        stationElem.select2();
+
+        var acRegList = JSON.parse('{!acRegListJSON}');
+        var acRegMap = {};
+        for (var i = 0, len = acRegList.length; i < len; i++) {
+            var acReg = acRegList[i];
+            acRegMap[acReg.text] = acReg;
+        }
+        $('#acType').select2({
+            data: JSON.parse('{!acTypeListJSON}')
+        }).change(function() {
+            var selectedACTypeList = $(this).val();
+            console.log('selectedACTypeList', selectedACTypeList);
+            var selectedACRegList = $('#acReg').val();
+            var newSelectedACRegList = [];
+
+            var filteredACRegList = acRegList;
+            if (selectedACTypeList) {
+                filteredACRegList = acRegList.filter(function(acReg) {
+                    for (var i = 0; i < selectedACTypeList.length; i++) {
+                        var selectedACType = selectedACTypeList[i];
+                        if (selectedACType == acReg.acType) {
+                            return true;
+                        }
+                    }
+                });
+            }
+
+            $('#acReg').html('').select2({
+                data: filteredACRegList
+            });
+
+            if (selectedACTypeList && selectedACRegList) {
+                for (var i = 0; i < selectedACRegList.length; i++) {
+                    var acRegName = selectedACRegList[i];
+                    var acReg = acRegMap[acRegName];
+                    if (acReg) {
+                        var thisACType = acReg.acType;
+                        var matchTypeList = selectedACTypeList.filter(function(selectedType) {
+                            return thisACType == selectedType;
+                        });
+                        if (matchTypeList && matchTypeList.length > 0) {
+                            newSelectedACRegList.push(acRegName);
+                        }
+                    }
+                }
+                $('#acReg').val(newSelectedACRegList).trigger('change');
+            } else {
+                $('#acReg').val([]).trigger('change');
+            }
+
+        });
+        $('#acReg').select2({
+            data: JSON.parse('{!acRegListJSON}')
+        });
+
+        table = $('#flightTable').DataTable({
+            fixedHeader: true,
+            paging: false,
+            "ordering": false,
+            "drawCallback": function(settings) {
+                $('[data-toggle="tooltip"]').tooltip({
+                    placement: function(context, element) {
+                        var position = $(element).position();
+                        if (position.top - $(window).scrollTop() < 30) {
+                            return "bottom";
+                        }
+                        return "top";
+                    }
+                });
+            },
+            columns: [{
+                    data: "status",
+                    name: "status",
+                    render: function(data, type, rowData, meta) {
+                        data = '';
+                        // if (rowData.noActionCount > 0) {
+                        data += getCaseNumberIndicatorElem('No Action', rowData.noActionCount, 'noAction');
+                        // }
+                        // if (rowData.blockCount > 0) {
+                        data += getCaseNumberIndicatorElem('Block', rowData.blockCount, 'block');
+                        // }
+                        // if (rowData.malfunctionCount > 0) {
+                        data += getCaseNumberIndicatorElem('Malfunction', rowData.malfunctionCount, 'malfunction');
+                        // }
+                        // if (rowData.serviceableCount > 0) {
+                        data += getCaseNumberIndicatorElem('Serviceable', rowData.serviceableCount, 'serviceable');
+                        // }
+
+                        // if (rowData.completedCount > 0) {
+                        //     data += '<span class="circle complete" data-toggle="tooltip" title="Complete">' + rowData.completedCount + '</span>';
+                        //     data += '<span style="display:none;">Complete</span>';
+                        // }
+
+                        return data;
+                    },
+                    defaultContent: ""
+                }, {
+                    data: "acReg",
+                    defaultContent: "",
+                    name: "acReg"
+                }, {
+                    data: "arrFlightFrom",
+                    defaultContent: ""
+                }, {
+                    data: "sta",
+                    defaultContent: ""
+                }, {
+                    data: "eta",
+                    defaultContent: ""
+                }, {
+                    data: "acType",
+                    defaultContent: "",
+                    name: "acType"
+                }, {
+                    data: "bayArrDep",
+                    defaultContent: ""
+                }, {
+                    data: "depFlightTo",
+                    defaultContent: ""
+                }, {
+                    data: "std",
+                    defaultContent: ""
+                }, {
+                    data: "etd",
+                    defaultContent: ""
+                }
+                // , {data: "timeToBeSortedString"}
+            ],
+            createdRow: function(row, data, dataIndex) {
+                if (data.isFocusArrivalFlight || data.isFocusDepartureFlight) {
+                    $(row).addClass('hasFocus')
+                }
+            },
+            columnDefs: [{
+                targets: [2, 3, 4],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    if (rowData.isFocusArrivalFlight) {
+                        $(td).addClass('success');
+                    }
+
+                    if (rowData.arrivalFlight) {
+                        $(td).css('cursor', 'pointer');
+                        $(td).click(function() {
+                            sforce.console.openPrimaryTab(null, '/' + rowData.arrivalFlight.Id, true, rowData.arrivalFlight.Name, null, rowData.arrivalFlight.Id);
+                        });
+                    }
+                }
+            }, {
+                targets: [7, 8, 9],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    if (rowData.isFocusDepartureFlight) {
+                        $(td).addClass('success');
+                    }
+
+                    if (rowData.departureFlight) {
+                        $(td).css('cursor', 'pointer');
+                        $(td).click(function() {
+                            sforce.console.openPrimaryTab(null, '/' + rowData.departureFlight.Id, true, rowData.departureFlight.Name, null, rowData.departureFlight.Id);
+                        });
+                    }
+                }
+            }, {
+                targets: 1,
+                createdCell: function(td, cellData, rowData, row, col) {
+                    if (rowData.aircraft) {
+                        $(td).css('cursor', 'pointer');
+                        $(td).click(function() {
+                            sforce.console.openPrimaryTab(null, '/' + rowData.aircraft.Id, true, rowData.aircraft.Name, null, rowData.aircraft.Id);
+                        });
+                    }
+                }
+            }]
+        });
+
+        var startTimeOffsetFromUser = convertToNumber('{!$User.Flight_Schedule_Previous_Hour__c}');
+        var endTimeOffsetFromUser = convertToNumber('{!$User.Flight_Schedule_Next_Hour__c}');
+        var autoRefreshInterval = convertToNumber('{!$User.Refresh_Interval__c}');
+
+        var defaultStartTimeOffset = startTimeOffsetFromUser != null ? startTimeOffsetFromUser : 2;
+        var defaultEndTimeOffset = endTimeOffsetFromUser != null ? endTimeOffsetFromUser : 6;
+        var defaultAutoRefreshInterval = autoRefreshInterval != null ? autoRefreshInterval : 5;
+        var defaultStation = '{!$User.Station__c}' || 'BKK';
+        var defaultACType = '{!$User.A_C_Type__c}';
+
+        if (defaultACType && defaultACType.length > 0) {
+            defaultACType = defaultACType.split(',');
+        } else {
+            defaultACType = [];
+        }
+
+        var defaultACReg = '{!$User.A_C_REG__c}';
+        if (defaultACReg && defaultACReg.length > 0) {
+            defaultACReg = defaultACReg.split(',');
+        } else {
+            defaultACReg = [];
+        }
+
+        // console.log('defaultACType', defaultACType);
+        $('#acType').val(defaultACType).trigger('change');
+        console.log($('#acType').val());
+        $('#acReg').val(defaultACReg).trigger('change');
+
+        var $startTimeOffsetElem = $('#startTimeOffset').val(defaultStartTimeOffset);
+        var $endTimeOffsetElem = $('#endTimeOffset').val(defaultEndTimeOffset);
+        var $stationElem = $('#station').val(defaultStation).trigger('change');
+
+        $('#autoRefreshInterval').val(defaultAutoRefreshInterval);
+
+        getFlightList($startTimeOffsetElem.val(), $endTimeOffsetElem.val(), $stationElem.val());
+
+        $('#refreshButton').click(function() {
+            getFlightList($('#startTimeOffset').val(), $('#endTimeOffset').val(), $('#station').val());
+        });
+
+        $('#filterHeader').click(function() {
+            $('#filterBody').toggle();
+        });
+
+        $('#savePrefButton').click(function() {
+            var acType = $('#acType').val();
+            if (acType) {
+                acType = acType.join();
+            }
+            var acReg = $('#acReg').val();
+            if (acReg) {
+                acReg = acReg.join();
+            }
+            updateUserPrefs($('#station').val(), $('#autoRefreshInterval').val(), $('#startTimeOffset').val(), $('#endTimeOffset').val(), acType, acReg);
+            getFlightList($('#startTimeOffset').val(), $('#endTimeOffset').val(), $('#station').val());
+        });
+
+        $('#filterBody').toggle();
+    });
+    </script>
+    <div class="container" style="padding-top: 20px;">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="filterHeader" style="cursor: pointer;">Filter</div>
+                <div class="panel-body" id="filterBody">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Previous (Hours):</label>
+                                <input type="number" class="form-control" id="startTimeOffset" min="1" max="12" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Next (Hours):</label>
+                                <input type="number" class="form-control" id="endTimeOffset" min="1" max="12" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Station:</label>
+                                <select id="station" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Auto Refresh Every (Minutes):</label>
+                                <input type="number" class="form-control" id="autoRefreshInterval" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Aircraft Type:</label>
+                                <select class="form-control" id="acType" multiple="multiple" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>A/C REG:</label>
+                                <select class="form-control" id="acReg" multiple="multiple" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-md-2 col-md-offset-1"> -->
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('status', 'Serviceable', this.checked)" />Serviceable <span id="mealCount"></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('status', 'Block', this.checked)" />Block <span id="wchCount"></span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('status', 'Malfunction', this.checked)" />Malfunction <span id="medaCount"></span></label>
+                        </div>
+                        <!-- <div class="col-md-2">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('status', 'Complete', this.checked)" />Complete <span id="inftCount"></span></label>
+                        </div> -->
+                        <div class="col-md-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" onclick="filterColumn('status', 'No Action', this.checked)" />No Action <span id="umnrCount"></span></label>
+                        </div>
+                        <div class="col-md-12" style="text-align: right;">
+                            <button type="submit" class="btn btn-primary" id="savePrefButton">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align: right;">
+                <button type="submit" class="btn btn-primary" id="refreshButton">Refresh</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 40px;">
+                <!-- <div class="table-responsive"> -->
+                <table id="flightTable" class="table table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="width:15%;">Status</th>
+                            <th>A/C Reg</th>
+                            <th style="width:7%;">ARR FLT FROM</th>
+                            <th>STA</th>
+                            <th>ETA</th>
+                            <th>A/C Type</th>
+                            <th style="width:5%;">BAY ARR/DEP</th>
+                            <th style="width:7%;">DEP FLT TO</th>
+                            <th>STD</th>
+                            <th>ETD</th>
+                            <!-- <th>TIMESORT</th> -->
+                        </tr>
+                    </thead>
+                    <!-- <tfoot style="display: table-header-group;">
+                        <tr>
+                            <th>Status</th>
+                            <th>A/C Reg</th>
+                            <th>ARR FLT FROM</th>
+                            <th>STA</th>
+                            <th>ETA</th>
+                            <th>A/C Type</th>
+                            <th>BAY ARR/DEP</th>
+                            <th>DEP FLT TO</th>
+                            <th>STD</th>
+                            <th>ETD</th>
+                        </tr>
+                    </tfoot> -->
+                </table>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</apex:page>
